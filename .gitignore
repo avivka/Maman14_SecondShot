@@ -75,3 +75,4 @@ assembler*
 *.ob
 samples/*.as
 .vscode
+.idea
