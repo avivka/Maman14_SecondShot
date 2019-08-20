@@ -74,5 +74,5 @@ fabric.properties
 assembler*
 *.ob
 samples/*.as
-.vscode
-.idea
+.vscode/*
+.idea/*
