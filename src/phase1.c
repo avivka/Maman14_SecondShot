@@ -38,6 +38,9 @@ void doPhase1(char* fileName){
 
     /** after we handled all the lines, update the final addresses in the symbols table */
     updateSymbolTableAddresses();
+    
+    printf("\n");
+    printSymbolTable();
 }
 
 

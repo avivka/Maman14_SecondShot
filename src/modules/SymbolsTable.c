@@ -95,3 +95,19 @@ int getSymbolAddress(char *symbolLabel){
 
     return  symbol->address;
 }
+
+int	printSymbolTable ()
+{
+	Symbol *currentSymbol;
+
+    currentSymbol = tableHead;
+
+    while (currentSymbol)
+    {
+		printf("%s \t %d \t %d \n", currentSymbol->label, currentSymbol->feature, currentSymbol->address);
+       
+        currentSymbol = currentSymbol->next;
+    }
+    
+    return 0;
+}
