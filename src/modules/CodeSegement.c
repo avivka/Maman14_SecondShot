@@ -49,7 +49,7 @@ void increaseCommandInstructionsCountByStatement(char* statement){
 
     /** if statment has a label, add it to the symbols table */
     if(label != NULL){
-        newSymbol = buildSymbol(label, FALSE, TRUE, getInstructionsCount() + MEMOERY_START_ADDRESS);
+        newSymbol = buildSymbol(label, code, getInstructionsCount() + MEMOERY_START_ADDRESS);
         addSymbolToTable(newSymbol);
     }
 
@@ -215,7 +215,7 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
             return;
         }
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-        if(symbol->isExternal){
+        if(symbol->feature == ext){
             encoding_type = EXTERNAL;
             /** add the external usage to the external symbols usage list*/
             addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
@@ -238,7 +238,7 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
             return;
         }
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-        if(symbol->isExternal){
+        if(symbol->feature == ext){
             encoding_type = EXTERNAL;
             addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
         } else {
