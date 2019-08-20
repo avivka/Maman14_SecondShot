@@ -195,10 +195,10 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
     } else if(operand->type == REGISTER_OPERAND){
         encoding_type = ABSOLUTE;
         if(position == SRC_OPERAND){
-            /** src register operands sholud encode the binary value of register number, and padd the value with 6 zeros */
+            /** src register operands should encode the binary value of register number, and padd the value with 6 zeros */
             value = concat(decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH), decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH));
         } else {
-            /** target register operands sholud start wuth 6 zeros, and then the binary value of the register value */
+            /** target register operands should start wuth 6 zeros, and then the binary value of the register value */
             value = concat(decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH), decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH));
         }
     } else if(operand->type == JUMP_OPERAND){

@@ -58,20 +58,20 @@ char* getCommandBinaryString(CommandStatement *cmd){
     char *string;
     string = malloc(14 * sizeof(char));
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
-                     cmd->jump_param_1_1,
-                     cmd->jump_param_1_2,
-                     cmd->jump_param_2_1,
-                     cmd->jump_param_2_2,
-                     cmd->op_code_1,
-                     cmd->op_code_2,
-                     cmd->op_code_3,
-                     cmd->op_code_4,
-                     cmd->source_operand_1,
-                     cmd->source_operand_2,
-                     cmd->destination_operand_1,
-                     cmd->destination_operand_2,
-                     cmd->encoding_type_1,
-                     cmd->encoding_type_2
+                     cmd->jump_param_1_1,/**bit 13:*/ /*TODO: should not be in use*/
+                     cmd->jump_param_1_2,/**bit 12:*/ /*TODO: should not be in use*/
+                     cmd->jump_param_2_1,/**bit 11:*/ /*TODO: should not be in use*/
+                     cmd->jump_param_2_2,/**bit 10:*/ /*TODO: should not be in use*/
+                     cmd->op_code_1,/**bit 9: op_code*/
+                     cmd->op_code_2,/**bit 8: op_code*/
+                     cmd->op_code_3,/**bit 7: op_code*/
+                     cmd->op_code_4,/**bit 6: op_code*/
+                     cmd->source_operand_1,/**bit 5: source operand addressing method code*/
+                     cmd->source_operand_2,/**bit 4: source operand addressing method code*/
+                     cmd->destination_operand_1,/**bit 3: destination operand addressing method code*/
+                     cmd->destination_operand_2,/**bit 2: destination operand addressing method code*/
+                     cmd->encoding_type_1,/**bit 1: A,R,E code*/
+                     cmd->encoding_type_2 /**bit 0: A,R,E code*/
     );
     return  string;
 }

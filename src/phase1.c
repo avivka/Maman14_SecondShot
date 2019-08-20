@@ -2,7 +2,6 @@
 extern int currentLine;
 void handleNextLIne(char* line);
 
-
 void doPhase1(char* fileName){
 
     FILE *fileToAssemble = NULL;
@@ -39,8 +38,8 @@ void doPhase1(char* fileName){
     updateSymbolTableAddresses();
 }
 
-
-void handleNextLIne(char* line){
+void handleNextLIne(char* line)
+{
 
     /** skip empty lines or comment lines */
     if(isCommentStatementOrEmptyLine(line) == TRUE){
@@ -58,8 +57,6 @@ void handleNextLIne(char* line){
     }
     currentLine++;
 }
-
-
 
 void updateSymbolTableAddresses(){
     Symbol *walker;

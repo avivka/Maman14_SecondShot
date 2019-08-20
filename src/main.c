@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
         /** rests line read, because reading the file from the start */
         currentLine = 1;
         /** execute phase 2 of the assembler */
-        /*doPhase2(*argv);*/
+        doPhase2(*argv);
 
         /** clear up so we can process properly the next file*/
         resetDataSegmentModule();

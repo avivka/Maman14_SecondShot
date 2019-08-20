@@ -12,13 +12,13 @@ void initCommandsDescriptors(){
     commands[mov]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[mov]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 0 and 2*/
     commands[mov]
             .allowedSrcOperands[0] = REGISTER_OPERAND;
     commands[mov]
             .allowedSrcOperands[1] = DIRECT_VALUE_OPERAND;
     commands[mov]
-            .allowedSrcOperands[2] = LABEL_OPERAND;
+            .allowedSrcOperands[2] = LABEL_OPERAND; /*TODO: add addressing method no. 2*/
     commands[cmp]
             .numberOfOperands = 2;
     commands[cmp]
@@ -26,13 +26,13 @@ void initCommandsDescriptors(){
     commands[cmp]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[cmp]
-            .allowedDestOperands[2] = DIRECT_VALUE_OPERAND;
+            .allowedDestOperands[2] = DIRECT_VALUE_OPERAND;/*TODO: add addressing method no. 2*/
     commands[cmp]
             .allowedSrcOperands[0] = REGISTER_OPERAND;
     commands[cmp]
             .allowedSrcOperands[1] = DIRECT_VALUE_OPERAND;
     commands[cmp]
-            .allowedSrcOperands[2] = LABEL_OPERAND;
+            .allowedSrcOperands[2] = LABEL_OPERAND;/*TODO: add addressing method no. 2*/
     commands[add]
             .numberOfOperands = 2;
     commands[add]
@@ -40,13 +40,13 @@ void initCommandsDescriptors(){
     commands[add]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[add]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 0 and 2*/
     commands[add]
             .allowedSrcOperands[0] = REGISTER_OPERAND;
     commands[add]
             .allowedSrcOperands[1] = DIRECT_VALUE_OPERAND;
     commands[add]
-            .allowedSrcOperands[2] = LABEL_OPERAND;
+            .allowedSrcOperands[2] = LABEL_OPERAND;/*TODO: add addressing method no. 2*/
     commands[sub]
             .numberOfOperands = 2;
     commands[sub]
@@ -54,13 +54,13 @@ void initCommandsDescriptors(){
     commands[sub]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[sub]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 0 and 2*/
     commands[sub]
             .allowedSrcOperands[0] = REGISTER_OPERAND;
     commands[sub]
             .allowedSrcOperands[1] = DIRECT_VALUE_OPERAND;
     commands[sub]
-            .allowedSrcOperands[2] = LABEL_OPERAND;
+            .allowedSrcOperands[2] = LABEL_OPERAND;/*TODO: add addressing method no. 2*/
     commands[lea]
             .numberOfOperands = 2;
     commands[lea]
@@ -68,19 +68,19 @@ void initCommandsDescriptors(){
     commands[lea]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[lea]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 2*/
     commands[lea]
             .allowedSrcOperands[0] = NO_OTHER_OPERAND;
     commands[lea]
             .allowedSrcOperands[1] = NO_OTHER_OPERAND;
     commands[lea]
-            .allowedSrcOperands[2] = LABEL_OPERAND;
+            .allowedSrcOperands[2] = LABEL_OPERAND;/*TODO: add addressing method no. 2*/
     commands[notCMD]
             .numberOfOperands = 1;
     commands[notCMD]
             .allowedDestOperands[0] = REGISTER_OPERAND;
     commands[notCMD]
-            .allowedDestOperands[1] = LABEL_OPERAND;
+            .allowedDestOperands[1] = LABEL_OPERAND;/*TODO: add addressing method no. 2*/
     commands[notCMD]
             .allowedDestOperands[2] = NO_OTHER_OPERAND;
     commands[clr]
@@ -90,7 +90,7 @@ void initCommandsDescriptors(){
     commands[clr]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[clr]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 2*/
     commands[inc]
             .numberOfOperands = 1;
     commands[inc]
@@ -98,7 +98,7 @@ void initCommandsDescriptors(){
     commands[inc]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[inc]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 2*/
     commands[dec]
             .numberOfOperands = 1;
     commands[dec]
@@ -106,7 +106,7 @@ void initCommandsDescriptors(){
     commands[dec]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[dec]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 2*/
     commands[jmp]
             .numberOfOperands = 1;
     commands[jmp]
@@ -114,7 +114,7 @@ void initCommandsDescriptors(){
     commands[jmp]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[jmp]
-            .allowedDestOperands[2] = JUMP_OPERAND;
+            .allowedDestOperands[2] = JUMP_OPERAND;/*TODO: remove JUMP_OPERAND, should accept only type 1 and 3*/
     commands[bne]
             .numberOfOperands = 1;
     commands[bne]
@@ -122,7 +122,7 @@ void initCommandsDescriptors(){
     commands[bne]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[bne]
-            .allowedDestOperands[2] = JUMP_OPERAND;
+            .allowedDestOperands[2] = JUMP_OPERAND;/*TODO: remove JUMP_OPERAND, should accept only type 1 and 3*/
     commands[red]
             .numberOfOperands = 1;
     commands[red]
@@ -130,7 +130,7 @@ void initCommandsDescriptors(){
     commands[red]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[red]
-            .allowedDestOperands[2] = NO_OTHER_OPERAND;
+            .allowedDestOperands[2] = NO_OTHER_OPERAND;/*TODO: add addressing method no. 2*/
     commands[prn]
             .numberOfOperands = 1;
     commands[prn]
@@ -138,7 +138,7 @@ void initCommandsDescriptors(){
     commands[prn]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[prn]
-            .allowedDestOperands[2] = DIRECT_VALUE_OPERAND;
+            .allowedDestOperands[2] = DIRECT_VALUE_OPERAND;/*TODO: add addressing method no. 2*/
     commands[jsr]
             .numberOfOperands = 1;
     commands[jsr]
@@ -146,7 +146,7 @@ void initCommandsDescriptors(){
     commands[jsr]
             .allowedDestOperands[1] = LABEL_OPERAND;
     commands[jsr]
-            .allowedDestOperands[2] = JUMP_OPERAND;
+            .allowedDestOperands[2] = JUMP_OPERAND;/*TODO: remove JUMP_OPERAND, should accept only type 1 and 3*/
     commands[rts]
             .numberOfOperands = 0;
     commands[stop]

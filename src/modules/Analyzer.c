@@ -111,7 +111,7 @@ char * extractJumpOperandLabel(char* jumpOperandValue){
    }
 
     return  buff;
-}
+} /*TODO: edit according to operand number 2*/
 
 int isStatementTypeDataStatement(char* sentence) {
     char *result;
@@ -219,8 +219,6 @@ boolean isCommentStatementOrEmptyLine(char *sentence){
     }
 }
 
-
-
 int isCommandStatement(char *sentence){
     COMMANDS command;
 
@@ -232,7 +230,6 @@ int isCommandStatement(char *sentence){
     return 0;
 
 }
-
 
 COMMANDS getCommandOfStatement(char *sentence){
     int labelLength;
