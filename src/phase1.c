@@ -40,6 +40,8 @@ void doPhase1(char* fileName){
     
     printf("\n");
     printSymbolTable();
+    
+    fclose(fileToAssemble);
 }
 
 void handleNextLIne(char* line)

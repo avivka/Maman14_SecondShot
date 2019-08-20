@@ -8,31 +8,52 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize);
 
 extern int currentLine;
 
-void doPhase2(char* fileName)
+int doPhase2(char* fileName)
 {
-    FILE *fileToAssemble;
-    int codeSegmentSize;
-    int dataSegmentSize;
+	int 	codeSegmentSize;
+    int 	dataSegmentSize;
+    FILE* 	fileToAssemble		= NULL;
+    char* 	renamedInputFile	= "";
 
     codeSegmentSize = getInstructionsCount();
     dataSegmentSize = getDataInstructionsCount();
 
     /** file names are given without the extension, we expect the file to end with the .as extension*/
-    fileToAssemble = openReadFile(concat(fileName, ".as"));
-
+    if (is_extention_exists (fileName, ".as"))
+    {
+		printf("check exist \n");
+        renamedInputFile = fileName;
+    }
+    
+    else
+    {
+        renamedInputFile = rename_file(fileName, ".as");
+        printf("check 18 \n");
+    }
+    
+    if (open_or_create_file(&fileToAssemble,renamedInputFile) != 0)
+    {
+		fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
+		
+		return -1;
+	}
+	
     /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
     initCodeSection();
     /** keeps reading line by line and handle each line */
     doWhileFileHaveLines(fileToAssemble, handleNextLine);
 
-
     if(errorFlag == 1){
         printf("didn't output files for file %s, because errors were found. see the errors output for more information.", fileName);
-        return;
+        return -1;
     }
     createEnteriesFile(fileName);
     createExternalsFile(fileName);
     createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
+    
+    fclose(fileToAssemble);
+    
+    return 0;
 }
 
 void handleNextLine(char* line){

@@ -6,7 +6,7 @@
 
 #define 	maxNumDecimalAddress 						1000
 #define		char_to_ascii								48
-#define 	NUM_OF_ACTIVE_BITS 				14
+#define 	NUM_OF_ACTIVE_BITS 							14
 
 /**
  * Converts the given int, to a binary digits sets of required size
