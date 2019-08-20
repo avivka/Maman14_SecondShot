@@ -1,0 +1,5 @@
+
+ Begin processing the following file: ./samples/1
+ Assembler completed processing file: ./samples/1
+ Begin processing the following file: ./samples/2
+ Assembler completed processing file: ./samples/2

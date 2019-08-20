@@ -1,0 +1,25 @@
+
+ Begin processing the following file: ./samples/errorExamples
+ Error:Label Cannot start with digits at line 12 
+
+ Error:Label cant be named as register at line 13 
+
+ Error:Label cannot be named as an instruction at line 14 
+
+ Error:Label cannot be named as an instruction at line 14 
+error invalid command at line
+ Error:Unknown symbol LOOP in jump statement at line 4 
+
+ Error:Unknown symbol LOOP in jump statement at line 8 
+
+ Error:invalid number of operands got 1, expected 0 at line 9 
+
+ Error:invalid operator type for command at line 10 
+
+ Error:Label cannot be named as an instruction at line 14 
+
+ Error:Label cannot be named as an instruction at line 14
+
+ Error:error invalid command at line 14 
+didn't output files for file ./samples/errorExamples, because errors were found. see the errors output for more information.
+ Assembler completed processing file: ./samples/errorExamples
