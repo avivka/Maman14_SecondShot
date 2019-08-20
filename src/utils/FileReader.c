@@ -79,7 +79,7 @@ void doWhileFileHaveLines(FILE * file, void (*nextLineHandler)(char*)){
     printf("check 16 \n");
     while(fgets(line, sizeof(line), file))
     {
-        printf("check 17 \n");
+        printf("check 17 %s\n", line);
         nextLineHandler(line);
     }
 }
