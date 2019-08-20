@@ -13,6 +13,7 @@ void doPhase1(char* fileName){
 
     if (is_extention_exists (fileName, ".as"))
     {
+		printf("check exist \n");
         renamedInputFile = fileName;
     }
     else
@@ -36,6 +37,9 @@ void doPhase1(char* fileName){
 
     /** after we handled all the lines, update the final addresses in the symbols table */
     updateSymbolTableAddresses();
+    
+    printf("\n");
+    printSymbolTable();
 }
 
 void handleNextLIne(char* line)
@@ -63,7 +67,7 @@ void updateSymbolTableAddresses(){
     walker = getSymbolsTableHead();
     while (walker){
         /** skip external or command labels, as we don't need to update their addresses */
-        if(walker->isPartOfCommandStatement == TRUE ||  walker->isExternal == TRUE){
+        if(walker->feature == ext ||  walker->feature == dat){
           walker = walker->next;
             continue;
         }

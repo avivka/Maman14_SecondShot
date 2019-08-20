@@ -55,12 +55,11 @@ void addSymbolToTable(Symbol *newSymbol){
     tableTail->next = NULL;
 }
 
-Symbol* buildSymbol(char* label, boolean isExternal, boolean isPartOfCommandStatement, int address){
+Symbol* buildSymbol(char* label, labelFeature feature, int address){
    Symbol* newSymbol = malloc(sizeof(Symbol));
    errorIfMallocFailed(newSymbol, "while trying to allocate memory to create a new Symbol");
    newSymbol->label = label;
-   newSymbol->isExternal = isExternal;
-   newSymbol->isPartOfCommandStatement = isPartOfCommandStatement;
+   newSymbol->feature = feature;
    newSymbol->address = address;
    newSymbol->next = NULL; /** protect pointer dangling, initialize it as NULL */
    return  newSymbol;
@@ -95,4 +94,20 @@ int getSymbolAddress(char *symbolLabel){
     }
 
     return  symbol->address;
+}
+
+int	printSymbolTable ()
+{
+	Symbol *currentSymbol;
+
+    currentSymbol = tableHead;
+
+    while (currentSymbol)
+    {
+		printf("%s \t %d \t %d \n", currentSymbol->label, currentSymbol->feature, currentSymbol->address);
+       
+        currentSymbol = currentSymbol->next;
+    }
+    
+    return 0;
 }

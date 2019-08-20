@@ -15,24 +15,30 @@ int getDataInstructionsCount();
  */
 void increaseDataInstructionsCount();
 
+typedef enum
+{
+  	macro,
+	code,
+	dat,
+	ext
+} labelFeature;
+
 typedef struct symbol_struct{
-    char* label;
-    boolean isExternal;
-    boolean isPartOfCommandStatement;
-    int address;
-    struct symbol_struct *next;
+    char* 					label;
+    labelFeature			feature;
+    int 					address;
+    struct symbol_struct*	next;
 } Symbol;
 
 
 /**
  * Builds a new Symbol object
- * @param label - the label of the new symbol
- * @param isExternal - either 0 or 1 indicates if the symbol is external or not
- * @param isPartOfCommandStatement - either 0 or 1, indicates if the symbol is part of a command statement
- * @param address - the memory address where the label is stored
- * @return pointer to the newly created Symbol
+ * @param 	label - the label of the new symbol
+ * @param 	feature - the source of the symbol, macro / code / data / external.
+ * @param 	address - the memory address where the label is stored
+ * @return 	pointer to the newly created Symbol
  */
-Symbol* buildSymbol(char* label, boolean isExternal, boolean isPartOfCommandStatement, int address);
+Symbol* buildSymbol(char* label, labelFeature feature, int address);
 
 /**
  * Adds a new symbol to the symbols table
@@ -66,6 +72,8 @@ int getSymbolAddress(char *symbolLabel);
  *   usually used when starting to work with a new file
  */
 void resetSymbolsModulesModule();
+
+int	printSymbolTable ();
 
 #endif
 

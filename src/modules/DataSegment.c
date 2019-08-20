@@ -74,7 +74,7 @@ void handleDataStatement(char* dataStatement){
 void addDataSymbolIfLabelGiven(char* label){
     Symbol *newSymbol;
     if(label != NULL){
-        newSymbol = buildSymbol(label, FALSE, FALSE, getDataInstructionsCount());
+        newSymbol = buildSymbol(label, dat, getDataInstructionsCount());
         addSymbolToTable(newSymbol);
     }
 }
@@ -150,7 +150,7 @@ void handleDataStatmentTypeExtern(OperandNode *operands){
             ERROR_PROGRAM(("Invalid operand value handling .extern statement, received %s, .extern operations can only use label operands. ", walker->value));
         }
         /** add the extern statment to the symbols table */
-        addSymbolToTable(buildSymbol(walker->value, TRUE, FALSE, 0));
+        addSymbolToTable(buildSymbol(walker->value, ext, 0));
         walker = walker->next;
     }
 }
