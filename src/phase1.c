@@ -41,6 +41,9 @@ void doPhase1(char* fileName){
 
 void handleNextLIne(char* line)
 {
+    STATEMENT_TYPE type = getStatementTypeOfSentence(line);
+
+    printf("check %d!!!!!!!!!!!!!!!!!!!!!!!! \n", type);
 
     /** skip empty lines or comment lines */
     if(isCommentStatementOrEmptyLine(line) == TRUE){
@@ -49,10 +52,11 @@ void handleNextLIne(char* line)
     }
 
     /** check if it data statment line, or command instruction line, and handle it as needed */
-    if(isDataStatement(line)){
-        handleDataStatement(line);
-    } else if(isCommandStatement(line)){
+    if(type == COMMAND_STATEMENT){
+        printf("\n\n\n\n\n\n check comman statement \n\n\n\n\n\n\n\n\n");
         increaseCommandInstructionsCountByStatement(line);
+    } else if(type != INVALID_STATEMENT){
+        handleDataStatement(line);
     } else {
         printf("error invalid command at line");
     }

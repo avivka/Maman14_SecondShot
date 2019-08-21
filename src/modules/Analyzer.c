@@ -2,6 +2,8 @@
 
 
 STATEMENT_TYPE getStatementTypeOfSentence(char* sentence){
+
+    printf("check that we're in getStatementTypeOfSentence");
  if(isStatementTypeDataStatement(sentence))
      return DATA_STATEMENT_TYPE_DATA;
 
@@ -15,7 +17,6 @@ STATEMENT_TYPE getStatementTypeOfSentence(char* sentence){
      return  DATA_STATEMENT_TYPE_STRING;
 
  if(isCommandStatement(sentence)) {
-    printf("\n\n\n\n\n\n\n\n\n\n check command statemant \n\n\n\n\n\n\n\n\n\n");
      return COMMAND_STATEMENT;
  }
  return  INVALID_STATEMENT;
@@ -23,6 +24,9 @@ STATEMENT_TYPE getStatementTypeOfSentence(char* sentence){
 
 int isDataStatement(char *sentence){
     STATEMENT_TYPE type = getStatementTypeOfSentence(sentence);
+
+    printf("check isDataStatement %d", type);
+
     if(type == DATA_STATEMENT_TYPE_DATA || type == DATA_STATEMENT_TYPE_ENTRY || type == DATA_STATEMENT_TYPE_EXTERN ||  type == DATA_STATEMENT_TYPE_STRING)
         return  1;
 
@@ -232,10 +236,10 @@ int isCommandStatement(char *sentence){
     if(command != UNKNOWN_COMMAND)
     {
         printf("check good command \n");
-        return 0;
+        return 1;
     }
 
-    return -1;
+    return 0;
 
 }
 
@@ -260,7 +264,6 @@ COMMANDS getCommandOfStatement(char *sentence){
     poteinailCommandString = sentence + labelLength;
     printf("check 21 %s\n", poteinailCommandString);
     /*while(iterationIndex < (strlen(sentence) - labelLength) && iterationIndex <= MAX_COMMAND_LENGTH)*/
-    printf("check %s \n", commandString);
     while(iterationIndex < (strlen(poteinailCommandString)) && iterationIndex <= MAX_COMMAND_LENGTH)
     {
         commandString[iterationIndex] = poteinailCommandString[iterationIndex];
