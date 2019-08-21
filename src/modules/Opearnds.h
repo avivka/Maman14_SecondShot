@@ -41,11 +41,11 @@ int countNumberOfOpearnds(OperandNode* operandsList);
 
 
 /**
- * Reads a value of JUMP operand, and returns a list of the 2 operands that the jump operand points to
- * @param jumpOperandString - string
+ * Reads a value of INDEX operand, and returns a list of the 2 operands that the index operand points to
+ * @param indexOperandString - string
  * @return list of operands
  */
-OperandNode* getOperandsListOfJumpOperand(char* jumpOperandString);
+OperandNode* getOperandListOfIndexOperand(char* indexOperandString);
 
 /**
  * Returns the integer number of the given register operand

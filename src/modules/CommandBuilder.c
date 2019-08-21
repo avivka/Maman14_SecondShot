@@ -1,7 +1,7 @@
 #include "CommandBuilder.h"
 
 
-CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* jumpOperandsList){
+CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* indexOperandsList){
     unsigned int *srcOperand;
     unsigned int *destOperand;
     unsigned int *commandCode;
@@ -30,27 +30,27 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
     command->op_code_3 = commandCode[2];
     command->op_code_4 = commandCode[3];
 
-    if(jumpOperandsList == NULL){
-        command->jump_param_1_1 = 0;
-        command->jump_param_1_2 = 0;
-        command->jump_param_2_1 = 0;
-        command->jump_param_2_2 = 0;
+    if(indexOperandsList == NULL){
+        command->index_param_1_1 = 0;
+        command->index_param_1_2 = 0;
+        command->index_param_2_1 = 0;
+        command->index_param_2_2 = 0;
     } else {
-        OperandType jumpParam1Type;
-        OperandType jumpParam2Type;
-        unsigned  int* jumpParam1Value;
-        unsigned  int* jumpParam2Value;
+        OperandType indexParam1Type;
+        OperandType indexParam2Type;
+        unsigned  int* indexParam1Value;
+        unsigned  int* indexParam2Value;
 
-        jumpParam1Type = jumpOperandsList->type;
-        jumpParam2Type = jumpOperandsList->next->type;
+        indexParam1Type = indexOperandsList->type;
+        indexParam2Type = indexOperandsList->next->type;
 
-        jumpParam1Value = int_to_bin_digit((unsigned int) jumpParam1Type, 2);
-        jumpParam2Value = int_to_bin_digit((unsigned int) jumpParam2Type, 2);
+        indexParam1Value = int_to_bin_digit((unsigned int) indexParam1Type, 2);
+        indexParam2Value = int_to_bin_digit((unsigned int) indexParam2Type, 2);
 
-        command->jump_param_1_1 = jumpParam1Value[0];
-        command->jump_param_1_2 = jumpParam1Value[1];
-        command->jump_param_2_1 = jumpParam2Value[0];
-        command->jump_param_2_2 = jumpParam2Value[1];
+        command->index_param_1_1 = indexParam1Value[0];
+        command->index_param_1_2 = indexParam1Value[1];
+        command->index_param_2_1 = indexParam2Value[0];
+        command->index_param_2_2 = indexParam2Value[1];
     }
     return  *command;
 }
@@ -59,10 +59,10 @@ char* getCommandBinaryString(CommandStatement *cmd){
     char *string;
     string = malloc(14 * sizeof(char));
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
-                     cmd->jump_param_1_1,/**bit 13:*/ /*TODO: should not be in use*/
-                     cmd->jump_param_1_2,/**bit 12:*/ /*TODO: should not be in use*/
-                     cmd->jump_param_2_1,/**bit 11:*/ /*TODO: should not be in use*/
-                     cmd->jump_param_2_2,/**bit 10:*/ /*TODO: should not be in use*/
+                     cmd->index_param_1_1,/**bit 13:*/ /*TODO: should not be in use*/
+                     cmd->index_param_1_2,/**bit 12:*/ /*TODO: should not be in use*/
+                     cmd->index_param_2_1,/**bit 11:*/ /*TODO: should not be in use*/
+                     cmd->index_param_2_2,/**bit 10:*/ /*TODO: should not be in use*/
                      cmd->op_code_1,/**bit 9: op_code*/
                      cmd->op_code_2,/**bit 8: op_code*/
                      cmd->op_code_3,/**bit 7: op_code*/

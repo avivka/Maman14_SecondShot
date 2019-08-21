@@ -96,13 +96,13 @@ char * extractLabel(char* sentence){
         return  NULL;
 }
 
-char * extractJumpOperandLabel(char* jumpOperandValue){
+char * extractIndexOperandLabel(char* indexOperandValue){
    char *buff;
     int i;
     i = 0;
     buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
-   while (i < strlen(jumpOperandValue) && jumpOperandValue[i] != '('){
-        buff[i] = jumpOperandValue[i];
+   while (i < strlen(indexOperandValue) && indexOperandValue[i] != '['){
+        buff[i] = indexOperandValue[i];
         i++;
     }
 

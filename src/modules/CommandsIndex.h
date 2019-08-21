@@ -13,13 +13,13 @@ typedef enum { mov, cmp, add , sub, notCMD, clr, lea, inc, dec, jmp, bne, red, p
 /**
  * A type that describes a command,
  *  numberOfOperands - describes the number of operands required by this command.
- *  canUseJumpOperand - boolean wether this command can accepts jump operator
+ *  canUseIndexOperand - boolean wether this command can accepts index operator
  */
 typedef struct command_descriptor {
     int numberOfOperands;
-    boolean canUseJumpOperand;
-    int allowedSrcOperands[3];
-    int allowedDestOperands[3];
+    boolean canUseIndexOperand;
+    int allowedSrcOperands[4];
+    int allowedDestOperands[4];
 } CommandDescriptor;
 
 

@@ -20,14 +20,14 @@ typedef enum { FALSE, TRUE } boolean;
 * REGISTER_OPERAND - an operand which points to a valid register name,
         * LABEL_OPERAND - an operand which points to a previously declared label
         * DIRECT_VALUE_OPERAND - an operand which points directly to a its value, either a string in case .string operation, or number in .data or #-1 cases.
-* JUMP_OPERAND- an operands which points to a special jump operand.
+* INDEX_OPERAND- an operands which points to a special index operand.
 * NO_OPERAND - indicates that no operand was given
 */
 typedef enum {
-    DIRECT_VALUE_OPERAND,
-    LABEL_OPERAND,
-    JUMP_OPERAND,
-    REGISTER_OPERAND,
+    DIRECT_VALUE_OPERAND, /*addressing method 0*/
+    LABEL_OPERAND, /*addressing method 1*/
+    INDEX_OPERAND, /*addressing method 2*/
+    REGISTER_OPERAND, /*addressing method 3*/
     NO_OPERAND
 } OperandType;
 

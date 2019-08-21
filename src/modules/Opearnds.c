@@ -33,13 +33,13 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
     while (stringIterationIndex <= strlen(statement)){
 
         /** if we hit pharntesses. keep collecting the whole expression as a whole */
-        if(isCharsEqual(statement[stringIterationIndex], '(')){
+        if(isCharsEqual(statement[stringIterationIndex], '[')){
             /** continue until either we reached the end of the string, or we found our closing pair */
-            while (!isCharsEqual(statement[stringIterationIndex], ')') && stringIterationIndex < strlen(statement)){
+            while (!isCharsEqual(statement[stringIterationIndex], ']') && stringIterationIndex < strlen(statement)){
                 stringIterationIndex++;
             }
             /** if we hit the end without the last char to be the closing pharntesses, error */
-            if(!isCharsEqual(statement[stringIterationIndex], ')')){
+            if(!isCharsEqual(statement[stringIterationIndex], ']')){
                 ERROR_PROGRAM(("no matching closing ), each ( must have a closing )"));
             }
             /** continue one more to get after phratnesis */
@@ -118,7 +118,7 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
             break;
         case COMMAND_STATEMENT:
             if (isContainsChar(operandValue, '(')){
-                newNode->type = JUMP_OPERAND;
+                newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
            }
            else if(isWordStartsWithChar(operandValue, '#')){
@@ -146,7 +146,7 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 }
 
 
-OperandNode* getOperandsListOfJumpOperand(char* jumpOperandString){
+OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         char* label;
         char* firstOperandValue;
         char* secondOperandValue;
@@ -155,30 +155,30 @@ OperandNode* getOperandsListOfJumpOperand(char* jumpOperandString){
         int labelLength;
         int firstOperandEndIndex;
         int firstOperandStartIndex;
-        label  = extractJumpOperandLabel(jumpOperandString);
+        label  = extractIndexOperandLabel(indexOperandString);
 
         if(label == NULL){
-            ERROR_PROGRAM(("jump operand must have a label that defines where to jump to"));
+            ERROR_PROGRAM(("index operand must have a label that defines where to index to"));
             return NULL;
         }
 
         labelLength = strlen(label);
          /** label length + open brace */
         firstOperandStartIndex = firstOperandEndIndex = labelLength + 1;
-        walker = jumpOperandString + labelLength + 1;
+        walker = indexOperandString + labelLength + 1;
         while (walker && *walker != ','){
             firstOperandEndIndex++;
             walker++;
         }
 
-        firstOperandValue = substringFromTo(jumpOperandString, firstOperandStartIndex, firstOperandEndIndex);
+        firstOperandValue = substringFromTo(indexOperandString, firstOperandStartIndex, firstOperandEndIndex);
 
-        if(*(jumpOperandString + firstOperandEndIndex) != ','){
-            ERROR_PROGRAM(("unexpected token, expected , in jump operand parsing, got %s", jumpOperandString + firstOperandEndIndex));
+        if(*(indexOperandString + firstOperandEndIndex) != ','){
+            ERROR_PROGRAM(("unexpected token, expected , in index operand parsing, got %s", indexOperandString + firstOperandEndIndex));
         }
 
         /** second operand, should be directly after the comma that seperates the operands, and until the end of the string (minus 1 for the closing braces) */
-        secondOperandValue = substringFromTo(jumpOperandString, firstOperandEndIndex + 1, strlen(jumpOperandString) - 1);
+        secondOperandValue = substringFromTo(indexOperandString, firstOperandEndIndex + 1, strlen(indexOperandString) - 1);
 
         list = createOperandNode(firstOperandValue, COMMAND_STATEMENT);
 

@@ -43,7 +43,7 @@ void increaseCommandInstructionsCountByStatement(char* statement){
     char *label;
     Symbol* newSymbol;
     OperandNode *operandsList;
-    OperandNode *jumpOperand;
+    OperandNode *indexOperand;
     int operandsCount;
     label = extractLabel(statement);
 
@@ -62,23 +62,23 @@ void increaseCommandInstructionsCountByStatement(char* statement){
             if(operandsList->type == REGISTER_OPERAND && operandsList->next->type == REGISTER_OPERAND){
                 /** if both operands, are of register type, increase only by one for both operands */
                 IC++;
-            } else if(operandsList->type == JUMP_OPERAND || operandsList->next->type == JUMP_OPERAND){
-                ERROR_PROGRAM(("jump operands can only exist in a single operand statement"));
+            } else if(operandsList->type == INDEX_OPERAND || operandsList->next->type == INDEX_OPERAND){
+                ERROR_PROGRAM(("index operands can only exist in a single operand statement"));
             } else {
                 /** increase by 1 for each operand */
                 IC += 2;
             }
             break;
         case 1:
-            if(operandsList->type == JUMP_OPERAND){
-                    jumpOperand = getOperandsListOfJumpOperand(operandsList->value);
-                    if(jumpOperand->type == JUMP_OPERAND || jumpOperand->next->type == JUMP_OPERAND){
-                        ERROR_PROGRAM(("jump operands cant contain other jump operand"));
-                    } else if (jumpOperand->type == REGISTER_OPERAND && jumpOperand->next->type == REGISTER_OPERAND){
-                        /** increase by 1 for the jump label, and by another one for both arguments as they fit one word */
+            if(operandsList->type == INDEX_OPERAND){
+                    indexOperand = getOperandListOfIndexOperand(operandsList->value);
+                    if(indexOperand->type == INDEX_OPERAND || indexOperand->next->type == INDEX_OPERAND){
+                        ERROR_PROGRAM(("index operands cant contain other index operand"));
+                    } else if (indexOperand->type == REGISTER_OPERAND && indexOperand->next->type == REGISTER_OPERAND){
+                        /** increase by 1 for the index label, and by another one for both arguments as they fit one word */
                         IC += 2;
                     } else{
-                        /** increae by one for jump label value, and by one for each of the two operands */
+                        /** increae by one for index label value, and by one for each of the two operands */
                         IC += 3;
                     }
             } else{
@@ -100,7 +100,7 @@ void addStatementToCodeSegment(char* statement){
     OperandNode *operandsList;
     CommandDescriptor *descriptor;
     CommandStatement command;
-    OperandNode* jumpList;
+    OperandNode* indexList;
     char* label;
     COMMANDS commandEnum;
     int operandsCount;
@@ -129,11 +129,11 @@ void addStatementToCodeSegment(char* statement){
             addToCodeSection(command);
             break;
         case 1:
-            jumpList = NULL;
-            if(operandsList->type == JUMP_OPERAND){
-                jumpList = getOperandsListOfJumpOperand(operandsList->value);
+            indexList = NULL;
+            if(operandsList->type == INDEX_OPERAND){
+                indexList = getOperandListOfIndexOperand(operandsList->value);
             }
-            command = buildCommandStatement(NO_OPERAND, operandsList->type, commandEnum, ABSOLUTE, jumpList);
+            command = buildCommandStatement(NO_OPERAND, operandsList->type, commandEnum, ABSOLUTE, indexList);
 
             break;
         case 2:
@@ -201,17 +201,17 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
             /** target register operands should start wuth 6 zeros, and then the binary value of the register value */
             value = concat(decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH), decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH));
         }
-    } else if(operand->type == JUMP_OPERAND){
-        char *jumpLabel;
-        int jumpLabelAddress;
-        OperandNode *jumpOperands;
-        jumpOperands = getOperandsListOfJumpOperand(operand->value);
-        jumpLabel = extractJumpOperandLabel(operand->value);
+    } else if(operand->type == INDEX_OPERAND){
+        char *indexLabel;
+        int indexLabelAddress;
+        OperandNode *indexOperands;
+        indexOperands = getOperandListOfIndexOperand(operand->value);
+        indexLabel = extractIndexOperandLabel(operand->value);
 
-        /** find the jump label in the symbols table */
-        symbol = searchForSymbolByLabel(jumpLabel);
+        /** find the index label in the symbols table */
+        symbol = searchForSymbolByLabel(indexLabel);
         if(symbol == NULL){
-            ERROR_PROGRAM(("Unknown symbol %s in jump statement", jumpLabel));
+            ERROR_PROGRAM(("Unknown symbol %s in index statement", indexLabel));
             return;
         }
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
@@ -222,12 +222,12 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
         } else {
             encoding_type = RELOCATEABLE;
         }
-        jumpLabelAddress = symbol->address;
-        /** add the jump label first */
-        codeSection[IC] = concat(decimal_to_binaryString(jumpLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+        indexLabelAddress = symbol->address;
+        /** add the index label first */
+        codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
         IC++;
-        /** add the jump operands */
-        addOperandsValuesToCodeSection(jumpOperands);
+        /** add the index operands */
+        addOperandsValuesToCodeSection(indexOperands);
         return;
     } else{  /** then its a label operand */
         Symbol* symbol;

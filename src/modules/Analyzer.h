@@ -76,7 +76,7 @@ char * extractLabel(char* sentence);
  * @param sentence
  * @return pointer to the string value of the statement, or NULL if statement has no label
  */
-char * extractJumpOperandLabel(char* jumpOperandValue);
+char * extractIndexOperandLabel(char* indexOperandValue);
 
 /** returns true if the given line is a comment line or empty line */
 boolean isCommentStatementOrEmptyLine(char *sentence);
