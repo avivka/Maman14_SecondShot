@@ -45,8 +45,7 @@ int isStatementTypeDataStatementExtern(char* sentence);
  * Checks if the given statement is of type of command statement, if not will throw error
  * @param sentence
  */
-int isCommandStatement
-(char *sentence);
+int isCommandStatement(char *sentence);
 
 
 /**

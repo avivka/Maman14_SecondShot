@@ -117,7 +117,7 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
             newNode->type = LABEL_OPERAND;
             break;
         case COMMAND_STATEMENT:
-            if (isContainsChar(operandValue, '(')){
+            if (isContainsChar(operandValue, '[')){
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
            }

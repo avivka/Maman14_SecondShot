@@ -71,6 +71,7 @@ void doWhileFileHaveLines(FILE * file, void (*nextLineHandler)(char*)){
     {
         printf("check 17 line %s read successfully.\n", line);
         nextLineHandler(line);
+        printf("check done 17 \n");
     }
 }
 

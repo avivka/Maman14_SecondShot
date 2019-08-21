@@ -14,9 +14,10 @@ STATEMENT_TYPE getStatementTypeOfSentence(char* sentence){
  if(isStatementTypeDataStatementString(sentence))
      return  DATA_STATEMENT_TYPE_STRING;
 
- if(isCommandStatement(sentence))
-     return  COMMAND_STATEMENT;
-
+ if(isCommandStatement(sentence)) {
+    printf("\n\n\n\n\n\n\n\n\n\n check command statemant \n\n\n\n\n\n\n\n\n\n");
+     return COMMAND_STATEMENT;
+ }
  return  INVALID_STATEMENT;
 }
 
@@ -55,7 +56,8 @@ int validateLabel(char* label){
             }
             for (i = 1; i < (strlen(label)); i++){
                 if (!(isalpha(label[i]) || isdigit(label[i]))){
-                    ERROR_PROGRAM(("Label contains signs)"));
+                    printf("This is the label: %s",label);
+                    ERROR_PROGRAM(("Label contains signs"));
                     return 0;
                 }
             }
@@ -89,6 +91,7 @@ char * extractLabel(char* sentence){
             ERROR_PROGRAM(("the label is contain spaces or tabs"));
             return NULL;
         }
+        buff[i]='\0';
         validateLabel(buff);
         return buff;
     }
@@ -224,19 +227,24 @@ int isCommandStatement(char *sentence){
 
     command = getCommandOfStatement(sentence);
 
-    if(command != UNKNOWN_COMMAND)
-        return 1;
+    printf("check command #2 %d \n", command);
 
-    return 0;
+    if(command != UNKNOWN_COMMAND)
+    {
+        printf("check good command \n");
+        return 0;
+    }
+
+    return -1;
 
 }
 
 COMMANDS getCommandOfStatement(char *sentence){
-    int labelLength;
-    int iterationIndex;
-    char* poteinailCommandString;
-    char* commandString;
-    char* label;
+    int labelLength = 0;
+    int iterationIndex = 0;
+    char* poteinailCommandString = "";
+    char* commandString = "";
+    char* label = "";
     COMMANDS command;
     commandString = malloc(sizeof(char) * 4);
     errorIfMallocFailed(commandString, "for a new string");
@@ -250,15 +258,26 @@ COMMANDS getCommandOfStatement(char *sentence){
         labelLength = strlen(label) + 2; /** length of the label, + 1 for the :, + for the space after the label, guaranteed to be single space due to removeExtraSpaces*/
     iterationIndex = 0;
     poteinailCommandString = sentence + labelLength;
-    while(iterationIndex < (strlen(sentence) - labelLength) && iterationIndex <= MAX_COMMAND_LENGTH){
+    printf("check 21 %s\n", poteinailCommandString);
+    /*while(iterationIndex < (strlen(sentence) - labelLength) && iterationIndex <= MAX_COMMAND_LENGTH)*/
+    printf("check %s \n", commandString);
+    while(iterationIndex < (strlen(poteinailCommandString)) && iterationIndex <= MAX_COMMAND_LENGTH)
+    {
         commandString[iterationIndex] = poteinailCommandString[iterationIndex];
+        printf("check 23: this should be the command: %s %d \n",commandString, iterationIndex);
         command = commandStringToEnum(commandString);
 
         /** if we already found the command return it */
         if(command != UNKNOWN_COMMAND)
+        {
+            printf("check 22 %d\n", command);
             return  command;
+        }
+
+
         iterationIndex++;
     }
+    printf("check 22 %d\n", command);
 
     return  UNKNOWN_COMMAND;
 
