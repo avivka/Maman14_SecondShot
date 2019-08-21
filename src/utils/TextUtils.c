@@ -122,20 +122,21 @@ boolean		is_extention_exists	    (char* s1, char* s2)
 {
     char* str;
 
-    printf("check got here \n");
+    printf("\ncheck if enters is_extention_exists \n");
 
-    str = strstr(s1, s2);
+    str = strstr(s1, s2); /**if exists - return the pointer to the */
 
-    printf("check %p \n", str);
+    printf("check the substring is %p \n", str);
 
     if ((str != NULL) && (strcmp (str, s2) == 0))
     {
-        printf("check true \n");
+        /**means that the extention already exists in s1*/
+        printf("check is_extention_exists true \n");
 
         return TRUE;
     }
 
-    printf("check false \n");
+    printf("check is_extention_exists false \n");
 
     return FALSE;
 }

@@ -10,7 +10,8 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
     CommandStatement *command;
     command = (CommandStatement*) malloc(sizeof(CommandStatement));
 
-    srcOperand = int_to_bin_digit((unsigned int) srcOperandType, 2);
+    srcOperand = int_to_bin_digit((unsigned int) srcOperandType
+            , 2);
     destOperand = int_to_bin_digit((unsigned int) destOperandType, 2);
     commandCode = int_to_bin_digit((unsigned int) commandOpCode, 4);
     encodingTypeValue = int_to_bin_digit((unsigned int) encodingType, 2);

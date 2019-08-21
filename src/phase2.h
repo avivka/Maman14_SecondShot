@@ -6,5 +6,5 @@
 #include "./modules/CodeSegement.h"
 #include "./utils/Error.h"
 
-int doPhase2(char* fileName);
+void doPhase2(char* fileName);
 #endif

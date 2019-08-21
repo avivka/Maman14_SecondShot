@@ -73,7 +73,5 @@ int getSymbolAddress(char *symbolLabel);
  */
 void resetSymbolsModulesModule();
 
-int	printSymbolTable ();
-
 #endif
 

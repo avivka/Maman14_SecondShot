@@ -19,7 +19,6 @@ unsigned int* int_to_bin_digit(unsigned int in, int count)
     return  out;
 }
 
-
 char *decimal_to_binaryString(int n, int numOfDigits)
 {
     int c, d, count;
