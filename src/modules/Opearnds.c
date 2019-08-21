@@ -149,12 +149,12 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         char* label;
         char* firstOperandValue;
-        char* secondOperandValue;
+        /*char* secondOperandValue; no need No need since there is no second operand*/
         char* walker;
         OperandNode* list;
         int labelLength;
         int firstOperandEndIndex;
-        int firstOperandStartIndex;
+        int theOnlyOperandStartIndex;
         label  = extractIndexOperandLabel(indexOperandString);
 
         if(label == NULL){
@@ -163,26 +163,31 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         }
 
         labelLength = strlen(label);
-         /** label length + open brace */
-        firstOperandStartIndex = firstOperandEndIndex = labelLength + 1;
+         /** label length + open [ brace */
+        theOnlyOperandStartIndex = firstOperandEndIndex = labelLength + 1;
         walker = indexOperandString + labelLength + 1;
         while (walker && *walker != ','){
             firstOperandEndIndex++;
             walker++;
         }
 
-        firstOperandValue = substringFromTo(indexOperandString, firstOperandStartIndex, firstOperandEndIndex);
+        /*firstOperandValue = substringFromTo(indexOperandString, theOnlyOperandStartIndex, firstOperandEndIndex);*/
 
+        firstOperandValue = substringFromTo(indexOperandString, theOnlyOperandStartIndex, strlen(indexOperandString) - 1);
+
+        /* No need since there is no second operand
         if(*(indexOperandString + firstOperandEndIndex) != ','){
             ERROR_PROGRAM(("unexpected token, expected , in index operand parsing, got %s", indexOperandString + firstOperandEndIndex));
         }
-
+        */
         /** second operand, should be directly after the comma that seperates the operands, and until the end of the string (minus 1 for the closing braces) */
-        secondOperandValue = substringFromTo(indexOperandString, firstOperandEndIndex + 1, strlen(indexOperandString) - 1);
+        /* No need since there is no second operand
+        secondOperandValue = substringFromTo(indexOperandString, firstOperandEndIndex + 1, strlen(indexOperandString) - 1);*/
 
         list = createOperandNode(firstOperandValue, COMMAND_STATEMENT);
 
-        list->next = createOperandNode(secondOperandValue, COMMAND_STATEMENT);
+        /*TODO: may cause issues?*/
+        list->next = NULL;
 
         return list;
 }

@@ -39,7 +39,6 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
  */
 int countNumberOfOpearnds(OperandNode* operandsList);
 
-
 /**
  * Reads a value of INDEX operand, and returns a list of the 2 operands that the index operand points to
  * @param indexOperandString - string
