@@ -17,9 +17,6 @@ char* rename_file(char *, char*);
 int open_or_create_file	(FILE**, char*);
 
 
-FILE * openReadFile(char *filename);
-
-
 /**
  * Keep getting line by line until the end of file.
  * @param file pointer to file.

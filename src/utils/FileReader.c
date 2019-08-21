@@ -63,17 +63,6 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
     return 0;
 }
 
-
-FILE * openReadFile(char *filename){
-    FILE * file = fopen(filename, "r");
-    if(!file){
-        fprintf(stdout, "\n error could not open file: %s \n", filename);
-        exit(1);
-    }
-    return file;
-}
-
-
 void doWhileFileHaveLines(FILE * file, void (*nextLineHandler)(char*)){
     char line[MAX_LINE_SIZE];
     printf("check 16 \n");
