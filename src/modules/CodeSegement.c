@@ -52,7 +52,7 @@ void increaseCommandInstructionsCountByStatement(char* statement){
         newSymbol = buildSymbol(label, code, getInstructionsCount() + MEMOERY_START_ADDRESS);
         addSymbolToTable(newSymbol);
     }
-
+	printf("!!!!!!!!!!!!!!!!!!!check all good!!!!!!!!!!!!!!!!! \n");
     operandsList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
     operandsCount = countNumberOfOpearnds(operandsList);
     /** first increase IC by one for the command it self */
@@ -62,8 +62,14 @@ void increaseCommandInstructionsCountByStatement(char* statement){
             if(operandsList->type == REGISTER_OPERAND && operandsList->next->type == REGISTER_OPERAND){
                 /** if both operands, are of register type, increase only by one for both operands */
                 IC++;
-            } else if(operandsList->type == INDEX_OPERAND || operandsList->next->type == INDEX_OPERAND){
-                ERROR_PROGRAM(("index operands can only exist in a single operand statement"));
+            } else if(operandsList->type == INDEX_OPERAND){
+					printf("check got here, %s \n", operandsList->value);
+                    indexOperand = getOperandListOfIndexOperand(operandsList->value);
+                    IC += 2;
+            } else if(operandsList->next->type == INDEX_OPERAND){
+					printf("check got here, %s \n", operandsList->next->value);
+                    indexOperand = getOperandListOfIndexOperand(operandsList->next->value);       
+                    IC += 2;
             } else {
                 /** increase by 1 for each operand */
                 IC += 2;
@@ -71,6 +77,7 @@ void increaseCommandInstructionsCountByStatement(char* statement){
             break;
         case 1:
             if(operandsList->type == INDEX_OPERAND){
+				printf("check got here, %s \n", operandsList->value);
                     indexOperand = getOperandListOfIndexOperand(operandsList->value);
                     if(indexOperand->type == INDEX_OPERAND || indexOperand->next->type == INDEX_OPERAND){
                         ERROR_PROGRAM(("index operands cant contain other index operand"));

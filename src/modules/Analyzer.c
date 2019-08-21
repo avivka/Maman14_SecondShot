@@ -105,12 +105,17 @@ char * extractLabel(char* sentence){
 
 char * extractIndexOperandLabel(char* indexOperandValue){
    char *buff;
-    int i;
-    i = 0;
+    int i = 0;
     buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
+    
+   printf("check buffer %s \n", buff);
+    
    while (i < strlen(indexOperandValue) && indexOperandValue[i] != '['){
         buff[i] = indexOperandValue[i];
         i++;
+        
+        printf("check %d %s \n", i,buff);
+        
     }
 
     if(strlen(buff) == 0){
