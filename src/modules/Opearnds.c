@@ -20,6 +20,9 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
     /** first get rid o any extra spaces */
     removeExtraSpaces(statement);
 
+
+	printf("\n\n\n\n\n\n check!!!!!!!!!!!!!!!!!!! \n\n\n\n\n\n\n");
+    
     /** figure label offset */
     if(label == NULL)
         labelLength = 0;
@@ -35,9 +38,13 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
         /** if we hit pharntesses. keep collecting the whole expression as a whole */
         if(isCharsEqual(statement[stringIterationIndex], '[')){
             /** continue until either we reached the end of the string, or we found our closing pair */
+            printf("\n\n\n check got to '[' sign \n");
             while (!isCharsEqual(statement[stringIterationIndex], ']') && stringIterationIndex < strlen(statement)){
                 stringIterationIndex++;
             }
+            
+            printf("check %c \n", statement[stringIterationIndex]);
+            
             /** if we hit the end without the last char to be the closing pharntesses, error */
             if(!isCharsEqual(statement[stringIterationIndex], ']')){
                 ERROR_PROGRAM(("no matching closing ), each ( must have a closing )"));
@@ -53,10 +60,13 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
             if(operandStartIndex == stringIterationIndex){
                 break;
             }
+            
+            printf("check operand %c %c \n", statement[operandStartIndex], statement[stringIterationIndex]);
 
             /** add the operand to the list */
             Operandvalue = substringFromTo(statement, operandStartIndex, stringIterationIndex);
             temp = createOperandNode(Operandvalue, statementType);
+            printf("check temp value = %s", temp->value);
             if(headOfList == NULL){
                 headOfList = tail = temp;
             } else{
@@ -83,13 +93,13 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 
 OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType) {
     char expected;
-    OperandNode *newNode;
+    OperandNode *newNode = NULL;
     newNode = (OperandNode *) malloc(sizeof(OperandNode));
     expected = '"';
     errorIfMallocFailed(newNode, "When trying to allocate memory for a new operand node.");
     newNode->next =NULL; /** dangling pointers protection */
 
-
+	printf("check %d \n", statementType);
     switch (statementType){
         case DATA_STATEMENT_TYPE_DATA:
             validateStringIsNumber(operandValue);
@@ -117,6 +127,7 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
             newNode->type = LABEL_OPERAND;
             break;
         case COMMAND_STATEMENT:
+			printf("check command! \n");
             if (isContainsChar(operandValue, '[')){
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
@@ -147,24 +158,32 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 
 
 OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
-        char* label;
-        char* firstOperandValue;
+        char* label = "";
+        char* firstOperandValue = "";
         /*char* secondOperandValue; no need No need since there is no second operand*/
-        char* walker;
-        OperandNode* list;
+        char* walker = "";
+        OperandNode* list = NULL;
         int labelLength;
         int firstOperandEndIndex;
         int theOnlyOperandStartIndex;
         label  = extractIndexOperandLabel(indexOperandString);
+        
+        printf("check label = %s \n", label);
+        printf("check label = %s \n", label);
+        printf("check label = %s \n", label);
+        
 
         if(label == NULL){
             ERROR_PROGRAM(("index operand must have a label that defines where to index to"));
             return NULL;
         }
 
+		printf("check %lu",strlen(label));
         labelLength = strlen(label);
+        printf("check %d",labelLength);
          /** label length + open [ brace */
         theOnlyOperandStartIndex = firstOperandEndIndex = labelLength + 1;
+        printf("check good to go");
         walker = indexOperandString + labelLength + 1;
         while (walker && *walker != ','){
             firstOperandEndIndex++;
@@ -188,6 +207,8 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
 
         /*TODO: may cause issues?*/
         list->next = NULL;
+        
+        printf("checl all good!!!!!!!!!! \n\n\n\n");
 
         return list;
 }
