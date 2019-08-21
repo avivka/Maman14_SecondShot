@@ -24,7 +24,8 @@ unsigned int* int_to_bin_digit(unsigned int in, int count);
 char *decimal_to_binaryString(int n, int numOfDigits);
 
 
-int	 		from_binary_machine_code_to_fourth_base 	(int short, int*, char*);
+/*int	 		from_binary_machine_code_to_fourth_base 	(int short, int*, char*);*/\
+int	 		from_binary_machine_code_to_fourth_base 	(char*, int*, FILE*);
 char 		to_4_base									(char, char);
 int			printSignToFile								(char*, FILE*);
 

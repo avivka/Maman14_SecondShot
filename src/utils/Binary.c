@@ -45,7 +45,7 @@ char *decimal_to_binaryString(int n, int numOfDigits)
     return  pointer;
 }
 
-int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decimalAddressCounter, char* filename)
+/*int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decimalAddressCounter, char* filename)
 {
     int 	counter 						= 0;
     char 	number 							= '\0';
@@ -69,8 +69,8 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
     if (*decimalAddressCounter < maxNumDecimalAddress)
     {
 
-        fputc('0', pf); 							/*puts 0 before the IC number if it is less then 1000*/
-    }
+        fputc('0', pf); 							puts 0 before the IC number if it is less then 1000*/
+   /* }
 
     fprintf(pf, "%d", *decimalAddressCounter);
 
@@ -136,7 +136,45 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 
     free(filenamewithextention);
 
-    fclose(pf); /*TODO: write functions that deal properly with files cleanup (such as clean_output_files)*/
+    fclose(pf); TODO: write functions that deal properly with files cleanup (such as clean_output_files)*/
+
+    /*return 0;
+}*/
+
+int 	from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* decimalAddressCounter, FILE* fp)
+{
+    int 		evenCounter		= 0;
+    int			oddCounter		= evenCounter++;
+    char		sign			= '0';
+
+    if (*decimalAddressCounter < maxNumDecimalAddress)
+    {
+
+        fputc('0', fp); 							/*puts 0 before the IC number if it is less then 1000*/
+    }
+
+    fprintf(fp, "%d", *decimalAddressCounter);
+
+    (*decimalAddressCounter)++;
+
+    fputc('\t', fp);
+
+    while (evenCounter < NUM_OF_ACTIVE_BITS)
+    {
+		sign = to_4_base(binaryCode[evenCounter], binaryCode[(oddCounter)]);
+		
+		if (sign == '0')
+		{
+			return -1;
+		}
+		
+		fputc(sign, fp);
+		
+		evenCounter 	+= 2;
+		oddCounter 		+= 2;
+    }
+
+    fputc('\n', fp);
 
     return 0;
 }

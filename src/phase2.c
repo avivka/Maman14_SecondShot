@@ -138,8 +138,8 @@ void createExternalsFile(char *fileName)
 void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
 {
     FILE * file;
-    int codeItteratorIndex;
-    int dataItteratorIndex;
+    int itteratorIndex			= 0;
+    int decimalAddress			= MEMOERY_START_ADDRESS;
     char ** codeSegment;
     char *firstLine;
     char* lineValue;
@@ -155,18 +155,14 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
     }
     firstLine = (char *)malloc(sizeof(char*));
     /** first put the total code instructions and total data instructions */
-    sprintf(firstLine, "%d %d", codeSegmentSize, dataSegmentSize);
+    sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
     fputs(firstLine, file);
-    fputs("\n", file);
-    codeItteratorIndex = dataItteratorIndex = 0;
+    
     /** write all the code section to the file line by line */
-    while (codeItteratorIndex < codeSegmentSize)
+    while (itteratorIndex < codeSegmentSize)
     {
-       /** replace each line to it weird binary value */
-        /*TODO: translate it to base 4 and to base 4 wierd and return it as base 4 wierd*/
-        fprintf(file, "%d        %s", codeItteratorIndex + MEMOERY_START_ADDRESS, codeSegment[codeItteratorIndex]);
-        fputs("\n", file);
-        codeItteratorIndex++;
+       /** prints each line to the weird binary value */
+        from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
     }
 
 
@@ -177,12 +173,9 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
         /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
         lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
         /** replace each line to it weird binary value */
-        /*TODO: translate it to base 4 and to base 4 wierd and return it as base 4 wierd*/
+        from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
         /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
-        fprintf(file, "%d        %s", dataItteratorIndex + MEMOERY_START_ADDRESS + codeItteratorIndex, lineValue);
-        fputs("\n", file);
         dataSegmentWalker = dataSegmentWalker->next;
-        dataItteratorIndex++;
     }
     fclose(file);
 }
