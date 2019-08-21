@@ -158,12 +158,14 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 
 
 OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
-        char* label = extractIndexOperandLabel(indexOperandString);
-        char* firstOperandValue = "";
+        char* indexOperandValue = "";
+        /*char* secondOperandValue; no need No need since there is no second operand*/
         char* walker = "";
         OperandNode* list = NULL;
-        int labelLength;
-        int theOnlyOperandStartIndex = 0;
+        int labelLength = 0;
+        int operandEndIndex = 0;
+        int operandStartIndex = 0;
+        char* label = extractIndexOperandLabel(indexOperandString);
         
         printf("ok \n");
         printf("check label = %s \n", label);
@@ -182,26 +184,28 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         labelLength = strlen(label);
         printf("check %d",labelLength);
          /** label length + open [ brace */
-        theOnlyOperandStartIndex = labelLength + 1;
+        operandStartIndex = operandEndIndex = labelLength + 1;
         printf("check good to go");
-        walker = indexOperandString;
-        while (walker && *walker != '['){
-            theOnlyOperandStartIndex++;
+        walker = indexOperandString + labelLength + 1;
+        while (walker && *walker != ','){
+            operandStartIndex++;
             walker++;
         }
 
-        firstOperandValue = substringFromTo(indexOperandString, theOnlyOperandStartIndex, strlen(indexOperandString) - 1);
+        /*indexOperandValue = substringFromTo(indexOperandString, operandStartIndex, operandEndIndex);*/
+
+        indexOperandValue = substringFromTo(indexOperandString, operandStartIndex, strlen(indexOperandString) - 1);
 
         /* No need since there is no second operand
-        if(*(indexOperandString + firstOperandEndIndex) != ','){
-            ERROR_PROGRAM(("unexpected token, expected , in index operand parsing, got %s", indexOperandString + firstOperandEndIndex));
+        if(*(indexOperandString + operandEndIndex) != ','){
+            ERROR_PROGRAM(("unexpected token, expected , in index operand parsing, got %s", indexOperandString + operandEndIndex));
         }
         */
         /** second operand, should be directly after the comma that seperates the operands, and until the end of the string (minus 1 for the closing braces) */
         /* No need since there is no second operand
-        secondOperandValue = substringFromTo(indexOperandString, firstOperandEndIndex + 1, strlen(indexOperandString) - 1);*/
+        secondOperandValue = substringFromTo(indexOperandString, operandEndIndex + 1, strlen(indexOperandString) - 1);*/
 
-        list = createOperandNode(firstOperandValue, COMMAND_STATEMENT);
+        list = createOperandNode(indexOperandValue, COMMAND_STATEMENT);
 
         /*TODO: may cause issues?*/
         list->next = NULL;
