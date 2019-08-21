@@ -8,52 +8,59 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize);
 
 extern int currentLine;
 
-int doPhase2(char* fileName)
+void doPhase2(char* fileName)
 {
 	int 	codeSegmentSize;
     int 	dataSegmentSize;
     FILE* 	fileToAssemble		= NULL;
-    char* 	renamedInputFile	= "";
+    char*   renamedInputFile = "";
+
+    printf("check 24 got to doPhase2\n");
 
     codeSegmentSize = getInstructionsCount();
+    printf("check 24 here's the IC %d\n", codeSegmentSize);
     dataSegmentSize = getDataInstructionsCount();
+    printf("check 24 here's the DC %d\n", dataSegmentSize);
 
     /** file names are given without the extension, we expect the file to end with the .as extension*/
+    /*fileToAssemble = openReadFile(concat(fileName, ".as"));*/
+
     if (is_extention_exists (fileName, ".as"))
     {
-		printf("check exist \n");
+        printf("check 1 again - the extention .as exists in %s\n", fileName);
         renamedInputFile = fileName;
+        printf("check 2 again the file name that we'll try to open %s\n", renamedInputFile);
     }
-    
     else
     {
+        printf("check again - the extention .as does not exist in %s\n", fileName);
         renamedInputFile = rename_file(fileName, ".as");
-        printf("check 18 \n");
+        printf("check 8 again\n");
     }
-    
-    if (open_or_create_file(&fileToAssemble,renamedInputFile) != 0)
-    {
-		fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
-		
-		return -1;
-	}
-	
-    /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
-    initCodeSection();
-    /** keeps reading line by line and handle each line */
-    doWhileFileHaveLines(fileToAssemble, handleNextLine);
+    if (open_or_create_file(&fileToAssemble,renamedInputFile) == 0) {
 
-    if(errorFlag == 1){
-        printf("didn't output files for file %s, because errors were found. see the errors output for more information.", fileName);
-        return -1;
+        printf("check 14 again open or creation of %s was done successfully\n", renamedInputFile);
+
+        /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
+        initCodeSection();
+        /** keeps reading line by line and handle each line */
+        doWhileFileHaveLines(fileToAssemble, handleNextLine);
+        if (errorFlag == 1) {
+            printf("didn't output files for file %s, because errors were found. see the errors output for more information.",
+                   fileName);
+            return;
+        }
+        createEnteriesFile(fileName);
+        createExternalsFile(fileName);
+        createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
     }
-    createEnteriesFile(fileName);
-    createExternalsFile(fileName);
-    createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
-    
+
+    else
+    {
+        fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
+    }
+
     fclose(fileToAssemble);
-    
-    return 0;
 }
 
 void handleNextLine(char* line){
@@ -156,7 +163,7 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
     while (codeItteratorIndex < codeSegmentSize)
     {
        /** replace each line to it weird binary value */
-        /*replaceToBinaryStringToWierdBinaryString(codeSegment[codeItteratorIndex]);*/
+        /*TODO: translate it to base 4 and to base 4 wierd and return it as base 4 wierd*/
         fprintf(file, "%d        %s", codeItteratorIndex + MEMOERY_START_ADDRESS, codeSegment[codeItteratorIndex]);
         fputs("\n", file);
         codeItteratorIndex++;
@@ -170,7 +177,7 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
         /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
         lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
         /** replace each line to it weird binary value */
-        /*replaceToBinaryStringToWierdBinaryString(lineValue);*/
+        /*TODO: translate it to base 4 and to base 4 wierd and return it as base 4 wierd*/
         /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
         fprintf(file, "%d        %s", dataItteratorIndex + MEMOERY_START_ADDRESS + codeItteratorIndex, lineValue);
         fputs("\n", file);

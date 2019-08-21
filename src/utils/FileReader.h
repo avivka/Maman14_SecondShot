@@ -9,16 +9,11 @@
 #include <string.h>
 #include "../constants.h"
 #include "TextUtils.h"
-
-
+FILE * openReadFile(char *filename);
 
 int check_if_file_exists (char*);
 char* rename_file(char *, char*);
 int open_or_create_file	(FILE**, char*);
-
-
-FILE * openReadFile(char *filename);
-
 
 /**
  * Keep getting line by line until the end of file.

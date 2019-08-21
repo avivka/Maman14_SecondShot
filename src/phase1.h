@@ -12,4 +12,7 @@ void doPhase1(char* fileName);
  * this method updates the symbols table addresses, after we know the exact length of the code segment, we can update each symbol its real address
 */
 void updateSymbolTableAddresses();
+
+void	printSymbolTable ();
+
 #endif
