@@ -41,6 +41,14 @@ int isStatementTypeDataStatementEntry(char* sentence);
  * @return 1 true, 0 if false
  */
 int isStatementTypeDataStatementExtern(char* sentence);
+
+/**
+ * Checks if the given statement is of type of DataStatement of define
+ * @param sentence
+ * @return 1 true, 0 if false
+ */
+int isStatementTypeDataStatementDefine(char* sentence);
+
 /**
  * Checks if the given statement is of type of command statement, if not will throw error
  * @param sentence

@@ -220,6 +220,8 @@ int instrctionLengthByStatmentType(STATEMENT_TYPE statementType, char *statement
             return  6; /** instruction of .entry is 6 chars long */
         case DATA_STATEMENT_TYPE_EXTERN:
             return  7; /** instruction of .extern is 7 chars long */
+        case DATA_STATEMENT_TYPE_DEFINE:
+            return  7; /** instruction of .define is 7 chars long */
         case COMMAND_STATEMENT:
             /** only command statement is with 4 chars all other are 3 */
             cmdType = getCommandOfStatement(statement);

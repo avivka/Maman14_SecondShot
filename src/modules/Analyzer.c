@@ -16,6 +16,9 @@ STATEMENT_TYPE getStatementTypeOfSentence(char* sentence){
  if(isStatementTypeDataStatementString(sentence))
      return  DATA_STATEMENT_TYPE_STRING;
 
+ if(isStatementTypeDataStatementDefine(sentence))
+     return  DATA_STATEMENT_TYPE_DEFINE;
+
  if(isCommandStatement(sentence)) {
      return COMMAND_STATEMENT;
  }
@@ -27,7 +30,7 @@ int isDataStatement(char *sentence){
 
     printf("check isDataStatement %d", type);
 
-    if(type == DATA_STATEMENT_TYPE_DATA || type == DATA_STATEMENT_TYPE_ENTRY || type == DATA_STATEMENT_TYPE_EXTERN ||  type == DATA_STATEMENT_TYPE_STRING)
+    if(type == DATA_STATEMENT_TYPE_DATA || type == DATA_STATEMENT_TYPE_ENTRY || type == DATA_STATEMENT_TYPE_EXTERN || type == DATA_STATEMENT_TYPE_DEFINE || type == DATA_STATEMENT_TYPE_STRING)
         return  1;
 
     return 0;
@@ -196,6 +199,30 @@ int isStatementTypeDataStatementExtern(char* sentence){
     result = strchr(sentence, '.');
     if(strlen(sentence) == 0)
         return 0;
+    if(result)
+    {
+        while((result[i] != '\n' && result[i] != ' ' && result[i] != '\t')){
+            if(result[i] != string[i]){
+                return 0;
+            }
+            i++;
+        }
+        return 1;
+    }
+    else
+        return 0;
+}
+
+
+int isStatementTypeDataStatementDefine(char* sentence){
+    char *result;
+    char* string = ".define";
+    int i;
+    i = 1;
+    result = strchr(sentence, '.');
+    if(strlen(sentence) == 0)
+        return 0;
+
     if(result)
     {
         while((result[i] != '\n' && result[i] != ' ' && result[i] != '\t')){

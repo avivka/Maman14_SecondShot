@@ -65,6 +65,9 @@ void handleDataStatement(char* dataStatement){
         case DATA_STATEMENT_TYPE_EXTERN:
             handleDataStatmentTypeExtern(operands);
             break;
+        case DATA_STATEMENT_TYPE_DEFINE:
+            /*handleDataStatmentTypeDefine(operands);*/
+            break;
         default:
             ERROR_PROGRAM(("received invalid data statement %s", dataStatement));
             break;

@@ -12,6 +12,7 @@
  *   - DATA_STATEMENT_TYPE_STRING - statements that store string
  *   - DATA_STATEMENT_TYPE_ENTRY - statements that declares a label that can be used by other files
  *   - DATA_STATEMENT_TYPE_EXTERN - statements that store reference to data that will be given from external source
+ *   - DATA_STATEMENT_TYPE_DEFINE - statements that store macro definition
  *  We can also have INVALID_STATEMENT which the given statement is invalid
  */
 typedef enum {
@@ -19,6 +20,7 @@ typedef enum {
     DATA_STATEMENT_TYPE_STRING,
     DATA_STATEMENT_TYPE_ENTRY,
     DATA_STATEMENT_TYPE_EXTERN,
+    DATA_STATEMENT_TYPE_DEFINE,
     COMMAND_STATEMENT,
     INVALID_STATEMENT
 } STATEMENT_TYPE;
