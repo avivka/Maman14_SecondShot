@@ -66,7 +66,7 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
             /** add the operand to the list */
             Operandvalue = substringFromTo(statement, operandStartIndex, stringIterationIndex);
             temp = createOperandNode(Operandvalue, statementType);
-            printf("check temp value = %s", temp->value);
+            printf("check temp value = %s \n", temp->value);
             if(headOfList == NULL){
                 headOfList = tail = temp;
             } else{
@@ -158,39 +158,37 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 
 
 OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
-        char* label = "";
+        char* label = extractIndexOperandLabel(indexOperandString);
         char* firstOperandValue = "";
-        /*char* secondOperandValue; no need No need since there is no second operand*/
         char* walker = "";
         OperandNode* list = NULL;
         int labelLength;
-        int firstOperandEndIndex;
-        int theOnlyOperandStartIndex;
-        label  = extractIndexOperandLabel(indexOperandString);
+        int theOnlyOperandStartIndex = 0;
         
+        printf("ok \n");
         printf("check label = %s \n", label);
         printf("check label = %s \n", label);
         printf("check label = %s \n", label);
-        
+        printf("ok \n");
 
         if(label == NULL){
             ERROR_PROGRAM(("index operand must have a label that defines where to index to"));
             return NULL;
         }
 
-		printf("check %lu",strlen(label));
+		printf("ok \n");
+		printf("check %lu \n",strlen(label));
+		printf("ok \n");
         labelLength = strlen(label);
         printf("check %d",labelLength);
          /** label length + open [ brace */
-        theOnlyOperandStartIndex = firstOperandEndIndex = labelLength + 1;
+        theOnlyOperandStartIndex = labelLength + 1;
         printf("check good to go");
-        walker = indexOperandString + labelLength + 1;
-        while (walker && *walker != ','){
-            firstOperandEndIndex++;
+        walker = indexOperandString;
+        while (walker && *walker != '['){
+            theOnlyOperandStartIndex++;
             walker++;
         }
-
-        /*firstOperandValue = substringFromTo(indexOperandString, theOnlyOperandStartIndex, firstOperandEndIndex);*/
 
         firstOperandValue = substringFromTo(indexOperandString, theOnlyOperandStartIndex, strlen(indexOperandString) - 1);
 
@@ -208,7 +206,7 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         /*TODO: may cause issues?*/
         list->next = NULL;
         
-        printf("checl all good!!!!!!!!!! \n\n\n\n");
+        printf("check all good!!!!!!!!!! \n\n\n\n");
 
         return list;
 }
