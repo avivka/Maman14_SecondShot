@@ -214,9 +214,12 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
         OperandNode *indexOperands;
         indexOperands = getOperandListOfIndexOperand(operand->value);
         indexLabel = extractIndexOperandLabel(operand->value);
-
+		
         /** find the index label in the symbols table */
-        symbol = searchForSymbolByLabel(indexLabel);
+        printf("check %s", indexLabel);
+        
+        if(!(isnumber(indexLabel)))
+			symbol = searchForSymbolByLabel(indexLabel);
         if(symbol == NULL){
             ERROR_PROGRAM(("Unknown symbol %s in index statement", indexLabel));
             return;
@@ -277,26 +280,24 @@ void validateIfOperandsAreaAllowed(OperandNode* operandsList, COMMANDS cmd){
 }
 
 void validateOperandAllowedForCommand(OperandType operandType, COMMANDS cmd, OperandPosition operandPosition){
-    CommandDescriptor *descriptor;
-    boolean result;
+    CommandDescriptor *descriptor = NULL;
+    boolean result = FALSE;
     descriptor = getCommandDescriptor(cmd);
-    /** not allowed unless proved otherwise */
-    result = FALSE;
     /** zero operands commands can't have any operand */
     if(descriptor->numberOfOperands == 0)
     return;
     /** single operand statements can only have Destination operands */
-    if(descriptor->numberOfOperands == 1 && operandPosition == SRC_OPERAND){
+    if((descriptor->numberOfOperands == 1) && (operandPosition == TARGET_OPEAND)){
         return;
     }
 
     switch (operandPosition){
         case SRC_OPERAND:
-            if(descriptor->allowedSrcOperands[0] == operandType || descriptor->allowedSrcOperands[1] == operandType || descriptor->allowedSrcOperands[2] == operandType)
+            if((descriptor->allowedSrcOperands[0] == operandType) || (descriptor->allowedSrcOperands[1] == operandType) || (descriptor->allowedSrcOperands[2] == operandType) || (descriptor->allowedSrcOperands[3] == operandType))
                 result = TRUE;
             break;
         case TARGET_OPEAND:
-            if(descriptor->allowedDestOperands[0] == operandType || descriptor->allowedDestOperands[1] == operandType || descriptor->allowedDestOperands[2] == operandType)
+            if((descriptor->allowedDestOperands[0] == operandType) || (descriptor->allowedDestOperands[1] == operandType) || (descriptor->allowedDestOperands[2] == operandType) || (descriptor->allowedDestOperands[3] == operandType))
                 result = TRUE;
             break;
     }

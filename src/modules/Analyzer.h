@@ -91,4 +91,6 @@ boolean isCommentStatementOrEmptyLine(char *sentence);
 /** returns which command is used in this sentence, if any, otherwise returns UNKOWN command */
 COMMANDS getCommandOfStatement(char *sentence);
 
+boolean			isnumber 		(char*);
+
 #endif

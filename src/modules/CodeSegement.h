@@ -25,9 +25,10 @@ void increaseCommandInstructionsCountByStatement(char* statement);
 void resetCodeSegmentModule();
 
 
-void addStatementToCodeSegment(char* statement);
+void addStatementToCodeSegment(char*);
 
 void initCodeSection();
+
 #endif
 
 

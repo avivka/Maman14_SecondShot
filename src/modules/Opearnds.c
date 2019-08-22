@@ -140,8 +140,10 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
                 newNode->value = operandValue;
             }
             else{
-                if(!validateLabel(operandValue)){
-                    ERROR_PROGRAM(("invalid label %s", operandValue));
+                if(!(isnumber(operandValue))) {
+					if (!(validateLabel(operandValue))){
+						ERROR_PROGRAM(("invalid label %s", operandValue));
+					}
                 }
                 /** set the value as is as its a label*/
                 newNode->value = operandValue;
@@ -185,16 +187,20 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         printf("check %d",labelLength);
          /** label length + open [ brace */
         operandStartIndex = operandEndIndex = labelLength + 1;
-        printf("check good to go");
+        printf("check good to go \n");
         walker = indexOperandString + labelLength + 1;
-        while (walker && *walker != ','){
+        while (walker && *walker != ']'){
             operandStartIndex++;
             walker++;
         }
 
         /*indexOperandValue = substringFromTo(indexOperandString, operandStartIndex, operandEndIndex);*/
+		
+		printf("check %d, %d \n",operandEndIndex, operandStartIndex);
 
-        indexOperandValue = substringFromTo(indexOperandString, operandStartIndex, strlen(indexOperandString) - 1);
+        indexOperandValue = substringFromTo(indexOperandString, operandEndIndex, operandStartIndex);
+        
+        printf("check %s \n", indexOperandValue);
 
         /* No need since there is no second operand
         if(*(indexOperandString + operandEndIndex) != ','){

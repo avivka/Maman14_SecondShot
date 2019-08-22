@@ -57,7 +57,7 @@ int validateLabel(char* label){
                    (strcmp(label, "dec") == 0) || (strcmp(label, "jmp") == 0) || (strcmp(label, "bne") == 0) || (strcmp(label, "red") == 0) ||
                    (strcmp(label, "prn") == 0) || (strcmp(label, "jsr") == 0) || (strcmp(label, "rts") == 0) || (strcmp(label, "stop") == 0 )))
         {
-            if (!isalpha(label[0])){
+            if ((!isalpha(label[0]))){
                 ERROR_PROGRAM(("Label Cannot start with digits"));
                 return 0;
             }
@@ -80,6 +80,9 @@ int validateLabel(char* label){
 }
 
 char * extractLabel(char* sentence){
+	
+	printf("check got to extractlabel \n");
+	
     const char ch = ':';
     char *buff;
     int i;
@@ -107,23 +110,23 @@ char * extractLabel(char* sentence){
 }
 
 char * extractIndexOperandLabel(char* indexOperandValue){
-   char *buff;
+	char *buff;
     int i = 0;
     buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
     
-   printf("check buffer %s \n", buff);
+	printf("check buffer %s \n", buff);
     
-   while (i < strlen(indexOperandValue) && indexOperandValue[i] != '['){
-        buff[i] = indexOperandValue[i];
-        i++;
-        
-        printf("check %d %s \n", i,buff);
-        
-    }
-
-    if(strlen(buff) == 0){
-        return  NULL;
-   }
+	while (i < strlen(indexOperandValue) && indexOperandValue[i] != '['){
+		buff[i] = indexOperandValue[i];
+		i++;
+			
+		printf("check %d %s \n", i,buff);
+			
+		}
+	
+		if(strlen(buff) == 0){
+			return  NULL;
+	}
 
     return  buff;
 } /*TODO: edit according to operand number 2*/
@@ -279,10 +282,10 @@ COMMANDS getCommandOfStatement(char *sentence){
     int labelLength = 0;
     int iterationIndex = 0;
     char* poteinailCommandString = "";
-    char* commandString = "";
+    char commandString[5] = "";
+    printf("check %s \n", commandString);
     char* label = "";
     COMMANDS command;
-    commandString = malloc(sizeof(char) * 4);
     errorIfMallocFailed(commandString, "for a new string");
     removeExtraSpaces(sentence);
     sentence =  trimwhitespace(sentence);
@@ -295,9 +298,9 @@ COMMANDS getCommandOfStatement(char *sentence){
     iterationIndex = 0;
     poteinailCommandString = sentence + labelLength;
     printf("check 21 %s\n", poteinailCommandString);
-    /*while(iterationIndex < (strlen(sentence) - labelLength) && iterationIndex <= MAX_COMMAND_LENGTH)*/
-    while(iterationIndex < (strlen(poteinailCommandString)) && iterationIndex <= MAX_COMMAND_LENGTH)
+    while(iterationIndex < (strlen(poteinailCommandString)) && iterationIndex < MAX_COMMAND_LENGTH)
     {
+		/*commandString[endstring] = '\0';*/
         commandString[iterationIndex] = poteinailCommandString[iterationIndex];
         printf("check 23: this should be the command: %s %d \n",commandString, iterationIndex);
         command = commandStringToEnum(commandString);
@@ -309,12 +312,27 @@ COMMANDS getCommandOfStatement(char *sentence){
             return  command;
         }
 
-
         iterationIndex++;
+        /*endstring++;*/
     }
     printf("check 22 %d\n", command);
 
     return  UNKNOWN_COMMAND;
+}
 
-
+boolean			isnumber 		(char* str)
+{
+	int counter = 0;
+	
+	while (counter < strlen(str))
+	{
+		if (!(str[counter] >= 48 && str[counter] <= 57))
+		{
+			return FALSE;
+		}
+		
+		counter++;
+	}
+	
+	return TRUE;
 }
