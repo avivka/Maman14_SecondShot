@@ -8,8 +8,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
-#define MAX_SIZE_OF_LABEL 255
-#define  MAX_COMMAND_LENGTH 4
+#define MAX_SIZE_OF_LABEL 31
+#define MAX_COMMAND_LENGTH 4
 /**
  * Returns the type of the given statement
  * @param sentence

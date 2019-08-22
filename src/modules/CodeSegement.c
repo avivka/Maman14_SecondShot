@@ -242,20 +242,24 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
     } else{  /** then its a label operand */
         Symbol* symbol;
         /** find the label in the symbols table */
-        symbol = searchForSymbolByLabel(operand->value);
-        if(symbol == NULL){
-            ERROR_PROGRAM(("Unknown symbol %s", operand->value));
-            return;
-        }
+        if(!(isnumber(operand->value)))
+        {
+			symbol = searchForSymbolByLabel(operand->value);
+		
+			if(symbol == NULL){
+				ERROR_PROGRAM(("Unknown symbol %s", operand->value));
+				return;
+			}
+        
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-        if(symbol->feature == ext){
-            encoding_type = EXTERNAL;
-            addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
-        } else {
-            encoding_type = RELOCATEABLE;
-        }
-
-        value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
+			if(symbol->feature == ext){
+				encoding_type = EXTERNAL;
+				addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
+			} else {
+				encoding_type = RELOCATEABLE;
+			}
+		}
+		value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
     }
 
     /** combine statement and the encoding type bits */
