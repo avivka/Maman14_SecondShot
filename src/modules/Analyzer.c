@@ -110,25 +110,28 @@ char * extractLabel(char* sentence){
 }
 
 char * extractIndexOperandLabel(char* indexOperandValue){
-	char *buff;
-    int i = 0;
-    buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
-    
-	printf("check buffer %s \n", buff);
-    
-	while (i < strlen(indexOperandValue) && indexOperandValue[i] != '['){
+	char* buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
+	int i = 0;
+	
+	
+	while ((i < strlen(indexOperandValue)) && (indexOperandValue[i] != '[')){
 		buff[i] = indexOperandValue[i];
 		i++;
 			
-		printf("check %d %s \n", i,buff);
+		printf("check %s %d \n", buff, i);
 			
 		}
 	
 		if(strlen(buff) == 0){
 			return  NULL;
 	}
+	
+	buff[i] = '\0';
+	
+	printf("check %s \n", buff);
 
     return  buff;
+	
 } /*TODO: edit according to operand number 2*/
 
 int isStatementTypeDataStatement(char* sentence) {
