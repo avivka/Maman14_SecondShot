@@ -36,6 +36,8 @@ void resetCodeSegmentModule(){
 
 void initCodeSection(){
     codeSection = (char**)malloc(IC * sizeof(char*));
+    errorIfMallocFailed(codeSection, "when tring to allocate memory for code section check.");
+    
     IC = 0;
 }
 
@@ -182,12 +184,12 @@ void addOperandsValuesToCodeSection(OperandNode* operandsList){
 
         /** two operands different types, add each of them, first operand is treated as src operand, second as the target operand */
         addOperandValueToCodeSection(operandsList, SRC_OPERAND);
-        addOperandValueToCodeSection(operandsList->next, TARGET_OPEAND);
+        addOperandValueToCodeSection(operandsList->next, TARGET_OPERAND);
         return;
     }
 
     /** if we are here we are handling a single operand add it value. single values are treated as target operands */
-    addOperandValueToCodeSection(operandsList, TARGET_OPEAND);
+    addOperandValueToCodeSection(operandsList, TARGET_OPERAND);
 }
 
 void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position){
@@ -272,11 +274,11 @@ void validateIfOperandsAreaAllowed(OperandNode* operandsList, COMMANDS cmd){
     operandsCount = countNumberOfOpearnds(operandsList);
     switch (operandsCount){
         case 1:
-            validateOperandAllowedForCommand(operandsList->type, cmd, TARGET_OPEAND);
+            validateOperandAllowedForCommand(operandsList->type, cmd, TARGET_OPERAND);
             break;
         case 2:
             validateOperandAllowedForCommand(operandsList->type, cmd, SRC_OPERAND);
-            validateOperandAllowedForCommand(operandsList->next->type, cmd, TARGET_OPEAND);
+            validateOperandAllowedForCommand(operandsList->next->type, cmd, TARGET_OPERAND);
             break;
         default:
             return;
@@ -291,7 +293,7 @@ void validateOperandAllowedForCommand(OperandType operandType, COMMANDS cmd, Ope
     if(descriptor->numberOfOperands == 0)
     return;
     /** single operand statements can only have Destination operands */
-    if((descriptor->numberOfOperands == 1) && (operandPosition == TARGET_OPEAND)){
+    if((descriptor->numberOfOperands == 1) && (operandPosition == TARGET_OPERAND)){
         return;
     }
 
@@ -300,7 +302,7 @@ void validateOperandAllowedForCommand(OperandType operandType, COMMANDS cmd, Ope
             if((descriptor->allowedSrcOperands[0] == operandType) || (descriptor->allowedSrcOperands[1] == operandType) || (descriptor->allowedSrcOperands[2] == operandType) || (descriptor->allowedSrcOperands[3] == operandType))
                 result = TRUE;
             break;
-        case TARGET_OPEAND:
+        case TARGET_OPERAND:
             if((descriptor->allowedDestOperands[0] == operandType) || (descriptor->allowedDestOperands[1] == operandType) || (descriptor->allowedDestOperands[2] == operandType) || (descriptor->allowedDestOperands[3] == operandType))
                 result = TRUE;
             break;

@@ -31,6 +31,8 @@ void handleDataStatmentTypeEntry(OperandNode *operand);
  */
 void handleDataStatmentTypeExtern(OperandNode *operand);
 
+void handleDataStatmentTypeDefine(OperandNode*, char*);
+
 /**
  * Apeends the given node to the end of the data segment list
  * @param valueToAdd
@@ -66,7 +68,7 @@ void handleDataStatement(char* dataStatement){
             handleDataStatmentTypeExtern(operands);
             break;
         case DATA_STATEMENT_TYPE_DEFINE:
-            /*handleDataStatmentTypeDefine(operands);*/
+            handleDataStatmentTypeDefine(operands, label);
             break;
         default:
             ERROR_PROGRAM(("received invalid data statement %s", dataStatement));
@@ -80,6 +82,10 @@ void addDataSymbolIfLabelGiven(char* label){
         newSymbol = buildSymbol(label, dat, getDataInstructionsCount());
         addSymbolToTable(newSymbol);
     }
+    else
+    {
+		ERROR_PROGRAM((" data label is not define"));
+	}
 }
 
 void handleDataTypeStatementOfData(OperandNode *operands, char* label){
@@ -155,6 +161,28 @@ void handleDataStatmentTypeExtern(OperandNode *operands){
         /** add the extern statment to the symbols table */
         addSymbolToTable(buildSymbol(walker->value, ext, 0));
         walker = walker->next;
+    }
+}
+
+void handleDataStatmentTypeDefine(OperandNode *operands, char* label){
+    OperandNode *walker = operands;
+    if (operands == NULL)
+    {
+        ERROR_PROGRAM((".define statements must at least one operand"));
+    }
+    else if (label == NULL)
+    {
+        ERROR_PROGRAM(("macro label is not define"));
+    }
+    else{
+		while (walker){
+			if(walker->type != LABEL_OPERAND){
+				ERROR_PROGRAM(("Invalid operand value handling .extern statement, received %s, .define operations can only use label operands. ", walker->value));
+			}
+			/** add the define statment to the symbols table */
+			addSymbolToTable(buildSymbol(label, macro, atoi(walker->value)));
+			walker = walker->next;
+		}
     }
 }
 

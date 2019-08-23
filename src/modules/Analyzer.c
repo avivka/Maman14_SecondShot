@@ -85,9 +85,10 @@ char * extractLabel(char* sentence){
 	
     const char ch = ':';
     char *buff;
-    int i;
+    int i = 0;
     buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
-    i = 0;
+	errorIfMallocFailed(buff, "when tring to allocate memory for the label check.");
+	
     if(strchr(sentence, ch))
     {
         if((sentence[0] != ' ') && (sentence[0] != '\t'))
@@ -111,6 +112,7 @@ char * extractLabel(char* sentence){
 
 char * extractIndexOperandLabel(char* indexOperandValue){
 	char* buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
+	errorIfMallocFailed(buff, "when tring to allocate memory for the label check.");
 	int i = 0;
 	
 	
@@ -122,9 +124,10 @@ char * extractIndexOperandLabel(char* indexOperandValue){
 			
 		}
 	
-		if(strlen(buff) == 0){
+		if(strlen(buff) == 0)
+		{
 			return  NULL;
-	}
+		}
 	
 	buff[i] = '\0';
 	

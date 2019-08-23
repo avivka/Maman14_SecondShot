@@ -12,7 +12,7 @@
 
 typedef enum {
     SRC_OPERAND,
-    TARGET_OPEAND
+    TARGET_OPERAND
 } OperandPosition;
 /**
  * OperandNode defines an operand node type, contains the type and the value of the current operand, references to the next operand.

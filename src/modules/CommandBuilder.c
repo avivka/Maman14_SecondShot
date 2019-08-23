@@ -9,9 +9,9 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
 
     CommandStatement *command;
     command = (CommandStatement*) malloc(sizeof(CommandStatement));
+    errorIfMallocFailed(command, "when tring to allocate memory for command.");
 
-    srcOperand = int_to_bin_digit((unsigned int) srcOperandType
-            , 2);
+    srcOperand = int_to_bin_digit((unsigned int) srcOperandType, 2);
     destOperand = int_to_bin_digit((unsigned int) destOperandType, 2);
     commandCode = int_to_bin_digit((unsigned int) commandOpCode, 4);
     encodingTypeValue = int_to_bin_digit((unsigned int) encodingType, 2);
@@ -58,6 +58,7 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
 char* getCommandBinaryString(CommandStatement *cmd){
     char *string;
     string = malloc(14 * sizeof(char));
+    errorIfMallocFailed(string, "when tring to allocate memory to string of bmc.");
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
                      cmd->index_param_1_1,/**bit 13:*/ /*TODO: should not be in use*/
                      cmd->index_param_1_2,/**bit 12:*/ /*TODO: should not be in use*/

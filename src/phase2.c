@@ -102,6 +102,7 @@ void createEnteriesFile(char *fileName){
     {
         address = getSymbolAddress((char *)walker->data);
         buffer[count] = (char *) malloc(sizeof(char *));
+        errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
         sprintf(buffer[count], "%s    %d", walker->data, address);
         walker = walker->next;
         count++;
@@ -127,6 +128,7 @@ void createExternalsFile(char *fileName)
     count = 0;
     while (walker){
         buffer[count] = (char *) malloc(sizeof(char *));
+        errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
         sprintf(buffer[count], "%s", walker->data);
         walker = walker->next;
         count++;
@@ -154,6 +156,7 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
         exit(1);
     }
     firstLine = (char *)malloc(sizeof(char*));
+    errorIfMallocFailed(firstLine, "while tring to allocate memory to the first line");
     /** first put the total code instructions and total data instructions */
     sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
     fputs(firstLine, file);
