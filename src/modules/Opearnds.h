@@ -53,4 +53,6 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString);
  */
 int getRegisterNumberOfOperand(OperandNode *operand);
 
+char* getOperandFromDefine (char*, int);
+
 #endif

@@ -5,21 +5,17 @@ int instructionLengthByStatmentType(STATEMENT_TYPE statementType, char *statemen
 OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType);
 boolean isRegisterValue(char* value);
 
-/* char* operandsStartPtr*/
 OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statementType, char* label){
-   int labelLength;
-   int instructionLength;
-   int stringIterationIndex;
-   int operandStartIndex;
-   int checkIfFirstOperand = 1;
-   char* Operandvalue;
-   OperandNode *headOfList;
-   OperandNode *tail;
-   OperandNode* temp;
-   headOfList = NULL;
-   tail = NULL;
-    /** first get rid o any extra spaces */
-    removeExtraSpaces(statement);
+	int labelLength = 0;
+	int instructionLength = 0;
+	int stringIterationIndex = 0;
+	int operandStartIndex = 0;
+	char* Operandvalue = "";
+	OperandNode *headOfList = NULL;
+	OperandNode *tail = NULL;
+	OperandNode* temp = NULL;
+	/** first get rid o any extra spaces */
+	removeExtraSpaces(statement);
 
 
 	printf("\n\n\n\n\n\n check!!!!!!!!!!!!!!!!!!! \n\n\n\n\n\n\n");
@@ -48,14 +44,14 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
             
             /** if we hit the end without the last char to be the closing pharntesses, error */
             if(!isCharsEqual(statement[stringIterationIndex], ']')){
-                ERROR_PROGRAM(("no matching closing ], each ( must have a closing )"));
+                ERROR_PROGRAM(("no matching closing ), each ( must have a closing )"));
             }
             /** continue one more to get after phratnesis */
             stringIterationIndex++;
         }
 
         /** if it the end of current operand */
-        if(isspace(statement[stringIterationIndex]) || (isCharsEqual(statement[stringIterationIndex], ',') == TRUE) || ((isCharsEqual(statement[stringIterationIndex], '=') == TRUE) && (statementType == DATA_STATEMENT_TYPE_DEFINE)) || (isCharsEqual(statement[stringIterationIndex], '\0') == TRUE)){ 			
+        if(isspace(statement[stringIterationIndex]) || isCharsEqual(statement[stringIterationIndex], ',') == TRUE || isCharsEqual(statement[stringIterationIndex], '\0') == TRUE){
 
             /** zero length operand value, means we actually have no operand */
             if(operandStartIndex == stringIterationIndex){
@@ -66,43 +62,61 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 
             /** add the operand to the list */
             Operandvalue = substringFromTo(statement, operandStartIndex, stringIterationIndex);
-            if (checkIfFirstOperand ==1 && !(validateLabel(Operandvalue)) && statementType == DATA_STATEMENT_TYPE_DEFINE)
-            {
-				ERROR_PROGRAM(("macro should include label in the first operand"));
-			}
-			else if (checkIfFirstOperand == 2 && !(isnumber(Operandvalue)) && statementType == DATA_STATEMENT_TYPE_DEFINE)
-			{
-				ERROR_PROGRAM(("macro should include digit in the second operand"));
-			}
-			else if (checkIfFirstOperand > 2 && statementType == DATA_STATEMENT_TYPE_DEFINE)
-			{
-				ERROR_PROGRAM(("macro should include only one value"));
-			}
-            else
-            {
-				temp = createOperandNode(Operandvalue, statementType);
-				printf("check temp value = %s \n", temp->value);
-				if(headOfList == NULL){
-					headOfList = tail = temp;
-				} else{
-					tail->next = temp;
-					tail = temp;
+            temp = createOperandNode(Operandvalue, statementType);
+            printf("check temp value = %s \n", temp->value);
+            if(headOfList == NULL){
+                headOfList = tail = temp;
+            } else{
+                tail->next = temp;
+                tail = temp;
+            }
+			
+			if (statementType == DATA_STATEMENT_TYPE_DEFINE)
+			{				
+				printf("check %s \n", headOfList->value);
+				
+				if (headOfList == NULL)
+				{
+					ERROR_PROGRAM(("somthing went wrong with the macro's label"));
 				}
+				
+				validateLabel(headOfList->value);
+				
+				Operandvalue = getOperandFromDefine(statement, stringIterationIndex);
+				
+				printf("check v = %s \n", Operandvalue);
+				
+				if ((strcmp(Operandvalue, "")))
+				{
+					tail->next = createOperandNode(Operandvalue, DATA_STATEMENT_TYPE_DEFINE);
+					
+					if (tail->next == NULL)
+					{
+						ERROR_PROGRAM(("somthing went wrong with the macro's value"));
+						
+						return NULL;
+					}
+				}
+				
+				else
+				{
+					ERROR_PROGRAM(("there is no secend operand in the macro definition"));
+					
+					return NULL;
+				}
+				
+				printf("check headlist good = %d label = %d value = %s", LABEL_OPERAND, headOfList->type, headOfList->value);
+				
+				return headOfList;
 			}
-
+			
             /** if are at the end of the string, then we collected the last operand and its time to stop */
             if(isCharsEqual(statement[stringIterationIndex], '\0') == TRUE)
                 break;
             /** keep iterating until we reach the start of next operand */
-            while (isspace(statement[stringIterationIndex]) || ((isCharsEqual(statement[stringIterationIndex], ',') == TRUE) || ((isCharsEqual(statement[stringIterationIndex], '=') == TRUE) && (statementType != DATA_STATEMENT_TYPE_DEFINE)))){
-                if ((isCharsEqual(statement[stringIterationIndex], '=') == TRUE) && (checkIfFirstOperand == 2))
-                {
-						ERROR_PROGRAM((" '=' sign cannot appear after second operand"));
-				}
+            while (isspace(statement[stringIterationIndex]) || isCharsEqual(statement[stringIterationIndex], ',') == TRUE){
                 stringIterationIndex++;
             }
-            
-            checkIfFirstOperand++;
             operandStartIndex = stringIterationIndex;
         } else{
             stringIterationIndex++;
@@ -113,6 +127,81 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 
 }
 
+char* getOperandFromDefine (char* operand, int index)
+{
+	int				endOperand 		= 0; 
+	char*			operandValue	= "";
+	
+	printf("check got here %c %d \n", operand[index], index);
+	
+	while(isspace(operand[index]) || isCharsEqual(operand[index], '\0') == TRUE)
+	{
+		if(operand[index] == '\0')
+		{
+			ERROR_PROGRAM(("Define statemant must include second operand"));
+			break;
+		}
+                
+		index++;
+		
+		printf("check index = %d \n", index);
+	}
+	
+	if(operand[index] != '=')
+	{
+		ERROR_PROGRAM(("Define statemant must include '=' sign"));
+	}
+	
+	index++;
+	
+	while(isspace(operand[index]) || isCharsEqual(operand[index], '\0') == TRUE)
+	{
+		if(operand[index] == '\0')
+		{
+			ERROR_PROGRAM(("Define statemant must include second operand"));
+			break;
+		}
+                
+		index++;
+		
+		printf("check %d %c \n", index, operand[index]);
+	}
+	
+	printf("check out of while \n");
+	
+	endOperand = index;
+	
+	while(check_if_number(operand[endOperand]))
+	{
+		endOperand++;
+	}
+	
+	printf("check end = %d \n", index);
+	
+	operandValue = substringFromTo(operand, index, endOperand);
+	
+	printf("check operand = %s \n", operandValue);
+	
+	while(isspace(operand[endOperand]) || operand[endOperand] == '\0')
+	{
+		if (operand[endOperand] == '\0')
+		{
+			break;
+		}
+		
+		endOperand++;
+	}
+	
+	printf("check end = %d \n", endOperand);
+	
+	if(operand[endOperand] != '\0')
+	{
+		ERROR_PROGRAM(("Define statemant must include not more than two operands"));
+	}
+	
+	return operandValue;
+}
+
 OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType) {
     char expected;
     OperandNode *newNode = NULL;
@@ -121,7 +210,7 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
     errorIfMallocFailed(newNode, "When trying to allocate memory for a new operand node.");
     newNode->next =NULL; /** dangling pointers protection */
 
-	printf("check %d \n", statementType);
+	printf("check stat = %d \n", statementType);
     switch (statementType){
         case DATA_STATEMENT_TYPE_DATA:
             validateStringIsNumber(operandValue);

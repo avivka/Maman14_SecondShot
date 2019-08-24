@@ -342,3 +342,13 @@ boolean			isnumber 		(char* str)
 	
 	return TRUE;
 }
+
+boolean			check_if_number	(char num)
+{
+	if (!(num >= 48 && num <= 57))
+		{
+			return FALSE;
+		}
+	
+	return TRUE;
+}

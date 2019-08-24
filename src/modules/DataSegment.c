@@ -31,7 +31,7 @@ void handleDataStatmentTypeEntry(OperandNode *operand);
  */
 void handleDataStatmentTypeExtern(OperandNode *operand);
 
-void handleDataStatmentTypeDefine(OperandNode*, char*);
+void handleDataStatmentTypeDefine(OperandNode*);
 
 /**
  * Apeends the given node to the end of the data segment list
@@ -68,7 +68,7 @@ void handleDataStatement(char* dataStatement){
             handleDataStatmentTypeExtern(operands);
             break;
         case DATA_STATEMENT_TYPE_DEFINE:
-            handleDataStatmentTypeDefine(operands, label);
+            handleDataStatmentTypeDefine(operands);
             break;
         default:
             ERROR_PROGRAM(("received invalid data statement %s", dataStatement));
@@ -164,25 +164,39 @@ void handleDataStatmentTypeExtern(OperandNode *operands){
     }
 }
 
-void handleDataStatmentTypeDefine(OperandNode *operands, char* label){
+void handleDataStatmentTypeDefine(OperandNode *operands){
     OperandNode *walker = operands;
+    
+    printf("check type = %d value = %s \n", walker->type, walker->value);
+    printf("check type = %d value = %s \n", walker->next->type, walker->next->value);
+    
     if (operands == NULL)
     {
         ERROR_PROGRAM((".define statements must at least one operand"));
     }
-    else if (label == NULL)
+	if (walker->value == NULL)
     {
         ERROR_PROGRAM(("macro label is not define"));
     }
-    else{
-		while (walker){
-			if(walker->type != LABEL_OPERAND){
-				ERROR_PROGRAM(("Invalid operand value handling .extern statement, received %s, .define operations can only use label operands. ", walker->value));
-			}
-			/** add the define statment to the symbols table */
-			addSymbolToTable(buildSymbol(label, macro, atoi(walker->value)));
-			walker = walker->next;
+    if (walker->next == NULL)
+    {
+        ERROR_PROGRAM(("there is no value for macro"));
+    }
+    else if (walker->next->value == NULL)
+    {
+        ERROR_PROGRAM(("macro digit is not define"));
+    }
+    else if ((walker->value != NULL) && (operands != NULL))
+    {
+		if(walker->type != LABEL_OPERAND){
+			ERROR_PROGRAM(("Invalid macro label handling .define statement, received %s, .define operations can only use label operands. ", walker->value));
 		}
+		if (walker->next->type != DIRECT_VALUE_OPERAND){
+			ERROR_PROGRAM(("Invalid operand value handling .define statement, received %s, .define operations can only use direct value operands. ", walker->next->value));
+		}
+		/** add the define statment to the symbols table */
+		addSymbolToTable(buildSymbol(walker->value, macro, atoi(walker->next->value)));
+		walker = walker->next;
     }
 }
 
