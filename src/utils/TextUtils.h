@@ -56,6 +56,7 @@ int isWordStartsWithChar(char *word, char charToTest);
  */
 char getLastChar(char* word);
 
+
 /**
  * Check if the two given chars are the same
  * @param c

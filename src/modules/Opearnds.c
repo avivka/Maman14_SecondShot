@@ -70,6 +70,7 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
             {
 				ERROR_PROGRAM(("macro should include label in the first operand"));
 			}
+
 			else if (checkIfFirstOperand == 2 && !(isnumber(Operandvalue)) && statementType == DATA_STATEMENT_TYPE_DEFINE)
 			{
 				ERROR_PROGRAM(("macro should include digit in the second operand"));
