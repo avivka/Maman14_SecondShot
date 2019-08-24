@@ -93,4 +93,6 @@ COMMANDS getCommandOfStatement(char *sentence);
 
 boolean			isnumber 		(char*);
 
+boolean			check_if_number	(char);
+
 #endif
