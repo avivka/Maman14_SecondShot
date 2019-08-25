@@ -9,7 +9,6 @@ void writeToFile(char *filename, char * *buffer, int bufferLength){
         exit(0);
     }
 
-    file = fopen(filename, "w+");
     i = 0;
     while (i < bufferLength){
         fputs(buffer[i], file);

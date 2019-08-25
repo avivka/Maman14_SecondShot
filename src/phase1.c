@@ -86,7 +86,7 @@ void	printSymbolTable ()
     Symbol *walker;
     printf("check 22 attempt to print the Symbol table\n");
     walker = getSymbolsTableHead();
-    printf("check 23 here's the label at the Symbol table's head %s\n", walker->label);
+    /*printf("check 23 here's the label at the Symbol table's head %s\n", walker->label);*/
     while (walker)
     {
         printf("%s \t %d \t %d \n", walker->label, walker->feature, walker->address);

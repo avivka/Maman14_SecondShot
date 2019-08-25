@@ -32,8 +32,8 @@ int main(int argc, char *argv[]) {
 
         /** clear up so we can process properly the next file*/
         resetDataSegmentModule();
-        /*resetSymbolsModulesModule();*/
-        /*resetCodeSegmentModule();*/
+        resetSymbolsModulesModule();
+        resetCodeSegmentModule();
 
         printf("\n Assembler completed processing file: %s", *argv);
 

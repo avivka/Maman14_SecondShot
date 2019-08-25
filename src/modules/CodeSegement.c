@@ -36,6 +36,7 @@ void resetCodeSegmentModule(){
 
 void initCodeSection(){
     codeSection = (char**)malloc(IC * sizeof(char*));
+    printf("this is the IC size:%d\n", IC);
     errorIfMallocFailed(codeSection, "when tring to allocate memory for code section check.");
     
     IC = 0;

@@ -67,12 +67,20 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 void doWhileFileHaveLines(FILE * file, void (*nextLineHandler)(char*)){
     char line[MAX_LINE_SIZE];
     printf("check 16 we're on doWhileFileHaveLines\n");
+
     while(fgets(line, sizeof(line), file))
     {
         printf("check 17 line %s read successfully.\n", line);
         nextLineHandler(line);
         printf("check done 17 %s\n", line);
     }
+    /*
+    if (fgets(line, sizeof(line), file))
+    {
+        printf("check 17 line %s read successfully.\n", line);
+        printf("check done 17 %s\n", line);
+    }
+     */
 }
 
 

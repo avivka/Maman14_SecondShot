@@ -17,6 +17,11 @@ void doPhase2(char* fileName)
 
     printf("check 24 got to doPhase2\n");
 
+    if(fileToAssemble == NULL)
+    {
+        printf("check file is null first time \n");
+    }
+
     codeSegmentSize = getInstructionsCount();
     printf("check 24 here's the IC %d\n", codeSegmentSize);
     dataSegmentSize = getDataInstructionsCount();
@@ -36,27 +41,38 @@ void doPhase2(char* fileName)
         printf("check 8 again\n");
     }
     if (open_or_create_file(&fileToAssemble,renamedInputFile) == 0) {
-
+        if(fileToAssemble == NULL)
+        {
+            printf("check file is null second time \n");
+        }
         printf("check 14 again open or creation of %s was done successfully\n", renamedInputFile);
-
+        printf("check there's a pointer to fileToAssemble in phase2:%p\n", (void*)fileToAssemble);
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection();
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssemble, handleNextLine);
+        printf("check 18 doWhileHaveLines ended \n");
         if (errorFlag == 1) {
             printf("didn't output files for file %s, because errors were found. see the errors output for more information.",
                    fileName);
             return;
         }
-        
+        if(fileToAssemble == NULL)
+        {
+            printf("check file is null third time \n");
+        }
+        fclose(fileToAssemble);
+
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
         createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
-        
+        printf("this is the filename:%s\n", fileName);
+        /*
         if (fclose(fileToAssemble))
         {
 			printf("check error");
 		}
+         */
         
         if(fileToAssemble == NULL)
         {
@@ -72,7 +88,8 @@ void doPhase2(char* fileName)
     }
 }
 
-void handleNextLine(char* line){
+void handleNextLine(char* line)
+{
     /** skip empty lines or comment lines */
     if(isCommentStatementOrEmptyLine(line) == TRUE){
         currentLine++;
@@ -91,8 +108,8 @@ void handleNextLine(char* line){
     currentLine++;
 }
 
-void createEnteriesFile(char *fileName){
-
+void createEnteriesFile(char *fileName)
+{
 	printf("check got here \n");
     listNode *walker = NULL;
     list *entryList = NULL;
@@ -101,24 +118,31 @@ void createEnteriesFile(char *fileName){
     char** buffer = NULL;
     entryList = getEntryStatementsList();
     walker = entryList->head;
+    char* file = "";
     /** if not entry statements nothing to do */
     if(walker == NULL){
         return;
     }
-    buffer = (char * *) malloc(sizeof(char *) * list_size(entryList));
+    buffer = (char * *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL * list_size(entryList));
     errorIfMallocFailed(buffer, "new array of strings");
     count = 0;
     while (walker)
     {
-        address = getSymbolAddress((char *)walker->data);
-        buffer[count] = (char *) malloc(sizeof(char *));
+        address = getSymbolAddress(walker->data);
+        buffer[count] = (char *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
         errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
         sprintf(buffer[count], "%s    %d", walker->data, address);
         walker = walker->next;
         count++;
     }
 
-    writeToFile(concat(fileName, ".ent"), buffer, count);
+    file = concat(fileName, ".ent");
+    writeToFile(file, buffer, count);
+    if (file == NULL)
+    {
+        printf("check file in entry is actually null \n");
+    }
+    free(file);
 }
 
 void createExternalsFile(char *fileName)
@@ -129,23 +153,33 @@ void createExternalsFile(char *fileName)
     int count;
     externalsList = getExternalStatementsList();
     walker = externalsList->head;
+    char* file = "";
     /** if not entry statements nothing to do */
     if(walker == NULL){
        return;
     }
-    buffer = (char**) malloc(sizeof(char *) * list_size(externalsList));
+    buffer = (char**) malloc(sizeof(char *) * (getInstructionsCount() + getDataInstructionsCount()));
     errorIfMallocFailed(buffer, "new array of strings");
     count = 0;
     while (walker){
-        buffer[count] = (char *) malloc(sizeof(char *));
+        buffer[count] = (char *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
         errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
         sprintf(buffer[count], "%s", walker->data);
         walker = walker->next;
         count++;
     }
 
-    writeToFile(concat(fileName, ".ext"), buffer, count);
-    
+    file = concat(fileName, ".ext");
+
+    writeToFile(file, buffer, count);
+
+    if (file == NULL)
+    {
+        printf("check file in extern is actually null \n");
+    }
+
+    free(file);
+
     printf("check done external \n");
 }
 
@@ -160,14 +194,15 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
     DataSegmentNode* 	dataSegmentWalker 	= NULL;
 
     fileName = concat(fileName, ".ob");
+    printf("check filename in createObjectFile:%s\n", fileName);
     
     if (open_or_create_file(&file,fileName) != 0)
 	{
         fprintf(stderr, "error could not create file: %s \n", fileName);
         exit(1);
     }
-    firstLine = (char *)malloc(sizeof(char*));
-    errorIfMallocFailed(firstLine, "while tring to allocate memory to the first line");
+    firstLine = (char *)malloc(sizeof(MAX_LINE_SIZE));
+    errorIfMallocFailed(firstLine, "while trying to allocate memory to the first line");
     /** first put the total code instructions and total data instructions */
     sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
     fputs(firstLine, file);
@@ -206,8 +241,24 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
         /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
         dataSegmentWalker = dataSegmentWalker->next;
     }
-    
+
+    if (firstLine == NULL)
+    {
+        printf("The first line is actually null\n");
+    }
+
     free(firstLine);
+
+    printf("check filename in createObjectFile:%s\n", fileName);
+    if (file == NULL)
+    {
+        printf("The fileName %p is actually null\n", (void*)file);
+    }
+    else
+    {
+        printf("The fileName %p is not null\n", (void*)file);
+    }
+    free(fileName);
     
     fclose(file);
     

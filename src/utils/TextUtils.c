@@ -1,5 +1,6 @@
 #include "TextUtils.h"
 
+/*
 char* getWord(char *input, int startIndex){
     int i = 0;
     char *word = NULL;
@@ -22,6 +23,7 @@ char* getWord(char *input, int startIndex){
     }
     return word;
 }
+*/
 
 int isContainsComma(char *input){
     return isContainsChar(input, ',');

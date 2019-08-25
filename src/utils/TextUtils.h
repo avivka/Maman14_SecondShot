@@ -12,8 +12,9 @@
  * Getting the next word in input, start from startIndex.
  *  Returns the pointer to the beginning of the word
  * */
+ /*
 char* getWord(char *input, int startIndex);
-
+*/
 
 /**
  * Gets an input, returns wether it contains the char
