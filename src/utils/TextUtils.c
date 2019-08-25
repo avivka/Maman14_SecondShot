@@ -10,7 +10,7 @@ char* getWord(char *input, int startIndex){
         word = malloc((sizeof(char) * (strlen(input))) + 1);
         errorIfMallocFailed(word, "While trying to allocate memory to create a new symbol.");
         if (!word){
-            fprintf(stderr, "Error: Memory allocation failed");
+            ERROR_PROGRAM(("Memory allocation failed"));
             exit (0);
         }
         while ((input[startIndex]) && (input[startIndex] != ' ') && (input[startIndex] != '\t') && (input[startIndex] != ',')){

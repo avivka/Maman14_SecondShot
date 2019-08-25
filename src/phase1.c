@@ -6,10 +6,8 @@ void doPhase1(char* fileName){
 
     FILE *fileToAssemble = NULL;
     char* renamedInputFile = "";
+
     /** file names are given without the extension, we expect the file to end with the .as extension*/
-    /*fileToAssemble = openReadFile(concat(fileName, ".as"));*/
-
-
     if (is_extention_exists (fileName, ".as"))
     {
 		printf("check - the extention .as exists in %s\n", fileName);
@@ -34,7 +32,7 @@ void doPhase1(char* fileName){
     }
     else
     {
-        fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
+        ERROR_PROGRAM(("The file %s could not be renamed to %s%s",fileName,fileName,".as"));
     }
     fclose(fileToAssemble);
 }

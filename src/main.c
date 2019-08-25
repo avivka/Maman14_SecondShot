@@ -9,7 +9,7 @@ int errorFlag;
 int main(int argc, char *argv[]) {
 
     if(argc < 2) {
-        fprintf(stderr, "Error: Arguments weren't supplied, exiting code \n");
+        ERROR_PROGRAM(("Arguments weren't supplied, exiting code \n"));
         exit (0);
     }
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     initCommandsDescriptors();
 
     for(argc--, argv++; argc; argv++, argc--) {
-        printf("\n Begin processing the following file: %s", *argv);
+        printf("\n Begin processing the following file: %s\n", *argv);
         currentLine = 1;
         errorFlag = 0;
         /** execute phase 1 of the assembler */
