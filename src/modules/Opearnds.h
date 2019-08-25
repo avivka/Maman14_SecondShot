@@ -7,6 +7,7 @@
 #include "../utils/Error.h"
 #include "../constants.h"
 #include "Analyzer.h"
+#include "SymbolsTable.h"
 #include "CommandsIndex.h"
 #include "statments_types.h"
 

@@ -28,31 +28,34 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 
     instructionLength = instructionLengthByStatmentType(statementType, statement);
     stringIterationIndex = labelLength + instructionLength + 1; /** the label length + the instruction length + one for the space before the operand  e.g: MAIN: sub */
-    /** iterate over each char */
+    /** iterate over each char in the statement, starting fron the first char that should be included in the operand's section.*/
     operandStartIndex = stringIterationIndex;
     while (stringIterationIndex <= strlen(statement)){
 
-        /** if we hit pharntesses. keep collecting the whole expression as a whole */
-        if(isCharsEqual(statement[stringIterationIndex], '[')){
-            /** continue until either we reached the end of the string, or we found our closing pair */
+        /** if we hit parentheses it a suspected index addressing method, Keep collecting the whole expression as a whole */
+        if(isCharsEqual(statement[stringIterationIndex], '['))
+        {
             printf("\n\n\n check got to '[' sign \n");
-            while (!isCharsEqual(statement[stringIterationIndex], ']') && stringIterationIndex < strlen(statement)){
+            /** continue until either we reached the end of the string, or we found our closing pair of parentheses*/
+            while (!isCharsEqual(statement[stringIterationIndex], ']') && stringIterationIndex < strlen(statement))
+            {
                 stringIterationIndex++;
             }
             
             printf("check %c \n", statement[stringIterationIndex]);
             
-            /** if we hit the end without the last char to be the closing pharntesses, error */
-            if(!isCharsEqual(statement[stringIterationIndex], ']')){
-                ERROR_PROGRAM(("no matching closing ), each ( must have a closing )"));
+            /** if we hit the end without the last char to be the closing parentheses, error */
+            if(!isCharsEqual(statement[stringIterationIndex], ']'))
+            {
+                ERROR_PROGRAM(("no matching closing ], each [ must have a closing ]"));
             }
-            /** continue one more to get after phratnesis */
+            /** continue one more to get after parentheses to \0 or other illegal char */
             stringIterationIndex++;
         }
 
-        /** if it the end of current operand */
-        if(isspace(statement[stringIterationIndex]) || isCharsEqual(statement[stringIterationIndex], ',') == TRUE || isCharsEqual(statement[stringIterationIndex], '\0') == TRUE){
-
+        /** if it the end of current operand, we */
+        if(isspace(statement[stringIterationIndex]) || isCharsEqual(statement[stringIterationIndex], ',') == TRUE || isCharsEqual(statement[stringIterationIndex], '\0') == TRUE)
+        {
             /** zero length operand value, means we actually have no operand */
             if(operandStartIndex == stringIterationIndex){
                 break;
@@ -213,7 +216,11 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 	printf("check stat = %d \n", statementType);
     switch (statementType){
         case DATA_STATEMENT_TYPE_DATA:
-            validateStringIsNumber(operandValue);
+            /**check if the operand is a number*/
+            if (!(isnumber(operandValue))) {
+                if (!searchForSymbolByLabel(operandValue))
+                    ERROR_PROGRAM(("invalid operand %s, should be macro or a number", operandValue));
+            }
             newNode->value = operandValue;
             newNode->type = DIRECT_VALUE_OPERAND;
             break;

@@ -328,6 +328,7 @@ COMMANDS getCommandOfStatement(char *sentence){
 
 boolean			isnumber 		(char* str)
 {
+    /*
 	int counter = 0;
 	
 	while (counter < strlen(str))
@@ -339,6 +340,13 @@ boolean			isnumber 		(char* str)
 		
 		counter++;
 	}
+    */
+    char *ptr;
+    strtol(str, &ptr, 10);
+    if(strlen(ptr) != 0){
+        /*ERROR_PROGRAM(("expected a number, but got %s", ptr));*/
+        return FALSE;
+    }
 	
 	return TRUE;
 }
