@@ -1,6 +1,6 @@
 #include "CodeSegement.h"
 
-void  addToCodeSection(CommandStatement cmd);
+void addToCodeSection(CommandStatement cmd);
 void addOperandValueToCodeSection(OperandNode* operand, OperandPosition operandPos);
 void addOperandsValuesToCodeSection(OperandNode* operandsList);
 /**
@@ -42,15 +42,17 @@ void initCodeSection(){
 }
 
 void increaseCommandInstructionsCountByStatement(char* statement){
-    char *label;
-    Symbol* newSymbol;
-    OperandNode *operandsList;
-    OperandNode *indexOperand;
-    int operandsCount;
-    label = extractLabel(statement);
+    char *label = extractLabel(statement);
+    Symbol* newSymbol = NULL;
+    OperandNode *operandsList = NULL;
+    OperandNode *indexSrcOperand = NULL;
+    OperandNode *indexDesOperand = NULL;
+    int operandsCount = 0;
 
     /** if statment has a label, add it to the symbols table */
     if(label != NULL){
+		printf("check ic = %d %s \n", getInstructionsCount(), statement);
+		
         newSymbol = buildSymbol(label, code, getInstructionsCount() + MEMOERY_START_ADDRESS);
         addSymbolToTable(newSymbol);
     }
@@ -61,34 +63,73 @@ void increaseCommandInstructionsCountByStatement(char* statement){
     IC++;
     switch (operandsCount){
         case 2:
-            if(operandsList->type == REGISTER_OPERAND && operandsList->next->type == REGISTER_OPERAND){
+            if(operandsList->type == REGISTER_OPERAND && operandsList->next->type == REGISTER_OPERAND)
+            {
                 /** if both operands, are of register type, increase only by one for both operands */
                 IC++;
-            } else if(operandsList->type == INDEX_OPERAND){
-					printf("check got here, %s \n", operandsList->value);
-                    indexOperand = getOperandListOfIndexOperand(operandsList->value);
-                    IC += 2;
-            } else if(operandsList->next->type == INDEX_OPERAND){
-					printf("check got here, %s \n", operandsList->next->value);
-                    indexOperand = getOperandListOfIndexOperand(operandsList->next->value);       
-                    IC += 2;
-            } else {
-                /** increase by 1 for each operand */
-                IC += 2;
             }
+            
+            else if((!(operandsList->next->type == INDEX_OPERAND)) && (!(operandsList->type == INDEX_OPERAND)))
+            {
+				/** increase by 1 for each operand */
+				printf("check both are not index \n");
+				
+				IC += 2;
+            } 
+            
+            else if (operandsList == NULL)
+            {
+				printf("check operand list = null \n");
+			}
+			
+			else
+            {
+				if(operandsList->type == INDEX_OPERAND)
+				{
+					printf("check got here, %s \n", operandsList->value);
+                    indexSrcOperand = getOperandListOfIndexOperand(operandsList->value);
+                    
+                    if(indexSrcOperand->type == INDEX_OPERAND)
+                    {
+                        ERROR_PROGRAM(("index operands cant contain other index operand"));
+					}
+					
+                    IC += 2;
+					
+				}
+					
+				if(operandsList->next->type == INDEX_OPERAND)
+				{
+					printf("\n check got here, %s %d \n", operandsList->next->value, operandsList->next->type);
+                    indexDesOperand = getOperandListOfIndexOperand(operandsList->next->value);       
+                    if(indexDesOperand->type == INDEX_OPERAND)
+                    {
+                        ERROR_PROGRAM(("index operands cant contain other index operand"));
+					}
+                    
+                    IC += 2;
+				}
+				
+				if(((operandsList->type == INDEX_OPERAND) && (operandsList->next->type != INDEX_OPERAND)) || ((operandsList->type != INDEX_OPERAND) && (operandsList->next->type == INDEX_OPERAND)))
+				{
+					IC += 1;
+				}
+			}
+			 
             break;
+            
         case 1:
             if(operandsList->type == INDEX_OPERAND){
 				printf("check got here, %s \n", operandsList->value);
-                    indexOperand = getOperandListOfIndexOperand(operandsList->value);
-                    if(indexOperand->type == INDEX_OPERAND || indexOperand->next->type == INDEX_OPERAND){
+                    indexDesOperand = getOperandListOfIndexOperand(operandsList->value);
+                    if(indexDesOperand->type == INDEX_OPERAND || indexDesOperand->next->type == INDEX_OPERAND){
                         ERROR_PROGRAM(("index operands cant contain other index operand"));
-                    } else if (indexOperand->type == REGISTER_OPERAND && indexOperand->next->type == REGISTER_OPERAND){
+                    } else if (indexDesOperand->type == REGISTER_OPERAND || indexDesOperand->next->type == REGISTER_OPERAND){
                         /** increase by 1 for the index label, and by another one for both arguments as they fit one word */
-                        IC += 2;
+                        ERROR_PROGRAM(("index operands cant contain register operand"));
                     } else{
                         /** increase by one for index label value, and by one for each of the two operands */
-                        IC += 3;
+                        IC += 2;
                     }
             } else{
                 /** just increase by one */
@@ -102,6 +143,8 @@ void increaseCommandInstructionsCountByStatement(char* statement){
             ERROR_PROGRAM(("invalid number of operands for a command statement, got %d, expected to be between 0 to 2", operandsCount));
             break;
     }
+    
+    printf("check ic = %d \n", IC);
 
 }
 

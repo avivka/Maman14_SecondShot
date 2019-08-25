@@ -72,16 +72,13 @@ void updateSymbolTableAddresses(){
     while (walker){
         printf("check 19 get the next node in Symbol is done successfully.\n");
         /** skip external or command labels, as we don't need to update their addresses */
-        if(walker->feature == ext ||  walker->feature == dat){
+        if(walker->feature == dat)
+        {
             printf("check 20 is ext or dat\n");
-          walker = walker->next;
-            continue;
+			walker->address += getInstructionsCount() + MEMOERY_START_ADDRESS;
         }
-        printf("check 21 not ext or dat\n");
-        /** add to the address the amount of command instructions + the memory start address, as the data segment starts immidiately after the code segment */
-        walker->address += getInstructionsCount() + MEMOERY_START_ADDRESS;
-
-        walker = walker->next;
+        
+        walker = walker->next;   
     }
 }
 
