@@ -5,12 +5,12 @@ void handleNextLIne(char* line);
 void doPhase1(char* fileName){
 
     FILE *fileToAssemble = NULL;
-    char* renamedInputFile = "";
+    /*char* renamedInputFile = "";*/
     /** file names are given without the extension, we expect the file to end with the .as extension*/
     /*fileToAssemble = openReadFile(concat(fileName, ".as"));*/
 
 
-    if (is_extention_exists (fileName, ".as"))
+    /*if (is_extention_exists (fileName, ".as"))
     {
 		printf("check - the extention .as exists in %s\n", fileName);
         renamedInputFile = fileName;
@@ -21,11 +21,12 @@ void doPhase1(char* fileName){
         printf("check - the extention .as does not exist in %s\n", fileName);
         renamedInputFile = rename_file(fileName, ".as");
         printf("check 8 \n");
-    }
-    if (open_or_create_file(&fileToAssemble,renamedInputFile) == 0)
+    }*/
+    
+    if (open_or_create_file(&fileToAssemble,fileName) == 0)
     {
 
-        printf("check 14 open or creation of %s was done successfully\n", renamedInputFile);
+        printf("check 14 open or creation of %s was done successfully\n", fileName);
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssemble, handleNextLIne);
         /** after we handled all the lines, update the final addresses in the symbols table */

@@ -13,7 +13,7 @@ void doPhase2(char* fileName)
 	int 	codeSegmentSize		= 0;
     int 	dataSegmentSize		= 0;
     FILE* 	fileToAssembler		= NULL;
-    char*   renamedInputFile 	= "";
+    /*char*   renamedInputFile 	= "";*/
     
     if(fileToAssembler == NULL)
     {
@@ -29,7 +29,7 @@ void doPhase2(char* fileName)
 
     /** file names are given without the extension, we expect the file to end with the .as extension*/
 
-    if (is_extention_exists (fileName, ".as"))
+    /*if (is_extention_exists (fileName, ".as"))
     {
         printf("check 1 again - the extention .as exists in %s\n", fileName);
         renamedInputFile = fileName;
@@ -40,10 +40,11 @@ void doPhase2(char* fileName)
         printf("check again - the extention .as does not exist in %s\n", fileName);
         renamedInputFile = rename_file(fileName, ".as");
         printf("check 8 again\n");
-    }
-    if (open_or_create_file(&fileToAssembler,renamedInputFile) == 0) 
+    }*/
+    
+    if (open_or_create_file(&fileToAssembler,fileName) == 0) 
     {
-        printf("check 14 again open or creation of %s was done successfully\n", renamedInputFile);
+        printf("check 14 again open or creation of %s was done successfully\n", fileName);
         
         /*fclose(fileToAssembler);*/
 		
@@ -64,7 +65,7 @@ void doPhase2(char* fileName)
         
         printf("check WTF \n");
         
-        if (fileToAssembler != NULL)
+        /*if (fileToAssembler != NULL)
 		{
 			printf("check closed corectly \n");
 			
@@ -72,7 +73,7 @@ void doPhase2(char* fileName)
 			{
 				printf("check went good \n");
 			}
-		}
+		}*/
 		        
         printf("check close phase2 \n");
     }

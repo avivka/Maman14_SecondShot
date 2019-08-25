@@ -94,6 +94,6 @@ void validateStringIsNumber(char *string);
  */
 char* concat(const char *s1, const char *s2);
 
-boolean is_extention_exists	(char* s1, char* s2);
+char* is_extention_exists	(char* s1, char* s2);
 
 #endif

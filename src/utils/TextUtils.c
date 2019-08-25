@@ -119,13 +119,14 @@ char* concat(const char *s1, const char *s2)
     return result;
 }
 
-boolean		is_extention_exists	    (char* s1, char* s2)
+char*		is_extention_exists	    (char* s1, char* s2)
 {
-    char* str;
+    char* str = "";
+    char* cutExtention = "";
 
-    printf("\ncheck if enters is_extention_exists \n");
+    printf("\n check if enters is_extention_exists \n");
 
-    str = strstr(s1, s2); /**if exists - return the pointer to the */
+    str = strstr(s1, s2); /**if exists - return the pointer to the second string in the first one*/
 
     printf("check the substring is %p \n", str);
 
@@ -133,11 +134,18 @@ boolean		is_extention_exists	    (char* s1, char* s2)
     {
         /**means that the extention already exists in s1*/
         printf("check is_extention_exists true \n");
-
-        return TRUE;
+		
+		printf("check %c %c \n", s1[0], s1[strlen(s1) - 3]);
+		
+        cutExtention = substringFromTo(s1, 0, strlen(s1) - 3);
     }
-
-    printf("check is_extention_exists false \n");
-
-    return FALSE;
+    
+    else
+    {
+		printf("check is_extention_exists false \n");
+		
+		return s1;
+	}
+	
+	return cutExtention;
 }
