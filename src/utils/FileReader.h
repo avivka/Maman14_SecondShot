@@ -20,7 +20,8 @@ int open_or_create_file	(FILE**, char*);
  * @param file pointer to file.
  * @param nextLineHandler pointer to fucnction that get the next line.
  */
-void doWhileFileHaveLines(FILE * file, void (*nextLineHandler)(char*));
+void doWhileFileHaveLines(FILE*, void (*nextLineHandler)(char*));
+void DoWhileFileHaveLines(char*, void (*nextLineHandler)(char*));
 #endif
 
 

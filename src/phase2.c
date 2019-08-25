@@ -10,17 +10,17 @@ extern int currentLine;
 
 void doPhase2(char* fileName)
 {
-	int 	codeSegmentSize;
-    int 	dataSegmentSize;
-    FILE* 	fileToAssemble		= NULL;
-    char*   renamedInputFile = "";
+	int 	codeSegmentSize		= 0;
+    int 	dataSegmentSize		= 0;
+    FILE* 	fileToAssembler		= NULL;
+    char*   renamedInputFile 	= "";
+    
+    if(fileToAssembler == NULL)
+    {
+		printf("check is null 1!\n");
+	}
 
     printf("check 24 got to doPhase2\n");
-
-    if(fileToAssemble == NULL)
-    {
-        printf("check file is null first time \n");
-    }
 
     codeSegmentSize = getInstructionsCount();
     printf("check 24 here's the IC %d\n", codeSegmentSize);
@@ -28,6 +28,7 @@ void doPhase2(char* fileName)
     printf("check 24 here's the DC %d\n", dataSegmentSize);
 
     /** file names are given without the extension, we expect the file to end with the .as extension*/
+
     if (is_extention_exists (fileName, ".as"))
     {
         printf("check 1 again - the extention .as exists in %s\n", fileName);
@@ -40,46 +41,40 @@ void doPhase2(char* fileName)
         renamedInputFile = rename_file(fileName, ".as");
         printf("check 8 again\n");
     }
-    if (open_or_create_file(&fileToAssemble,renamedInputFile) == 0) {
-        if(fileToAssemble == NULL)
-        {
-            printf("check file is null second time \n");
-        }
+    if (open_or_create_file(&fileToAssembler,renamedInputFile) == 0) 
+    {
         printf("check 14 again open or creation of %s was done successfully\n", renamedInputFile);
-        printf("check there's a pointer to fileToAssemble in phase2:%p\n", (void*)fileToAssemble);
+        
+        /*fclose(fileToAssembler);*/
+		
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection();
         /** keeps reading line by line and handle each line */
-        doWhileFileHaveLines(fileToAssemble, handleNextLine);
-        printf("check 18 doWhileHaveLines ended \n");
+        doWhileFileHaveLines(fileToAssembler, handleNextLine);
+        /*DoWhileFileHaveLines(renamedInputFile, handleNextLine);*/
+        /*fclose(fileToAssembler);*/
         if (errorFlag == 1) {
-            printf("didn't output files for file %s, because errors were found. see the errors output for more information.",
-                   fileName);
+            printf("didn't output files for file %s, because errors were found. see the errors output for more information.", fileName);
             return;
         }
-        if(fileToAssemble == NULL)
-        {
-            printf("check file is null third time \n");
-        }
-        fclose(fileToAssemble);
 
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
         createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
-        printf("this is the filename:%s\n", fileName);
-        /*
-        if (fclose(fileToAssemble))
-        {
-			printf("check error");
-		}
-         */
         
-        if(fileToAssemble == NULL)
-        {
-			printf("check file closed \n");
-		}
+        printf("check WTF \n");
         
-        printf("check close phase2");
+        if (fileToAssembler != NULL)
+		{
+			printf("check closed corectly \n");
+			
+			if(fclose(fileToAssembler) == 0)
+			{
+				printf("check went good \n");
+			}
+		}
+		        
+        printf("check close phase2 \n");
     }
 
     else
