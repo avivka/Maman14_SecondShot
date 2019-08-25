@@ -67,12 +67,70 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 void doWhileFileHaveLines(FILE * file, void (*nextLineHandler)(char*)){
     char line[MAX_LINE_SIZE];
     printf("check 16 we're on doWhileFileHaveLines\n");
+  
     while(fgets(line, sizeof(line), file))
     {
         printf("check 17 line %s read successfully.\n", line);
         nextLineHandler(line);
         printf("check done 17 %s\n", line);
     }
+}
+
+void DoWhileFileHaveLines(char* filename, void (*nextLineHandler)(char*)){
+    char line[MAX_LINE_SIZE] = "";
+    FILE* fileToAssembler = NULL;
+    int	counter = 1;
+    int counter2 = 0;
+    printf("check 16 we're on doWhileFileHaveLines\n");
+    
+    if (open_or_create_file(&fileToAssembler,filename) == 0)
+	{
+		while(fgets(line, sizeof(line), fileToAssembler))
+		{
+			
+			if (fileToAssembler != NULL)
+			{
+				printf("check all good \n");
+				
+				printf("check 17 line %s read successfully.\n", line);
+				nextLineHandler(line);
+				printf("check done 17 %s\n", line);
+				counter2++;
+				
+				printf("check counter = %d counter2 = %d \n", counter, counter2);
+				
+				if(counter == counter2)
+				{
+					counter++;
+					counter2 = 0;
+					if (fclose(fileToAssembler) == 0)
+					{
+						printf("check closed \n");
+						
+						if (open_or_create_file(&fileToAssembler,filename) == 0)
+						{
+							printf("check opened successfully \n");
+						}
+						
+						else
+						{
+							printf("check problem with opening file \n");
+						}
+					}
+					
+					else
+					{
+						printf("check problem with closing file \n");
+					}
+				}
+			}
+			else
+			{
+				printf("check error!!!!! \n");
+			}
+			
+		}
+	}
 }
 
 

@@ -10,10 +10,15 @@ extern int currentLine;
 
 void doPhase2(char* fileName)
 {
-	int 	codeSegmentSize;
-    int 	dataSegmentSize;
-    FILE* 	fileToAssemble		= NULL;
-    char*   renamedInputFile = "";
+	int 	codeSegmentSize		= 0;
+    int 	dataSegmentSize		= 0;
+    FILE* 	fileToAssembler		= NULL;
+    char*   renamedInputFile 	= "";
+    
+    if(fileToAssembler == NULL)
+    {
+		printf("check is null 1!\n");
+	}
 
     printf("check 24 got to doPhase2\n");
 
@@ -36,17 +41,20 @@ void doPhase2(char* fileName)
         renamedInputFile = rename_file(fileName, ".as");
         printf("check 8 again\n");
     }
-    if (open_or_create_file(&fileToAssemble,renamedInputFile) == 0) {
-
+    if (open_or_create_file(&fileToAssembler,renamedInputFile) == 0) 
+    {
         printf("check 14 again open or creation of %s was done successfully\n", renamedInputFile);
-
+        
+        /*fclose(fileToAssembler);*/
+		
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection();
         /** keeps reading line by line and handle each line */
-        doWhileFileHaveLines(fileToAssemble, handleNextLine);
+        doWhileFileHaveLines(fileToAssembler, handleNextLine);
+        /*DoWhileFileHaveLines(renamedInputFile, handleNextLine);*/
+        /*fclose(fileToAssembler);*/
         if (errorFlag == 1) {
-            printf("didn't output files for file %s, because errors were found. see the errors output for more information.",
-                   fileName);
+            printf("didn't output files for file %s, because errors were found. see the errors output for more information.", fileName);
             return;
         }
         
@@ -54,17 +62,19 @@ void doPhase2(char* fileName)
         createExternalsFile(fileName);
         createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
         
-        if (fclose(fileToAssemble))
-        {
-			printf("check error");
-		}
+        printf("check WTF \n");
         
-        if(fileToAssemble == NULL)
-        {
-			printf("check file closed \n");
+        if (fileToAssembler != NULL)
+		{
+			printf("check closed corectly \n");
+			
+			if(fclose(fileToAssembler) == 0)
+			{
+				printf("check went good \n");
+			}
 		}
-        
-        printf("check close phase2");
+		        
+        printf("check close phase2 \n");
     }
 
     else
