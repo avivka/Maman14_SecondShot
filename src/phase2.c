@@ -26,17 +26,18 @@ void doPhase2(char* fileName)
     if (is_extention_exists (fileName, ".as"))
     {
         printf("check 1 again - the extention .as exists in %s\n", fileName);
-        renamedInputFile = rename_file(fileName, "");
-        printf("check 2 again the file name that we'll try to open after renaming %s\n", fileName);
+        renamedInputFile = fileName;
+        printf("check 2 again the file name that we'll try to open %s\n", renamedInputFile);
     }
     else
     {
-        renamedInputFile = fileName;
-        printf("check again - the extention .as does not exist in %s, keep on going to the opening\n", fileName);
+        printf("check again - the extention .as does not exist in %s\n", fileName);
+        renamedInputFile = rename_file(fileName, ".as");
+        printf("check 8 again\n");
     }
     if (open_or_create_file(&fileToAssemble,renamedInputFile) == 0) {
 
-        printf("check 14 again open or creation of %s was done successfully\n", fileName);
+        printf("check 14 again open or creation of %s was done successfully\n", renamedInputFile);
 
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection();
