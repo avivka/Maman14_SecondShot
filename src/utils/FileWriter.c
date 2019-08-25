@@ -18,5 +18,4 @@ void writeToFile(char *filename, char * *buffer, int bufferLength){
     }
 
     fclose(file);
-
 }

@@ -27,11 +27,13 @@ int main(int argc, char *argv[]) {
         currentLine = 1;
         /** execute phase 2 of the assembler */
         doPhase2(*argv);
+        
+        printf("check phase2 done \n");
 
         /** clear up so we can process properly the next file*/
         resetDataSegmentModule();
-        resetSymbolsModulesModule();
-        resetCodeSegmentModule();
+        /*resetSymbolsModulesModule();*/
+        /*resetCodeSegmentModule();*/
 
         printf("\n Assembler completed processing file: %s", *argv);
 
