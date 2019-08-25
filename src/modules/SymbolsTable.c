@@ -73,8 +73,11 @@ Symbol* searchForSymbolByLabel(char* label){
     currentSymbol = tableHead;
 
     while (currentSymbol){
+		
+		printf("check yyy %s %s \n", currentSymbol->label, label);
         /** if matches, meaning we found the requested label */
         if(strcmp(currentSymbol->label, label) == 0){
+            printf("check true \n");
             return  currentSymbol; /** returns pointer to the symbol with the requested label */
         }
         /** advance to next symbol */
@@ -82,6 +85,7 @@ Symbol* searchForSymbolByLabel(char* label){
     }
 
     /** could'nt find a symbol with the request label, returns NULL **/
+    printf("check false \n");
     return  NULL;
 }
 

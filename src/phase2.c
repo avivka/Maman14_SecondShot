@@ -23,7 +23,6 @@ void doPhase2(char* fileName)
     printf("check 24 here's the DC %d\n", dataSegmentSize);
 
     /** file names are given without the extension, we expect the file to end with the .as extension*/
-    /*fileToAssemble = openReadFile(concat(fileName, ".as"));*/
 
     if (is_extention_exists (fileName, ".as"))
     {
@@ -50,17 +49,28 @@ void doPhase2(char* fileName)
                    fileName);
             return;
         }
+        
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
         createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
+        
+        if (fclose(fileToAssemble))
+        {
+			printf("check error");
+		}
+        
+        if(fileToAssemble == NULL)
+        {
+			printf("check file closed \n");
+		}
+        
+        printf("check close phase2");
     }
 
     else
     {
         fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
     }
-
-    fclose(fileToAssemble);
 }
 
 void handleNextLine(char* line){
@@ -84,11 +94,12 @@ void handleNextLine(char* line){
 
 void createEnteriesFile(char *fileName){
 
-    listNode *walker;
-    list *entryList;
-    int address;
-    int count;
-    char * * buffer;
+	printf("check got here \n");
+    listNode *walker = NULL;
+    list *entryList = NULL;
+    int address = 0;
+    int count = 0;
+    char** buffer = NULL;
     entryList = getEntryStatementsList();
     walker = entryList->head;
     /** if not entry statements nothing to do */
@@ -123,7 +134,7 @@ void createExternalsFile(char *fileName)
     if(walker == NULL){
        return;
     }
-    buffer = (char * *) malloc(sizeof(char *) * list_size(externalsList));
+    buffer = (char**) malloc(sizeof(char *) * list_size(externalsList));
     errorIfMallocFailed(buffer, "new array of strings");
     count = 0;
     while (walker){
@@ -135,23 +146,24 @@ void createExternalsFile(char *fileName)
     }
 
     writeToFile(concat(fileName, ".ext"), buffer, count);
+    
+    printf("check done external \n");
 }
 
 void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
 {
-    FILE * file;
-    int itteratorIndex			= 0;
-    int decimalAddress			= MEMOERY_START_ADDRESS;
-    char ** codeSegment;
-    char *firstLine;
-    char* lineValue;
-    DataSegmentNode *dataSegmentWalker;
-    codeSegment = getCodeSection();
-    /*fileName = concat(fileName, ".ob");
-    file = fopen(fileName, "w+");*/
-    file = (FILE *)(fileName);
+    FILE* 				file 				= NULL;
+    int 				itteratorIndex		= 0;
+    int 				decimalAddress		= MEMOERY_START_ADDRESS;
+    char** 				codeSegment			= getCodeSection();
+    char* 				firstLine			= NULL;
+    char* 				lineValue			= NULL;
+    DataSegmentNode* 	dataSegmentWalker 	= NULL;
 
-    if(!file){
+    fileName = concat(fileName, ".ob");
+    
+    if (open_or_create_file(&file,fileName) != 0)
+	{
         fprintf(stderr, "error could not create file: %s \n", fileName);
         exit(1);
     }
@@ -162,14 +174,29 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
     fputs(firstLine, file);
     
     /** write all the code section to the file line by line */
+    printf("check code segment = %d \n", codeSegmentSize);
+    
     while (itteratorIndex < codeSegmentSize)
     {
+		printf("\n check itterator = %d \n", itteratorIndex);
        /** prints each line to the weird binary value */
         from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
+        
+        itteratorIndex++;
     }
 
-
     dataSegmentWalker = getDataSegmentHead();
+    
+    if(dataSegmentWalker == NULL)
+    {
+		printf("check walker is null \n");
+	}
+	
+	else
+	{
+		printf("check walker is not null \n");
+	}
+	
     /** write all the data section to the file line by line */
     while (dataSegmentWalker != NULL)
     {
@@ -180,5 +207,10 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
         /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
         dataSegmentWalker = dataSegmentWalker->next;
     }
+    
+    free(firstLine);
+    
     fclose(file);
+    
+    printf("check good file close! \n");
 }

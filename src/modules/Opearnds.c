@@ -217,9 +217,12 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
     switch (statementType){
         case DATA_STATEMENT_TYPE_DATA:
             /**check if the operand is a number*/
-            if (!(isnumber(operandValue))) {
-                if (!searchForSymbolByLabel(operandValue))
+            if (!(isnumber(operandValue))) 
+            {
+                if ((searchForSymbolByLabel(operandValue)) == NULL)
+                {
                     ERROR_PROGRAM(("invalid operand %s, should be macro or a number", operandValue));
+				}
             }
             newNode->value = operandValue;
             newNode->type = DIRECT_VALUE_OPERAND;

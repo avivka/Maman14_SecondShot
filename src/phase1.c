@@ -36,6 +36,7 @@ void doPhase1(char* fileName){
     {
         fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
     }
+    
     fclose(fileToAssemble);
 }
 

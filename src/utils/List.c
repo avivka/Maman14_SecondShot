@@ -1,6 +1,7 @@
 #include "List.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 
 void list_new(list *list, int elementSize)
@@ -12,6 +13,8 @@ void list_new(list *list, int elementSize)
 
 void list_destroy(list *list)
 {
+	printf("check got to list destroy \n");
+	
     listNode *current;
     while(list->head != NULL) {
         current = list->head;
