@@ -95,7 +95,7 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 					
 					if (tail->next == NULL)
 					{
-						ERROR_PROGRAM(("somthing went wrong with the macro's value"));
+						ERROR_PROGRAM(("something went wrong with the macro's value"));
 						
 						return NULL;
 					}
@@ -103,12 +103,12 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 				
 				else
 				{
-					ERROR_PROGRAM(("there is no secend operand in the macro definition"));
+					ERROR_PROGRAM(("there is no second operand in the macro definition"));
 					
 					return NULL;
 				}
 				
-				printf("check headlist good = %d label = %d value = %s", LABEL_OPERAND, headOfList->type, headOfList->value);
+				printf("check headlist good = %d \tlabel = %d \tvalue = %s\t", LABEL_OPERAND, headOfList->type, headOfList->value);
 				
 				return headOfList;
 			}
@@ -219,8 +219,11 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
             /**check if the operand is a number*/
             if (!(isnumber(operandValue))) {
                 if (!searchForSymbolByLabel(operandValue))
+                {
                     ERROR_PROGRAM(("invalid operand %s, should be macro or a number", operandValue));
+                }
             }
+            /** inserts the value of newNode->value with the '#' */
             newNode->value = operandValue;
             newNode->type = DIRECT_VALUE_OPERAND;
             break;
@@ -250,7 +253,6 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 				newNode->value = operandValue;
 				newNode->type = LABEL_OPERAND;
 			}
-			
 			else
 			{
 				newNode->value = operandValue;
@@ -259,13 +261,14 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			break;
         case COMMAND_STATEMENT:
 			printf("check command! \n");
-            if (isContainsChar(operandValue, '[')){
+            if (isContainsChar(operandValue, '[')){ /*TODO: does it get the macro inside if it's macro after the [ ?*/
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
            }
-           else if(isWordStartsWithChar(operandValue, '#')){
-                newNode->value = substringFromTo(operandValue, 1, strlen(operandValue));
-                newNode->type = DIRECT_VALUE_OPERAND;
+           else if(isWordStartsWithChar(operandValue, '#'))
+           { /*TODO: check if what's after the # is a macro and get it's value*/
+               newNode->value = substringFromTo(operandValue, 1, strlen(operandValue));
+               newNode->type = DIRECT_VALUE_OPERAND;
             } else if(isRegisterValue(operandValue)){
                 newNode->type = REGISTER_OPERAND;
                 newNode->value = operandValue;
@@ -292,7 +295,6 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 
 OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         char* indexOperandValue = "";
-        /*char* secondOperandValue; no need No need since there is no second operand*/
         char* walker = "";
         OperandNode* list = NULL;
         int labelLength = 0;

@@ -167,8 +167,8 @@ void handleDataStatmentTypeExtern(OperandNode *operands){
 void handleDataStatmentTypeDefine(OperandNode *operands){
     OperandNode *walker = operands;
     
-    printf("check type = %d value = %s \n", walker->type, walker->value);
-    printf("check type = %d value = %s \n", walker->next->type, walker->next->value);
+    printf("check type = %d \tvalue = %s \t", walker->type, walker->value);
+    printf("check type = %d \tvalue = %s \t", walker->next->type, walker->next->value);
     
     if (operands == NULL)
     {
@@ -195,6 +195,7 @@ void handleDataStatmentTypeDefine(OperandNode *operands){
 			ERROR_PROGRAM(("Invalid operand value handling .define statement, received %s, .define operations can only use direct value operands. ", walker->next->value));
 		}
 		/** add the define statment to the symbols table */
+		printf("check here's the macro info: %s\t%d\n",walker->value, atoi(walker->next->value));
 		addSymbolToTable(buildSymbol(walker->value, macro, atoi(walker->next->value)));
 		walker = walker->next;
     }

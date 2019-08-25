@@ -87,7 +87,7 @@ void increaseCommandInstructionsCountByStatement(char* statement){
                         /** increase by 1 for the index label, and by another one for both arguments as they fit one word */
                         IC += 2;
                     } else{
-                        /** increae by one for index label value, and by one for each of the two operands */
+                        /** increase by one for index label value, and by one for each of the two operands */
                         IC += 3;
                     }
             } else{
