@@ -45,7 +45,7 @@ void			doPhase2			(char* fileName)
         
         printf("check WTF \n");
         
-        /*if (fileToAssembler != NULL)
+        if (fileToAssembler != NULL)
 		{
 			printf("check closed corectly \n");
 			
@@ -53,7 +53,7 @@ void			doPhase2			(char* fileName)
 			{
 				printf("check went good \n");
 			}
-		}*/
+		}
 		        
         printf("check close phase2 \n");
     }

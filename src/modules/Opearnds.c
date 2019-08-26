@@ -264,7 +264,6 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			printf("check command! \n");
             if (isContainsChar(operandValue, '['))
             {
-				printf("check command 2 \n");
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
            }
