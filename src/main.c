@@ -1,17 +1,13 @@
-#include "./constants.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include "./phase1.h"
-#include "./phase2.h"
-#include "./modules/CommandsIndex.h"
-int currentLine;
-int errorFlag;
-int main(int argc, char *argv[]) {
-	
-	char* fileName = "";
+#include "main.h"
 
-    if(argc < 2) {
+int			main			(int argc, char *argv[]) {
+	
+	char* 	fileName 		= "";
+
+    if(argc < 2) 
+    {
         fprintf(stderr, "Error: Arguments weren't supplied, exiting code \n");
+    
         exit (0);
     }
 
@@ -27,20 +23,24 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 		
-		fileName = is_extention_exists(*argv, ".as");
+		fileName 	= is_extention_exists(*argv, ".as");
 		
 		printf("check the filename is - %s \n", fileName);
 		
 		rename(*argv, fileName);
 		
         printf("\n Begin processing the following file: %s", *argv);
+        
         currentLine = 1;
+        
         errorFlag = 0;
+        
         /** execute phase 1 of the assembler */
         doPhase1(fileName);
 
         /** rests line read, because reading the file from the start */
         currentLine = 1;
+        
         /** execute phase 2 of the assembler */
         doPhase2(fileName);
         
@@ -54,7 +54,6 @@ int main(int argc, char *argv[]) {
         printf("\n Assembler completed processing file: %s", *argv);
         
         rename(fileName, concat(fileName, ".as"));
-
     }
         return  0;
 }

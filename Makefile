@@ -4,7 +4,7 @@ assembler: main.o phase2.o phase1.o SymbolsTable.o CodeSegement.o Analyzer.o Com
 	gcc -g -Wall -pedantic -ansi main.o phase2.o phase1.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o  -o assembler -lm
 	rm *.o
 
-main.o: src/main.c src/constants.h
+main.o: src/main.c src/main.h src/constants.h
 	gcc -c -Wall -pedantic  src/main.c -o main.o
 
 phase2.o: src/phase2.c src/phase2.h src/constants.h

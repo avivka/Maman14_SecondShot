@@ -1,18 +1,27 @@
-#ifndef ASSEMBLER_PHASE1_H
-#define ASSEMBLER_PHASE1_H
+/* Includes				*/
 
-#include "./utils/FileReader.h"
-#include "./utils/TextUtils.h"
-#include "./modules/Analyzer.h"
-#include "./modules/DataSegment.h"
-#include "./modules/CodeSegement.h"
-void doPhase1(char* fileName);
+#include 	"utils/FileReader.h"
+#include 	"utils/TextUtils.h"
+#include 	"modules/Analyzer.h"
+#include 	"modules/DataSegment.h"
+#include 	"modules/CodeSegement.h"
 
+/* Defines				*/
+
+#ifndef 	ASSEMBLER_PHASE1_H
+#define 	ASSEMBLER_PHASE1_H
+
+/* Extern Data Members	*/
+
+extern int currentLine;
+
+/* Function Declaration	*/
+
+void		doPhase1					(char*);
+void 		handleNextLinePhase1		(char*);
 /**
  * this method updates the symbols table addresses, after we know the exact length of the code segment, we can update each symbol its real address
 */
-void updateSymbolTableAddresses();
-
-void	printSymbolTable ();
+void 		updateSymbolTableAddresses	();
 
 #endif

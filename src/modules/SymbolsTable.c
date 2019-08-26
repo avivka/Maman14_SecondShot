@@ -35,6 +35,7 @@ void resetSymbolsModulesModule(){
 }
 
 void addSymbolToTable(Symbol *newSymbol){
+	printf("check 3 \n");
     Symbol *isSymbolExists = searchForSymbolByLabel(newSymbol->label);
 
     /** label already exists */
@@ -91,6 +92,7 @@ Symbol* searchForSymbolByLabel(char* label){
 
 int getSymbolAddress(char *symbolLabel){
     Symbol *symbol;
+    printf("check 4 \n");
     symbol = searchForSymbolByLabel(symbolLabel);
 
     if(symbol == NULL){

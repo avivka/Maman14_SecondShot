@@ -262,7 +262,9 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			break;
         case COMMAND_STATEMENT:
 			printf("check command! \n");
-            if (isContainsChar(operandValue, '[')){
+            if (isContainsChar(operandValue, '[') || isnumber(operandValue))
+            {
+				printf("check command 2 \n");
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
            }
@@ -334,7 +336,7 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
 
         indexOperandValue = substringFromTo(indexOperandString, operandEndIndex, operandStartIndex);
         
-        printf("check %s \n", indexOperandValue);
+        printf("!!!!check %s \n", indexOperandValue);
 
         list = createOperandNode(indexOperandValue, COMMAND_STATEMENT);
 
