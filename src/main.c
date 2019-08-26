@@ -1,18 +1,13 @@
 #include "main.h"
 
-<<<<<<< HEAD
-    if(argc < 2) {
-        ERROR_PROGRAM(("Arguments weren't supplied, exiting code \n"));
-=======
 int			main			(int argc, char *argv[]) {
 	
 	char* 	fileName 		= "";
 
     if(argc < 2) 
     {
-        fprintf(stderr, "Error: Arguments weren't supplied, exiting code \n");
-    
->>>>>>> 03a17e9235e68b601c2bfb97f1422bca28d229fc
+        ERROR_PROGRAM(("Arguments weren't supplied, exiting code \n"));
+
         exit (0);
     }
 
@@ -20,9 +15,6 @@ int			main			(int argc, char *argv[]) {
     initCommandsDescriptors();
 
     for(argc--, argv++; argc; argv++, argc--) {
-<<<<<<< HEAD
-        printf("\n Begin processing the following file: %s\n", *argv);
-=======
 		
 		if(check_if_file_exists(*argv) != 0)
 		{
@@ -38,8 +30,7 @@ int			main			(int argc, char *argv[]) {
 		rename(*argv, fileName);
 		
         printf("\n Begin processing the following file: %s", *argv);
-        
->>>>>>> 03a17e9235e68b601c2bfb97f1422bca28d229fc
+
         currentLine = 1;
         
         errorFlag = 0;

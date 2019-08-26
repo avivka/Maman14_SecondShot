@@ -53,6 +53,3 @@ void 	validateIfOperandsAreaAllowed				(OperandNode*, COMMANDS);
  */
 void 	validateOperandAllowedForCommand			(OperandType, COMMANDS, OperandPosition);
 
-#endif
-
-
