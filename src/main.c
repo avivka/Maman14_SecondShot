@@ -1,6 +1,7 @@
 #include "main.h"
 
-int			main			(int argc, char *argv[]) {
+int			main			(int argc, char *argv[])
+{
 	
 	char* 	fileName 		= "";
 
@@ -14,7 +15,8 @@ int			main			(int argc, char *argv[]) {
     /** init the map that defines all the commands rules */
     initCommandsDescriptors();
 
-    for(argc--, argv++; argc; argv++, argc--) {
+    for(argc--, argv++; argc; argv++, argc--)
+    {
 		
 		if(check_if_file_exists(*argv) != 0)
 		{
@@ -55,5 +57,6 @@ int			main			(int argc, char *argv[]) {
         
         rename(fileName, concat(fileName, ".as"));
     }
-        return  0;
+	
+	return  0;
 }
