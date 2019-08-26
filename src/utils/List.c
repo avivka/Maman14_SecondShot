@@ -1,8 +1,4 @@
 #include "List.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
 
 void list_new(list *list, int elementSize)
 {

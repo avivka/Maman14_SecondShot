@@ -1,40 +1,28 @@
 #include "CodeSegement.h"
 
-void addToCodeSection(CommandStatement cmd);
-void addOperandValueToCodeSection(OperandNode* operand, OperandPosition operandPos);
-void addOperandsValuesToCodeSection(OperandNode* operandsList);
-/**
- * Go through the operands list, and check weather all the operands match the allowed operands defined by the given CMD, print error for any unallowed operand
- * @param operandsList
- * @param cmd
- */
-void validateIfOperandsAreaAllowed(OperandNode* operandsList, COMMANDS cmd);
-/**
- * Check if the given operand type is allowed for this command, at this position, errors if not
- * @param operandType the type  to check
- * @param cmd  which command
- * @param operandPosition  at which positon
- */
-
-void validateOperandAllowedForCommand(OperandType operandType, COMMANDS cmd, OperandPosition operandPosition);
+/* Static Data Members	*/
 
 /** Instruction counter */
-static  int IC = 0;
-static char** codeSection;
+static  int 		IC 				= 0;
+static char** 		codeSection;
 
-int getInstructionsCount(){
+int 		getInstructionsCount		()
+{
     return  IC;
 }
 
-char** getCodeSection(){
+char** 		getCodeSection				()
+{
     return  codeSection;
 }
 
-void resetCodeSegmentModule(){
+void 		resetCodeSegmentModule		()
+{
     IC = 0; /* resets the instructions count */
 }
 
-void initCodeSection(){
+void 		initCodeSection				()
+{
     codeSection = (char**)malloc(IC * sizeof(char*));
     printf("this is the IC size:%d\n", IC);
     errorIfMallocFailed(codeSection, "when tring to allocate memory for code section check.");
@@ -42,27 +30,32 @@ void initCodeSection(){
     IC = 0;
 }
 
-void increaseCommandInstructionsCountByStatement(char* statement){
-    char *label = extractLabel(statement);
-    Symbol* newSymbol = NULL;
-    OperandNode *operandsList = NULL;
-    OperandNode *indexSrcOperand = NULL;
-    OperandNode *indexDesOperand = NULL;
-    int operandsCount = 0;
+void 		increaseCommandInstructionsCountByStatement	(char* statement)
+{
+    char* 			label 			= extractLabel(statement);
+    Symbol* 		newSymbol 		= NULL;
+    OperandNode* 	operandsList	= NULL;
+    OperandNode* 	indexSrcOperand = NULL;
+    OperandNode* 	indexDesOperand = NULL;
+    int 			operandsCount 	= 0;
 
     /** if statment has a label, add it to the symbols table */
-    if(label != NULL){
-		printf("check ic = %d %s \n", getInstructionsCount(), statement);
-		
+    if(label != NULL)
+    {		
         newSymbol = buildSymbol(label, code, getInstructionsCount() + MEMOERY_START_ADDRESS);
+     
         addSymbolToTable(newSymbol);
     }
-	printf("!!!!!!!!!!!!!!!!!!!check all good!!!!!!!!!!!!!!!!! \n");
+    
     operandsList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
+   
     operandsCount = countNumberOfOpearnds(operandsList);
+   
     /** first increase IC by one for the command it self */
     IC++;
-    switch (operandsCount){
+   
+    switch (operandsCount)
+    {
         case 2:
             if(operandsList->type == REGISTER_OPERAND && operandsList->next->type == REGISTER_OPERAND)
             {
@@ -72,22 +65,14 @@ void increaseCommandInstructionsCountByStatement(char* statement){
             
             else if((!(operandsList->next->type == INDEX_OPERAND)) && (!(operandsList->type == INDEX_OPERAND)))
             {
-				/** increase by 1 for each operand */
-				printf("check both are not index \n");
-				
+				/** increase by 1 for each operand */				
 				IC += 2;
             } 
             
-            else if (operandsList == NULL)
-            {
-				printf("check operand list = null \n");
-			}
-			
-			else
+            else if (operandsList != NULL)
             {
 				if(operandsList->type == INDEX_OPERAND)
 				{
-					printf("check got here, %s \n", operandsList->value);
                     indexSrcOperand = getOperandListOfIndexOperand(operandsList->value);
                     
                     if(indexSrcOperand->type == INDEX_OPERAND)
@@ -101,8 +86,8 @@ void increaseCommandInstructionsCountByStatement(char* statement){
 					
 				if(operandsList->next->type == INDEX_OPERAND)
 				{
-					printf("\n check got here, %s %d \n", operandsList->next->value, operandsList->next->type);
                     indexDesOperand = getOperandListOfIndexOperand(operandsList->next->value);       
+                 
                     if(indexDesOperand->type == INDEX_OPERAND)
                     {
                         ERROR_PROGRAM(("index operands cant contain other index operand"));
@@ -120,95 +105,141 @@ void increaseCommandInstructionsCountByStatement(char* statement){
             break;
             
         case 1:
-            if(operandsList->type == INDEX_OPERAND){
-				printf("check got here, %s \n", operandsList->value);
-                    indexDesOperand = getOperandListOfIndexOperand(operandsList->value);
-                    if(indexDesOperand->type == INDEX_OPERAND || indexDesOperand->next->type == INDEX_OPERAND){
-                        ERROR_PROGRAM(("index operands cant contain other index operand"));
-                    } else if (indexDesOperand->type == REGISTER_OPERAND || indexDesOperand->next->type == REGISTER_OPERAND){
-                        /** increase by 1 for the index label, and by another one for both arguments as they fit one word */
-                        ERROR_PROGRAM(("index operands cant contain register operand"));
-                    } else{
-                        /** increase by one for index label value, and by one for each of the two operands */
-                        IC += 2;
-                    }
-            } else{
+            if(operandsList->type == INDEX_OPERAND)
+            {
+				indexDesOperand = getOperandListOfIndexOperand(operandsList->value);
+				
+				if(indexDesOperand->type == INDEX_OPERAND || indexDesOperand->next->type == INDEX_OPERAND)
+				{
+					ERROR_PROGRAM(("index operands cant contain other index operand"));
+				}
+				
+				else if (indexDesOperand->type == REGISTER_OPERAND || indexDesOperand->next->type == REGISTER_OPERAND)
+				{
+					/** increase by 1 for the index label, and by another one for both arguments as they fit one word */
+					ERROR_PROGRAM(("index operands cant contain register operand"));
+				}
+				
+				else
+				{
+					/** increae by one for index label value, and by one for each of the two operands */
+					IC += 2;
+				}
+				
+            }
+            else
+            {
                 /** just increase by one */
                 IC++;
             }
+            
             break;
+        
         case 0:
+        
             /** nothing to do */
             break;
+            
         default:
+        
             ERROR_PROGRAM(("invalid number of operands for a command statement, got %d, expected to be between 0 to 2", operandsCount));
             break;
     }
-    
-    printf("check ic = %d \n", IC);
-
 }
 
-void addStatementToCodeSegment(char* statement){
-    OperandNode *operandsList;
-    CommandDescriptor *descriptor;
-    CommandStatement command;
-    char* label;
-    COMMANDS commandEnum;
-    int operandsCount;
+void 		addStatementToCodeSegment	(char* statement)
+{
+	char* 				label					= "";
+    int 				operandsCount			= 0;
+    OperandNode* 		operandsList			= NULL;
+    OperandNode* 		indexList				= NULL;
+    CommandDescriptor*	descriptor				= NULL;
+    CommandStatement 	command;
+    COMMANDS 			commandEnum;
+
     /** get rid of unneeded white spaces */
     removeExtraSpaces(statement);
+    
     trimwhitespace(statement);
+    
     label = extractLabel(statement);
+    
     operandsList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
+    
     operandsCount = countNumberOfOpearnds(operandsList);
+    
     commandEnum = getCommandOfStatement(statement);
+    
     descriptor = getCommandDescriptor(commandEnum);
-    if(descriptor == NULL){
+    
+    if(descriptor == NULL)
+    {
         ERROR_PROGRAM(("unknown command"));
+    
             return;
     }
 
-    if(operandsCount != descriptor->numberOfOperands){
+    if(operandsCount != descriptor->numberOfOperands)
+    {
         ERROR_PROGRAM(("invalid number of operands got %d, expected %d", operandsCount, descriptor->numberOfOperands));
     }
 
     validateIfOperandsAreaAllowed(operandsList, commandEnum);
 
-    switch (operandsCount){
+    switch (operandsCount)
+    {    
         case 0:
             command = buildCommandStatement(NO_OPERAND, NO_OPERAND, commandEnum, ABSOLUTE, NULL);
+     
             addToCodeSection(command);
+     
             break;
+     
         case 1:
             command = buildCommandStatement(NO_OPERAND, operandsList->type, commandEnum, ABSOLUTE, NULL);
 
             break;
+        
         case 2:
             command = buildCommandStatement(operandsList->type, operandsList->next->type, commandEnum, ABSOLUTE, NULL);
+        
             break;
     }
 
     addToCodeSection(command);
+    
     addOperandsValuesToCodeSection(operandsList);
 }
 
-void addToCodeSection(CommandStatement cmd){
+void 		addToCodeSection			(CommandStatement cmd)
+{
     codeSection[IC] = getCommandBinaryString(&cmd);
+
     IC++;
 }
 
-void addOperandsValuesToCodeSection(OperandNode* operandsList){
+void 		addOperandsValuesToCodeSection	(OperandNode* operandsList)
+{
+	printf("check add \n");
+	
     STATEMENT_ENCODING_TYPE encoding_type;
 
     /** nothing to do if no operands */
     if(operandsList == NULL)
+    {
+		printf("check return null \n");
+		
         return;
+	}
 
     /** two operands check*/
-    if(operandsList->next != NULL){
+    if(operandsList->next != NULL)
+    {
         /** if both operands are of type of register, we can combine them to a single word */
-        if(operandsList->next->type == REGISTER_OPERAND && operandsList->type == REGISTER_OPERAND){
+        if(operandsList->next->type == REGISTER_OPERAND && operandsList->type == REGISTER_OPERAND)
+        {
+			printf("check 2 registers");
+			
             char *registerOneValue;
             char *registerTwoValue;
 
@@ -216,36 +247,51 @@ void addOperandsValuesToCodeSection(OperandNode* operandsList){
             printf("check registerOneValue:%s\n", registerOneValue);
             registerTwoValue = decimal_to_binaryString(getRegisterNumberOfOperand(operandsList->next), COMMAND_REGISTER_LENGTH);
             printf("check registerTwoValue:%s\n", registerTwoValue);
+
+
             /** registers are absolute encoded */
             encoding_type = ABSOLUTE;
+        
             codeSection[IC] = concat(concat(registerOneValue, registerTwoValue),decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+
             printf("check codeSection[IC]: %s\n", codeSection[IC]);
+
             IC++;
+        
             return;
         }
-        else if(operandsList->type == INDEX_OPERAND && operandsList->type == INDEX_OPERAND)
-        {
 
-        }
-
+		printf("check add to code section \n");
+		
         /** two operands different types, add each of them, first operand is treated as src operand, second as the target operand */
         addOperandValueToCodeSection(operandsList, SRC_OPERAND);
         printf("check operandsList on addOperandsValuesToCodeSection: %s\n", operandsList->value);
         addOperandValueToCodeSection(operandsList->next, TARGET_OPERAND);
         printf("check operandsList (next) on addOperandsValuesToCodeSection: %s\n", operandsList->next->value);
+
         return;
     }
 
+	printf(" check single operand %s \n", operandsList->value);
+	
     /** if we are here we are handling a single operand add it value. single values are treated as target operands */
     addOperandValueToCodeSection(operandsList, TARGET_OPERAND);
 }
 
-void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position){
+void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition position)
+{
+	printf("check add 2\n");
+	
+    Symbol* 				symbol			= NULL;
+    char* 					value			= "";
     STATEMENT_ENCODING_TYPE encoding_type;
-    Symbol* symbol;
-    char *value;
+
+    printf("check %d \n",operand->type);
+
     if(operand->type == DIRECT_VALUE_OPERAND)
     { /** addressing method type 1*/
+
+        printf("check direct \n");
         /** direct values  do not need to be reallocated they are absolute */
         encoding_type = ABSOLUTE;
         /** direct value of command statements may be numbers or macro, therefore we need to check that the value exists and convert it to number */
@@ -275,17 +321,36 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
     }
     else if(operand->type == INDEX_OPERAND)
     { /** addressing method type 2*/
-        char *indexLabel;
-        int indexLabelAddress;
-        OperandNode *indexOperands;
+        char* 			indexLabel			= "";
+        int 			indexLabelAddress	= 0;
+        OperandNode*	indexOperands		= NULL;
         indexOperands = getOperandListOfIndexOperand(operand->value);
+
+        if(indexOperands != NULL)
+        {
+            printf("check not null \n");
+
+            if(indexOperands -> next != NULL)
+            {
+                printf("check not null \n");
+            }
+        }
+
         /*printf("check here's the operand's list of index: %s\n",indexOperands->value);*/
+        printf("check %s %d \n", indexOperands->value, indexOperands->type);
+
         indexLabel = extractIndexOperandLabel(operand->value);
+
         printf("check here's the indexLabel: %s\n", indexLabel);
-        printf("check %s", indexLabel);
 
         /** find the index label in the symbols table */
-        symbol = searchForSymbolByLabel(indexLabel);
+        if(!(isnumber(indexLabel)))
+        {
+            printf("check 1 \n");
+            symbol = searchForSymbolByLabel(indexLabel);
+
+            printf("check %d \n", symbol->address);
+        }
 
         if(symbol == NULL){
             ERROR_PROGRAM(("Unknown symbol %s is a part of the index statement", indexLabel));
@@ -294,23 +359,40 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
         printf("check here's the label that was found: %s %d \n", symbol->label, symbol->feature);
 
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-        if(symbol->feature == ext){
+        if(symbol->feature == ext)
+        {
+			printf("check ext");
+			
             encoding_type = EXTERNAL;
+        
             /** add the external usage to the external symbols usage list*/
             addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
         }
+
         else
         {
+            printf("check relocateable \n");
+
             encoding_type = RELOCATEABLE;
         }
         /***/
         indexLabelAddress = symbol->address;
+        printf("check %d \n", indexLabelAddress);
         printf("check the label's address:%d\n", symbol->address);
+
         /** add the index label first */
         codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+
         printf("check the label's codeSection[IC]:%s\n", codeSection[IC]);
+
         IC++;
+   
+		printf("check ic = %d \n", IC);
+		
+		printf("check index operands = %s \n", indexOperands->value);
+		
         /** add the index operands */
+
         /*
         if (!(isnumber(indexOperands->value))) {
             /** in case that there's a macro inside the index parentheses  */
@@ -330,17 +412,18 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
             /*value = decimal_to_binaryString(atoi(operand->value), COMMAND_VALUE_LENGTH);
         }
 
-        codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
-        addOperandsValuesToCodeSection(indexOperands);*/
+        codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));*/
+        addOperandsValuesToCodeSection(indexOperands);
         return;
     }
     else
     {  /** then its a label operand */
-        Symbol* symbol;
+        Symbol* 		symbol			= NULL;
 
         /** find the label in the symbols table */
         if(!(isnumber(operand->value)))
         {
+            printf("check 2 %s \n", operand->value);
             symbol = searchForSymbolByLabel(operand->value);
             if(symbol == NULL)
             {
@@ -351,6 +434,7 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
             if(symbol->feature == ext)
             {
                 encoding_type = EXTERNAL;
+
                 addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
             }
             else
@@ -359,53 +443,80 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
             }
         }
         value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
+
     }
 
     /** combine statement and the encoding type bits */
     codeSection[IC] = concat(value, decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+    
     IC++;
 }
 
-void validateIfOperandsAreaAllowed(OperandNode* operandsList, COMMANDS cmd){
-    int operandsCount;
+void 		validateIfOperandsAreaAllowed	(OperandNode* operandsList, COMMANDS cmd)
+{
+    int 	operandsCount				 = 0;
+    
     operandsCount = countNumberOfOpearnds(operandsList);
-    switch (operandsCount){
+    
+    switch (operandsCount)
+    {
         case 1:
             validateOperandAllowedForCommand(operandsList->type, cmd, TARGET_OPERAND);
+    
             break;
+    
         case 2:
             validateOperandAllowedForCommand(operandsList->type, cmd, SRC_OPERAND);
             validateOperandAllowedForCommand(operandsList->next->type, cmd, TARGET_OPERAND);
+    
             break;
+    
         default:
+    
             return;
     }
 }
 
-void validateOperandAllowedForCommand(OperandType operandType, COMMANDS cmd, OperandPosition operandPosition){
-    CommandDescriptor *descriptor = NULL;
-    boolean result = FALSE;
+void 		validateOperandAllowedForCommand(OperandType operandType, COMMANDS cmd, OperandPosition operandPosition)
+{
+    CommandDescriptor* 		descriptor 		= NULL;
+    boolean 				result 			= FALSE;
+    
     descriptor = getCommandDescriptor(cmd);
+    
     /** zero operands commands can't have any operand */
     if(descriptor->numberOfOperands == 0)
-    return;
+    {
+		return;
+	}
+    
     /** single operand statements can only have Destination operands */
-    if((descriptor->numberOfOperands == 1) && (operandPosition == TARGET_OPERAND)){
+    if((descriptor->numberOfOperands == 1) && (operandPosition == TARGET_OPERAND))
+    {
         return;
     }
 
-    switch (operandPosition){
+    switch (operandPosition)
+    {
         case SRC_OPERAND:
             if((descriptor->allowedSrcOperands[0] == operandType) || (descriptor->allowedSrcOperands[1] == operandType) || (descriptor->allowedSrcOperands[2] == operandType) || (descriptor->allowedSrcOperands[3] == operandType))
+            {
                 result = TRUE;
+			}
+            
             break;
+        
         case TARGET_OPERAND:
             if((descriptor->allowedDestOperands[0] == operandType) || (descriptor->allowedDestOperands[1] == operandType) || (descriptor->allowedDestOperands[2] == operandType) || (descriptor->allowedDestOperands[3] == operandType))
+            {
                 result = TRUE;
+			}
+            
             break;
     }
 
-    if(result == FALSE){
+    if(result == FALSE)
+    {
         ERROR_PROGRAM(("invalid operator type for command"));
     }
 }

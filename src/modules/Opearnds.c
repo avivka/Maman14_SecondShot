@@ -261,21 +261,29 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			break;
         case COMMAND_STATEMENT:
 			printf("check command! \n");
-            if (isContainsChar(operandValue, '[')){ /*TODO: does it get the macro inside if it's macro after the [ ?*/
+]
+            if (isContainsChar(operandValue, '['))
+            {
+                printf("check command 2 \n");
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
-           }
-           else if(isWordStartsWithChar(operandValue, '#'))
-           { /*TODO: check if what's after the # is a macro and get it's value*/
+            }
+            else if(isWordStartsWithChar(operandValue, '#') || isnumber(operandValue))
+            {
+               /*TODO: check if what's after the # is a macro and get it's value*/
                newNode->value = substringFromTo(operandValue, 1, strlen(operandValue));
                newNode->type = DIRECT_VALUE_OPERAND;
-            } else if(isRegisterValue(operandValue)){
+            }
+            else if(isRegisterValue(operandValue))
+            {
                 newNode->type = REGISTER_OPERAND;
                 newNode->value = operandValue;
             }
             else{
-                if(!(isnumber(operandValue))) {
-					if (!(validateLabel(operandValue))){
+                if(!(isnumber(operandValue)))
+                {
+					if (!(validateLabel(operandValue)))
+					{
 						ERROR_PROGRAM(("invalid label %s", operandValue));
 					}
                 }
@@ -304,9 +312,6 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         
         printf("ok \n");
         printf("check label = %s \n", label);
-        printf("check label = %s \n", label);
-        printf("check label = %s \n", label);
-        printf("ok \n");
 
         if(label == NULL){
             ERROR_PROGRAM(("index operand must have a label that defines where to index to"));
@@ -333,7 +338,7 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
 
         indexOperandValue = substringFromTo(indexOperandString, operandEndIndex, operandStartIndex);
         
-        printf("check %s \n", indexOperandValue);
+        printf("!!!!check %s \n", indexOperandValue);
 
         list = createOperandNode(indexOperandValue, COMMAND_STATEMENT);
 
