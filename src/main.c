@@ -16,7 +16,6 @@ int			main			(int argc, char *argv[])
 
     for(argc--, argv++; argc; argv++, argc--)
     {
-
 		if(check_if_file_exists(*argv) != 0)
 		{
 			ERROR_PROGRAM(("There is no file name %s \n", *argv));
@@ -54,7 +53,6 @@ int			main			(int argc, char *argv[])
 
         printf("\n Assembler completed processing file: %s", *argv);
 
-        /*rename(fileName, concat(fileName, ".as"));
     }
     return  0;
 }

@@ -1,12 +1,15 @@
 #include "phase2.h"
 
-extern int decimalAddress = 100;
+extern int 		decimalAddress 	= 100;
+extern char* 	exFleName 		= "";
 
 void			doPhase2			(char* fileName)
 {
 	int 	codeSegmentSize		= 0;
     int 	dataSegmentSize		= 0;
     FILE* 	fileToAssembler		= NULL;
+    
+    strcpy(exFleName, fileName);
     
     if(fileToAssembler == NULL)
     {
@@ -88,7 +91,8 @@ void 			handleNextLine		(char* line)
     else if (isCommandStatement(line))
     {
         newLine = addStatementToCodeSegment(line);
-        from_line_to_bmc(commandLine, decimalAddress, getSymbolsTableHead());
+        
+        from_line_to_bmc(commandLine, &decimalAddress, exFleName);
     }
     
     else

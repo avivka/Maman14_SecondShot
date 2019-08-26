@@ -1,6 +1,6 @@
 #include 	"CreateBMC.h"
 
-int			from_line_to_bmc	(commandLine* nextLine, int decimalAddress, list* symbolList, char* filename) 		/** The main function of creation binary machine code */
+int			from_line_to_bmc	(commandLine* nextLine, int* decimalAddress, char* filename) 		/** The main function of creation binary machine code */
 {												
 	create_basic_bmc (nextLine, &decimalAddress, filename);				 											/** Creates the first binary machine code from the line (COMMANDS based) */
 														
