@@ -19,7 +19,7 @@
 /*	Prototypes	*/
 
 int			to_decimal					(int);							/* Calculates from power to decimal */
-int			from_operation_to_binary	(char [], command);			/* Calculates the operation value to binary */
+int			from_operation_to_binary	(char [], COMMANDS);			/* Calculates the operation value to binary */
 int			from_operand_to_binary		(char [], OperandType);			/* Calculates the operand value to binary */
 int			from_storage_to_binary		(char [], int);					/* Calculates the storage operand value to binary */
 int			print_extern				(char*, int*, char*);					/* Print extern to file */
