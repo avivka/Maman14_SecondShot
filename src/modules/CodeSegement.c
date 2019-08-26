@@ -4,7 +4,7 @@
 
 /** Instruction counter */
 static  int 		IC 				= 0;
-static char** 		codeSection;
+static 	char** 		codeSection;
 
 int 		getInstructionsCount		()
 {

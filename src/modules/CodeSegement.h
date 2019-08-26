@@ -29,14 +29,10 @@ void	    increaseCommandInstructionsCountByStatement	(char*);
 /** resets the Code Segment module, re-initialaizing it, usually used when start to work with a new file */
 void 	    resetCodeSegmentModule						();
 
-commandLine addStatementToCodeSegment	(char* statement)
-	
+commandLine addStatementToCodeSegment					(char*);
 void 	    initCodeSection								();
-
 void 	    addToCodeSection							(CommandStatement);
-
 void 	    addOperandValueToCodeSection				(OperandNode*, OperandPosition);
-
 void 	    addOperandsValuesToCodeSection				(OperandNode*);
 
 /**
