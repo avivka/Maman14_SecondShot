@@ -7,15 +7,6 @@
 
 /*  Structs     */
 
-typedef struct
-{
-    COMMANDS            command;
-    OperandNode			srcoperand;
-    OperandNode			desoperand;
-    OperandType			srctype;
-    OperandType			destype;
-} commandLine;
-
 /* Prototypes 	*/
 
 int			from_line_to_bmc	(commandLine*, int, list*, char*);				/* The main function of creation binary machine code */

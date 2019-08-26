@@ -57,6 +57,6 @@ int			main			(int argc, char *argv[])
 
         rename(fileName, concat(fileName, ".as"));
     }
-    
+
     return  0;
 }
