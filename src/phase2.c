@@ -57,13 +57,13 @@ void doPhase2(char* fileName)
             printf("didn't output files for file %s, because errors were found. see the errors output for more information.", fileName);
             return;
         }
-
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
         createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
-        
+
         printf("check WTF \n");
-        
+
+        /*
         if (fileToAssembler != NULL)
 		{
 			printf("check closed corectly \n");
@@ -73,7 +73,8 @@ void doPhase2(char* fileName)
 				printf("check went good \n");
 			}
 		}
-		        
+
+        */
         printf("check close phase2 \n");
     }
 
@@ -209,6 +210,7 @@ void createObjectFile(char *fileName, int codeSegmentSize, int dataSegmentSize)
     {
 		printf("\n check itterator = %d \n", itteratorIndex);
        /** prints each line to the weird binary value */
+       printf("check here's the line's bmc:\n%s\n",codeSegment[itteratorIndex]);
         from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
         
         itteratorIndex++;

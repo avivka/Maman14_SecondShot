@@ -9,7 +9,7 @@
 
 #define COMMAND_VALUE_LENGTH 12
 #define COMMAND_ARE_BITS_LENGTH 2
-#define COMMAND_REGISTER_LENGTH 6
+#define COMMAND_REGISTER_LENGTH 3
 
 /** returns the current count of command instructions */
 int getInstructionsCount();

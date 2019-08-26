@@ -4,7 +4,7 @@ void addToCodeSection(CommandStatement cmd);
 void addOperandValueToCodeSection(OperandNode* operand, OperandPosition operandPos);
 void addOperandsValuesToCodeSection(OperandNode* operandsList);
 /**
- * Go through the operands list, and check wether all the operands match the allowed operands defined by the given CMD, print error for any unallowed operand
+ * Go through the operands list, and check weather all the operands match the allowed operands defined by the given CMD, print error for any unallowed operand
  * @param operandsList
  * @param cmd
  */
@@ -153,7 +153,6 @@ void addStatementToCodeSegment(char* statement){
     OperandNode *operandsList;
     CommandDescriptor *descriptor;
     CommandStatement command;
-    OperandNode* indexList;
     char* label;
     COMMANDS commandEnum;
     int operandsCount;
@@ -182,11 +181,7 @@ void addStatementToCodeSegment(char* statement){
             addToCodeSection(command);
             break;
         case 1:
-            indexList = NULL;
-            if(operandsList->type == INDEX_OPERAND){
-                indexList = getOperandListOfIndexOperand(operandsList->value);
-            }
-            command = buildCommandStatement(NO_OPERAND, operandsList->type, commandEnum, ABSOLUTE, indexList);
+            command = buildCommandStatement(NO_OPERAND, operandsList->type, commandEnum, ABSOLUTE, NULL);
 
             break;
         case 2:
@@ -218,17 +213,26 @@ void addOperandsValuesToCodeSection(OperandNode* operandsList){
             char *registerTwoValue;
 
             registerOneValue = decimal_to_binaryString(getRegisterNumberOfOperand(operandsList), COMMAND_REGISTER_LENGTH);
+            printf("check registerOneValue:%s\n", registerOneValue);
             registerTwoValue = decimal_to_binaryString(getRegisterNumberOfOperand(operandsList->next), COMMAND_REGISTER_LENGTH);
+            printf("check registerTwoValue:%s\n", registerTwoValue);
             /** registers are absolute encoded */
             encoding_type = ABSOLUTE;
             codeSection[IC] = concat(concat(registerOneValue, registerTwoValue),decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+            printf("check codeSection[IC]: %s\n", codeSection[IC]);
             IC++;
             return;
+        }
+        else if(operandsList->type == INDEX_OPERAND && operandsList->type == INDEX_OPERAND)
+        {
+
         }
 
         /** two operands different types, add each of them, first operand is treated as src operand, second as the target operand */
         addOperandValueToCodeSection(operandsList, SRC_OPERAND);
+        printf("check operandsList on addOperandsValuesToCodeSection: %s\n", operandsList->value);
         addOperandValueToCodeSection(operandsList->next, TARGET_OPERAND);
+        printf("check operandsList (next) on addOperandsValuesToCodeSection: %s\n", operandsList->next->value);
         return;
     }
 
@@ -240,72 +244,121 @@ void addOperandValueToCodeSection(OperandNode* operand, OperandPosition position
     STATEMENT_ENCODING_TYPE encoding_type;
     Symbol* symbol;
     char *value;
-    if(operand->type == DIRECT_VALUE_OPERAND){
-        /** direct values do not need to be reallocted they are absolute */
+    if(operand->type == DIRECT_VALUE_OPERAND)
+    { /** addressing method type 1*/
+        /** direct values  do not need to be reallocated they are absolute */
         encoding_type = ABSOLUTE;
-        /** direct value of command statements, are gaurnteed to be numbers we can use atoi safely */
-        value = decimal_to_binaryString(atoi(operand->value), COMMAND_VALUE_LENGTH);
-    } else if(operand->type == REGISTER_OPERAND){
+        /** direct value of command statements may be numbers or macro, therefore we need to check that the value exists and convert it to number */
+        if (!isnumber(operand->value) && validateLabel(operand->value) && searchForSymbolByLabel(operand->value)->feature == macro)
+        {
+            value = decimal_to_binaryString(getSymbolAddress(operand->value), COMMAND_VALUE_LENGTH);
+        }
+        else
+        {
+            value = decimal_to_binaryString(atoi(operand->value), COMMAND_VALUE_LENGTH);
+        }
+        printf("check here's the direct operand operandNode value: %s\n", operand->value);
+        printf("check direct operand bmc value:%s\n", value);
+    }
+    else if(operand->type == REGISTER_OPERAND)
+    { /** addressing method type 3*/
         encoding_type = ABSOLUTE;
         if(position == SRC_OPERAND){
-            /** src register operands should encode the binary value of register number, and padd the value with 6 zeros */
+            /** src register operands should encode the binary value of register number, and pad the value with 6 zeros */
             value = concat(decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH), decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH));
+            printf("check src register operand value:%s\n", value);
         } else {
-            /** target register operands should start wuth 6 zeros, and then the binary value of the register value */
+            /** target register operands should start with 6 zeros, and then the binary value of the register value */
             value = concat(decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH), decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH));
+            printf("check dest register operand value:%s\n", value);
         }
-    } else if(operand->type == INDEX_OPERAND){
+    }
+    else if(operand->type == INDEX_OPERAND)
+    { /** addressing method type 2*/
         char *indexLabel;
         int indexLabelAddress;
         OperandNode *indexOperands;
         indexOperands = getOperandListOfIndexOperand(operand->value);
+        /*printf("check here's the operand's list of index: %s\n",indexOperands->value);*/
         indexLabel = extractIndexOperandLabel(operand->value);
-		
-        /** find the index label in the symbols table */
+        printf("check here's the indexLabel: %s\n", indexLabel);
         printf("check %s", indexLabel);
-        
-        if(!(isnumber(indexLabel)))
-			symbol = searchForSymbolByLabel(indexLabel);
+
+        /** find the index label in the symbols table */
+        symbol = searchForSymbolByLabel(indexLabel);
+
         if(symbol == NULL){
-            ERROR_PROGRAM(("Unknown symbol %s in index statement", indexLabel));
+            ERROR_PROGRAM(("Unknown symbol %s is a part of the index statement", indexLabel));
             return;
         }
+        printf("check here's the label that was found: %s %d \n", symbol->label, symbol->feature);
+
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
         if(symbol->feature == ext){
             encoding_type = EXTERNAL;
             /** add the external usage to the external symbols usage list*/
             addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
-        } else {
+        }
+        else
+        {
             encoding_type = RELOCATEABLE;
         }
+        /***/
         indexLabelAddress = symbol->address;
+        printf("check the label's address:%d\n", symbol->address);
         /** add the index label first */
         codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+        printf("check the label's codeSection[IC]:%s\n", codeSection[IC]);
         IC++;
         /** add the index operands */
-        addOperandsValuesToCodeSection(indexOperands);
+        /*
+        if (!(isnumber(indexOperands->value))) {
+            /** in case that there's a macro inside the index parentheses  */
+            /** macro, such as direct values, do not need to be reallocated they are absolute */
+            /*encoding_type = ABSOLUTE;
+            /** get the macro's number*/
+            /*if (validateLabel(indexOperands->value) && searchForSymbolByLabel(indexOperands->value)->feature == macro)
+            {
+                value = decimal_to_binaryString(getSymbolAddress(indexOperands->value), COMMAND_VALUE_LENGTH);
+            }
+            printf("check here's the index operand operandNode value (should be macro): %s\n", indexOperands->value);
+            printf("check direct operand bmc value:%s\n", value);
+        }
+        else
+        {
+            /** in case that there value inside the index parentheses is regular number */
+            /*value = decimal_to_binaryString(atoi(operand->value), COMMAND_VALUE_LENGTH);
+        }
+
+        codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+        addOperandsValuesToCodeSection(indexOperands);*/
         return;
-    } else{  /** then its a label operand */
+    }
+    else
+    {  /** then its a label operand */
         Symbol* symbol;
+
         /** find the label in the symbols table */
         if(!(isnumber(operand->value)))
         {
-			symbol = searchForSymbolByLabel(operand->value);
-		
-			if(symbol == NULL){
-				ERROR_PROGRAM(("Unknown symbol %s", operand->value));
-				return;
-			}
-        
-        /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-			if(symbol->feature == ext){
-				encoding_type = EXTERNAL;
-				addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
-			} else {
-				encoding_type = RELOCATEABLE;
-			}
-		}
-		value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
+            symbol = searchForSymbolByLabel(operand->value);
+            if(symbol == NULL)
+            {
+                ERROR_PROGRAM(("Unknown symbol %s", operand->value));
+                return;
+            }
+            /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
+            if(symbol->feature == ext)
+            {
+                encoding_type = EXTERNAL;
+                addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
+            }
+            else
+            {
+                encoding_type = RELOCATEABLE;
+            }
+        }
+        value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
     }
 
     /** combine statement and the encoding type bits */
