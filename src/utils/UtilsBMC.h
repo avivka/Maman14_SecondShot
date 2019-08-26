@@ -1,14 +1,13 @@
 /* Includes 	*/
 
 #include 	<stdio.h>
-#include    "../phase1.h"
 #include    "../modules/CommandsIndex.h"
 
 /*  Definitions	*/
 
 #define		SHORT_TO_14_BITS			49152							/* The value of the last two bits */
 #define		LAST_CAPITAL_LETTER_ASCII	122
-#define		FIRST_CAPITAL_LETTER_ASCII	97			
+#define		FIRST_CAPITAL_LETTER_ASCII	97
 #define		LAST_SMALL_LETTER_ASCII		90
 #define		FIRST_SMALL_LETTER_ASCII	65
 #define		FOURTH_BIT_VALUE			8

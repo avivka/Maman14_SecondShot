@@ -12,12 +12,15 @@ add_executable(Maman14_SecondShot
         src/modules/Opearnds.c src/modules/Opearnds.h
         src/modules/statments_types.h
         src/modules/SymbolsTable.c src/modules/SymbolsTable.h
+        src/modules/CreateBMC.c src/modules/CreateBMC.h
+        src/modules/FromBitToSign.c src/modules/FromBitToSign.h
         src/utils/Binary.c src/utils/Binary.h
         src/utils/Error.c src/utils/Error.h
         src/utils/FileReader.c src/utils/FileReader.h
         src/utils/FileWriter.c src/utils/FileWriter.h
         src/utils/List.c src/utils/List.h
         src/utils/TextUtils.c src/utils/TextUtils.h
+        src/utils/UtilsBMC.c src/utils/UtilsBMC.h
         src/constants.h
         src/main.c
         src/phase1.c src/phase1.h

@@ -9,7 +9,6 @@
 #include "Analyzer.h"
 #include "SymbolsTable.h"
 #include "CommandsIndex.h"
-#include "statments_types.h"
 
 typedef enum {
     SRC_OPERAND,
