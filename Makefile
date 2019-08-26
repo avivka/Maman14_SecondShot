@@ -1,7 +1,7 @@
 all: assembler
 
-assembler: main.o phase2.o phase1.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o src/constants.h src/modules/statments_types.h
-	gcc -g -Wall -pedantic -ansi main.o phase2.o phase1.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o  -o assembler -lm
+assembler: main.o phase2.o phase1.o CreateBMC.o UtilsBMC.o FromBitToSign.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o src/constants.h src/modules/statments_types.h
+	gcc -g -Wall -pedantic -ansi main.o phase2.o phase1.o CreateBMC.o UtilsBMC.o FromBitToSign.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o  -o assembler -lm
 	rm *.o
 
 main.o: src/main.c src/main.h src/constants.h
@@ -12,6 +12,12 @@ phase2.o: src/phase2.c src/phase2.h src/constants.h
 
 phase1.o: src/phase1.c src/phase1.h src/constants.h
 	gcc -c -Wall -pedantic  src/phase1.c -o phase1.o
+
+CreateBMC.o: src/modules/CreateBMC.c src/modules/CreateBMC.h src/utils/UtilsBMC.h
+	gcc -c -Wall -pedantic  src/modules/CreateBMC.c -o CreateBMC.o
+
+UtilsBMC.o: src/utils/UtilsBMC.c src/utils/UtilsBMC.h
+	gcc -c -Wall -pedantic  src/utile/UtilsBMC.c -o UtilsBMC.o
 
 SymbolsTable.o: src/modules/SymbolsTable.c src/modules/SymbolsTable.h src/constants.h
 	gcc -c -Wall -pedantic  src/modules/SymbolsTable.c -o SymbolsTable.o
