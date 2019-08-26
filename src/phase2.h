@@ -13,10 +13,6 @@
 #ifndef 	ASSEMBLER_PHASE2_H
 #define 	ASSEMBLER_PHASE2_H
 
-/* Extern Data Members	*/
-
-extern int currentLine;
-
 /* Function Declaration	*/
 
 void		doPhase2			(char*);

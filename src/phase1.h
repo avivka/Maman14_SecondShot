@@ -11,10 +11,6 @@
 #ifndef 	ASSEMBLER_PHASE1_H
 #define 	ASSEMBLER_PHASE1_H
 
-/* Extern Data Members	*/
-
-extern int currentLine;
-
 /* Function Declaration	*/
 
 void		doPhase1					(char*);
