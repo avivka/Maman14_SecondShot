@@ -261,7 +261,6 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			break;
         case COMMAND_STATEMENT:
 			printf("check command! \n");
-]
             if (isContainsChar(operandValue, '['))
             {
                 printf("check command 2 \n");

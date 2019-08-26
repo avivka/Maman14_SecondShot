@@ -152,7 +152,6 @@ void 		addStatementToCodeSegment	(char* statement)
 	char* 				label					= "";
     int 				operandsCount			= 0;
     OperandNode* 		operandsList			= NULL;
-    OperandNode* 		indexList				= NULL;
     CommandDescriptor*	descriptor				= NULL;
     CommandStatement 	command;
     COMMANDS 			commandEnum;
@@ -394,10 +393,10 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         /** add the index operands */
 
         /*
-        if (!(isnumber(indexOperands->value))) {
+        if (!(isnumber(indexOperands->value))) {*/
             /** in case that there's a macro inside the index parentheses  */
             /** macro, such as direct values, do not need to be reallocated they are absolute */
-            /*encoding_type = ABSOLUTE;
+            /*encoding_type = ABSOLUTE;*/
             /** get the macro's number*/
             /*if (validateLabel(indexOperands->value) && searchForSymbolByLabel(indexOperands->value)->feature == macro)
             {
@@ -407,7 +406,7 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
             printf("check direct operand bmc value:%s\n", value);
         }
         else
-        {
+        {*/
             /** in case that there value inside the index parentheses is regular number */
             /*value = decimal_to_binaryString(atoi(operand->value), COMMAND_VALUE_LENGTH);
         }
