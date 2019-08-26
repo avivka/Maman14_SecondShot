@@ -1,7 +1,8 @@
 /* Includes 		*/
 
 #include 	<stdio.h>
-#include 	"FileGeneralOperations.h"
+#include 	"../utils/FileReader.h"
+#include    "SymbolsTable.h"
 
 /* Definitions		*/
 

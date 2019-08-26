@@ -1,35 +1,35 @@
 #include 	"CreateBMC.h"
 
-int			from_line_to_bmc	(line* nextLine, int decimalAddress, list* symbolList, char* filename) 					/* The main function of creation binary machine code */
+int			from_line_to_bmc	(commandLine* nextLine, int decimalAddress, list* symbolList, char* filename) 		/** The main function of creation binary machine code */
 {												
-	create_basic_bmc (nextLine, &decimalAddress, filename);				 											/* Creates the first binary machine code from the line (operation based) */
+	create_basic_bmc (nextLine, &decimalAddress, filename);				 											/** Creates the first binary machine code from the line (COMMANDS based) */
 														
 	if (nextLine->srcoperand != NULL)													
 	{													
-		from_src_des_opr (nextLine, symbolList, true, &decimalAddress, filename);									/* Checks what kind of operand is it and transfers if to fourth base */
+		from_src_des_opr (nextLine, symbolList, TRUE, &decimalAddress, filename);									/** Checks what kind of operand is it and transfers if to fourth base */
 	}					
 						
-	if (nextLine->srctype == storageAddress && nextLine->destype == storageAddress)						/* Checks if the source and destination operands are storage type */
+	if (nextLine->srctype == REGISTER_OPERAND && nextLine->destype == REGISTER_OPERAND)								/** Checks if the source and destination operands are storage type */
 	{
 		return decimalAddress;
 	}
 	
 	if (nextLine->desoperand != NULL)
 	{
-		from_src_des_opr (nextLine, symbolList, false, &decimalAddress, filename);									/* Checks what kind of operand is it and transfers if to fourth base */
+		from_src_des_opr (nextLine, symbolList, FALSE, &decimalAddress, filename);									/* Checks what kind of operand is it and transfers if to fourth base */
 	}	
 	
 	return decimalAddress;
 }
 
-short int	create_basic_bmc	(line* nextLine, int* decimalAddress, char* filename)										/* Creates the first binary machine code from operation */
+short int	create_basic_bmc	(line* nextLine, int* decimalAddress, char* filename)										/* Creates the first binary machine code from COMMANDS */
 {
 	int 		bitCounter		= NUM_OF_ACTIVE_BITS - 5; 													/* Unused bits */
 	short int	counter			= 0;
 	char		op[OPCODE]		= "";
 	char		opr[OPERAND]	= "";
 
-	from_operation_to_binary (op, nextLine->ope);															/* Transfer operation to binary */
+	from_command_to_binary (op, nextLine->command);															/* Transfer command to binary */
 
 	counter += from_binary_to_decimal(op, &bitCounter, OPCODE - 1);										/* Transfer from binary to decimal */
 						
@@ -54,16 +54,16 @@ short int 	from_src_des_opr	(line* nextLine, list* symbolList, boolean isSrc, in
 
 		switch (nextLine->srctype)
 		{
-			case immediateAddress:																			/* Immediate address */
+			case DIRECT_VALUE_OPERAND:																			/* Immediate address */
 					return opr_immediate(symbolList, nextLine->srcoperand, decimalAddress, filename);
 											
-			case directAddress:																				/* Direct address */
-					return opr_direct(nextLine->srcoperand, symbolList, false, decimalAddress, filename);
+			case LABEL_OPERAND:																				/* Direct address */
+					return opr_direct(nextLine->srcoperand, symbolList, FALSE, decimalAddress, filename);
 											
-			case indexAddress:																				/* Index address */
+			case INDEX_OPERAND:																				/* Index address */
 				return opr_index(nextLine->srcoperand, symbolList, decimalAddress, filename);
 						
-			case storageAddress:																			/* Storage address */
+			case REGISTER_OPERAND:																			/* Storage address */
 				return src_des_storage(nextLine, decimalAddress, filename);
 
 			default:
@@ -77,16 +77,16 @@ short int 	from_src_des_opr	(line* nextLine, list* symbolList, boolean isSrc, in
 
 		switch (nextLine->destype)
 		{
-			case immediateAddress:																													/* Immediate address */
+			case DIRECT_VALUE_OPERAND:																													/* Immediate address */
 					return opr_immediate(symbolList, nextLine->desoperand, decimalAddress, filename);
 											
-			case directAddress:																														/* Direct address */
+			case LABEL_OPERAND:																														/* Direct address */
 					return opr_direct(nextLine->desoperand, symbolList, false, decimalAddress, filename);
 											
-			case indexAddress:																														/* Index address */
+			case INDEX_OPERAND:																														/* Index address */
 				return opr_index(nextLine->desoperand, symbolList, decimalAddress, filename);
 						
-			case storageAddress:																													/* Storage address */
+			case REGISTER_OPERAND:																													/* Storage address */
 				return src_des_storage(nextLine, decimalAddress, filename);
 
 			default:
@@ -110,7 +110,7 @@ short int 	opr_immediate		(list* symbolList, char* opr, int* decimalAddress, cha
 	{
 		printf("check got here \n");
 		
-		currentSymbol = search_for_symbol_by_label(opr);																	/* Checks if the label is in the table */
+		currentSymbol = searchForSymbolByLabel(opr);																	/* Checks if the label is in the table */
 		
 		return from_binary_machine_code_to_fourth_base (from_label_to_bmc(currentSymbol->address), decimalAddress, filename);		/* Adds the ARE section and returns it */
 	}
@@ -119,10 +119,10 @@ short int 	opr_immediate		(list* symbolList, char* opr, int* decimalAddress, cha
 	{
 		printf("check got to negative \n");
 		
-		return from_binary_machine_code_to_fourth_base (possitive_or_negative_num(&opr[1], true, true), decimalAddress, filename);	/* Calculates the negative number */
+		return from_binary_machine_code_to_fourth_base (possitive_or_negative_num(&opr[1], TRUE, FALSE), decimalAddress, filename);	/* Calculates the negative number */
 	}
 	
-	return from_binary_machine_code_to_fourth_base (possitive_or_negative_num(&opr[0], true, false), decimalAddress, filename);	/* Calculates the positive number */
+	return from_binary_machine_code_to_fourth_base (possitive_or_negative_num(&opr[0], TRUE, FALSE), decimalAddress, filename);	/* Calculates the positive number */
 }
 
 short int 	opr_direct			(char* label, list* symbolList, boolean isIndex, int* decimalAddress, char* filename)		/* Creates binary machine code by label, internal or external */
@@ -130,7 +130,7 @@ short int 	opr_direct			(char* label, list* symbolList, boolean isIndex, int* de
 	short int 	bmc						= 0;
 	Symbol* 	currentSymbol			= NULL;
 		
-	currentSymbol = search_for_symbol_by_label(label);														/* Search the label in the table and return pointer to it */
+	currentSymbol = searchForSymbolByLabel(label);														/* Search the label in the table and return pointer to it */
 																							
 	if (currentSymbol == NULL)																						
 	{																						
@@ -160,8 +160,8 @@ short int 	opr_direct			(char* label, list* symbolList, boolean isIndex, int* de
 }
 
 short int 	opr_index			(char* ope, list* symbolList, int* decimalAddress, char* filename)							/* In case of index operand create the binary machine code for it and for the label */
-{
-	char		label[max_operand]		= "";
+{ /*TODO: needs to be in enum? why is it passed as char*?*/
+	char		label[MAX_SIZE_OF_LABEL]		= "";
 	int 		i						= 0;
 	int			j						= 0;
 	
@@ -185,7 +185,7 @@ short int 	opr_index			(char* ope, list* symbolList, int* decimalAddress, char* 
 		return -1;
 	}
 	
-	opr_direct(label, symbolList, true, decimalAddress, filename);													/* Creates binary machine code from the label */
+	opr_direct(label, symbolList, TRUE, decimalAddress, filename);													/* Creates binary machine code from the label */
 	
 	for ( i++ ; ope[i] != '\0' ; i++, j++)																	/* Separates the index from the rest of the operand */
 	{
@@ -219,7 +219,7 @@ short int	src_des_storage		(line* nextLine, int* decimalAddress, char* filename)
 	short int	counter					= 0;
 	char		sto[STORAGE_OPERAND]	= "";
 
-	if (nextLine->srctype == storageAddress)
+	if (nextLine->srctype == REGISTER_OPERAND)
 	{
 		from_storage_to_binary(sto, (nextLine->srcoperand[1] - char_to_ascii));
 
@@ -231,7 +231,7 @@ short int	src_des_storage		(line* nextLine, int* decimalAddress, char* filename)
 		bitCounter -= STORAGE_OPERAND;																												/* Unused bits */
 	}
 
-	if (nextLine->destype == storageAddress)
+	if (nextLine->destype == REGISTER_OPERAND)
 	{
 		from_storage_to_binary(sto, (nextLine->desoperand[1] - char_to_ascii));
 
@@ -240,3 +240,4 @@ short int	src_des_storage		(line* nextLine, int* decimalAddress, char* filename)
 
 	return from_binary_machine_code_to_fourth_base (counter, decimalAddress, filename);
 }
+

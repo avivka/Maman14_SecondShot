@@ -12,7 +12,7 @@ int			to_decimal					(int power)											/* Calculates from power to decimal *
 	return j;	
 }	
 	
-int			from_operation_to_binary	(char op[], commands ope)							/* Calculates the operation value to binary */
+int			from_command_to_binary	(char op[], COMMANDS commands)							/* Calculates the command value to binary */
 {	
 	int			i				= OPCODE;	
 	int 		j				= FOURTH_BIT_VALUE;	
@@ -39,7 +39,7 @@ int			from_operation_to_binary	(char op[], commands ope)							/* Calculates the
 	return 0;	
 }	
 	
-int			from_operand_to_binary		(char opr[], hash oprtype)							/* Calculates the operand value to binary */
+int			from_operand_to_binary		(char opr[], OperandType oprtype)							/* Calculates the operand value to binary */
 {	
 	int			i				= OPERAND;	
 	int 		j				= OPERAND;	
@@ -233,7 +233,7 @@ int			print_extern				(char* label, int* decimalAddress, char* filename)					/* 
 		label = &label[1];
 	}
 	
-	currentSymbol = search_for_symbol_by_label(label);
+	currentSymbol = searchForSymbolByLabel(label);
 	
 	if (currentSymbol == NULL)
 	{

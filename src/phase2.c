@@ -1,5 +1,7 @@
 #include "phase2.h"
 
+extern int decimalAddress = 100;
+
 void			doPhase2			(char* fileName)
 {
 	int 	codeSegmentSize		= 0;
@@ -65,6 +67,8 @@ void			doPhase2			(char* fileName)
 
 void 			handleNextLine		(char* line)
 {
+    commandLine     newLine;
+
     /** skip empty lines or comment lines */
     if (isCommentStatementOrEmptyLine(line))
     {
@@ -83,7 +87,8 @@ void 			handleNextLine		(char* line)
     
     else if (isCommandStatement(line))
     {
-        addStatementToCodeSegment(line);
+        newLine = addStatementToCodeSegment(line);
+        from_line_to_bmc(commandLine, decimalAddress, getSymbolsTableHead());
     }
     
     else

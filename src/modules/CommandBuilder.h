@@ -14,10 +14,10 @@ typedef struct {
     unsigned int op_code_2: 1;
     unsigned int op_code_3: 1;
     unsigned int op_code_4: 1;
-    unsigned int index_param_2_1: 1;
-    unsigned int index_param_2_2: 1;
-    unsigned int index_param_1_1: 1;
-    unsigned int index_param_1_2: 1;
+    unsigned int not_in_use_3: 1;
+    unsigned int not_in_use_4: 1;
+    unsigned int not_in_use_1: 1;
+    unsigned int not_in_use_2: 1;
 } CommandStatement;
 
 

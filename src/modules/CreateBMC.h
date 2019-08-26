@@ -1,7 +1,20 @@
 /* Includes 	*/
 
 #include 	<stdio.h>
-#include    "UtilsBMC.h"
+#include    "../utils/UtilsBMC.h"
+#include    "Analyzer.h"
+#inclue "SymbolLis"
+
+/*  Structs     */
+
+typedef struct
+{
+    COMMANDS            command;
+    OperandNode			srcoperand;
+    OperandNode			desoperand;
+    OperandType			srctype;
+    OperandType			destype;
+} commandLine;
 
 /* Prototypes 	*/
 

@@ -18,8 +18,8 @@ typedef enum { FALSE, TRUE } boolean;
 * OperandType, defines what is the type of the given operand.
 * The different types of operands we have in our system:
 * REGISTER_OPERAND - an operand which points to a valid register name,
-        * LABEL_OPERAND - an operand which points to a previously declared label
-        * DIRECT_VALUE_OPERAND - an operand which points directly to a its value, either a string in case .string operation, or number in .data or #-1 cases.
+* LABEL_OPERAND - an operand which points to a previously declared label
+* DIRECT_VALUE_OPERAND - an operand which points directly to a its value, either a string in case .string operation, or number in .data or #-1 cases.
 * INDEX_OPERAND- an operands which points to a special index operand.
 * NO_OPERAND - indicates that no operand was given
 */

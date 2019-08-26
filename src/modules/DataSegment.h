@@ -5,6 +5,7 @@
 #include "Opearnds.h"
 #include "../utils/Error.h"
 #include "../utils/List.h"
+
 typedef struct data_segment_node {
     int value;
     struct data_segment_node *next;

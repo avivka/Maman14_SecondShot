@@ -17,7 +17,10 @@ CreateBMC.o: src/modules/CreateBMC.c src/modules/CreateBMC.h src/utils/UtilsBMC.
 	gcc -c -Wall -pedantic  src/modules/CreateBMC.c -o CreateBMC.o
 
 UtilsBMC.o: src/utils/UtilsBMC.c src/utils/UtilsBMC.h
-	gcc -c -Wall -pedantic  src/utile/UtilsBMC.c -o UtilsBMC.o
+	gcc -c -Wall -pedantic  src/utils/UtilsBMC.c -o UtilsBMC.o
+
+FromBitToSign.o: src/utils/FromBitToSign.c src/utils/FromBitToSign.h
+	gcc -c -Wall -pedantic  src/utils/FromBitToSign.c -o FromBitToSign.o
 
 SymbolsTable.o: src/modules/SymbolsTable.c src/modules/SymbolsTable.h src/constants.h
 	gcc -c -Wall -pedantic  src/modules/SymbolsTable.c -o SymbolsTable.o
@@ -31,11 +34,11 @@ Analyzer.o: src/modules/Analyzer.c src/modules/Analyzer.h src/constants.h src/mo
 CommandBuilder.o: src/modules/CommandBuilder.c src/modules/CommandBuilder.h src/constants.h
 	gcc -c -Wall -pedantic  src/modules/CommandBuilder.c -o CommandBuilder.o
 
-DataSegment.o: src/modules/DataSegment.c src/modules/DataSegment.h src/constants.h
-	gcc -c -Wall -pedantic  src/modules/DataSegment.c -o DataSegment.o
-
 CommandsIndex.o: src/modules/CommandsIndex.c src/modules/CommandsIndex.h src/constants.h
 	gcc -c -Wall -pedantic  src/modules/CommandsIndex.c -o CommandsIndex.o
+
+DataSegment.o: src/modules/DataSegment.c src/modules/DataSegment.h src/constants.h
+	gcc -c -Wall -pedantic  src/modules/DataSegment.c -o DataSegment.o
 
 Opearnds.o: src/modules/Opearnds.c src/modules/Opearnds.h src/constants.h src/modules/statments_types.h
 	gcc -c -Wall -pedantic  src/modules/Opearnds.c -o Opearnds.o

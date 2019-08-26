@@ -147,14 +147,16 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
     }
 }
 
-void 		addStatementToCodeSegment	(char* statement)
+commandLine addStatementToCodeSegment	(char* statement)
 {
 	char* 				label					= "";
     int 				operandsCount			= 0;
-    OperandNode* 		operandsList			= NULL;
+    OperandNode* 		operandsSrcList			= NULL;
+    OperandNode* 		operandsDesList			= NULL;
     CommandDescriptor*	descriptor				= NULL;
     CommandStatement 	command;
     COMMANDS 			commandEnum;
+    commandLine         newLine;
 
     /** get rid of unneeded white spaces */
     removeExtraSpaces(statement);
@@ -162,10 +164,24 @@ void 		addStatementToCodeSegment	(char* statement)
     trimwhitespace(statement);
     
     label = extractLabel(statement);
-    
-    operandsList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
-    
-    operandsCount = countNumberOfOpearnds(operandsList);
+
+    operandsSrcList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
+
+    if(operandsSrcList ->next == NULL)
+    {
+        operandsDesList = operandsSrcList;
+
+        operandsSrcList = NULL;
+    }
+
+    else
+    {
+        operandsDesList = operandsSrcList ->next;
+
+        operandsSrcList->next = NULL;
+    }
+
+    operandsCount = countNumberOfOpearnds(operandsSrcList);
     
     commandEnum = getCommandOfStatement(statement);
     
@@ -178,11 +194,18 @@ void 		addStatementToCodeSegment	(char* statement)
             return;
     }
 
+    /** initialaize line in order to handle command coding with CreateBMC functionalities*/
+
+    newLine.command = commandEnum;
+    newLine.srcoperand = *operandsSrcList;
+    newLine.desoperand = *operandsDesList;
+
     if(operandsCount != descriptor->numberOfOperands)
     {
         ERROR_PROGRAM(("invalid number of operands got %d, expected %d", operandsCount, descriptor->numberOfOperands));
     }
 
+    /*
     validateIfOperandsAreaAllowed(operandsList, commandEnum);
 
     switch (operandsCount)
@@ -208,6 +231,9 @@ void 		addStatementToCodeSegment	(char* statement)
     addToCodeSection(command);
     
     addOperandsValuesToCodeSection(operandsList);
+    */
+
+    return newLine;
 }
 
 void 		addToCodeSection			(CommandStatement cmd)

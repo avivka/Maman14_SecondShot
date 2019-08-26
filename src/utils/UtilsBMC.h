@@ -1,7 +1,8 @@
 /* Includes 	*/
 
 #include 	<stdio.h>
-#include    "PhaseOne.h"
+#include    "../phase1.h"
+#include    "../modules/CommandsIndex.h"
 
 /*  Definitions	*/
 
@@ -19,8 +20,8 @@
 /*	Prototypes	*/
 
 int			to_decimal					(int);							/* Calculates from power to decimal */
-int			from_operation_to_binary	(char [], commands);			/* Calculates the operation value to binary */
-int			from_operand_to_binary		(char [], hash);				/* Calculates the operand value to binary */
+int			from_operation_to_binary	(char [], command);			/* Calculates the operation value to binary */
+int			from_operand_to_binary		(char [], OperandType);			/* Calculates the operand value to binary */
 int			from_storage_to_binary		(char [], int);					/* Calculates the storage operand value to binary */
 int			print_extern				(char*, int*, char*);					/* Print extern to file */
 short int 	from_string_to_int			(char*);						/* Casting from string to integer */

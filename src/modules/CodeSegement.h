@@ -5,6 +5,7 @@
 #include 	"DataSegment.h"
 #include 	"SymbolsTable.h"
 #include 	"CommandBuilder.h"
+#include    "CreateBMC.h"
 
 /* Defines				*/
 
@@ -15,35 +16,35 @@
 /* Function Declaration	*/
 
 /** returns the current count of command instructions */
-int 	getInstructionsCount						();
+int 	    getInstructionsCount						();
 
 /** returns pointer to the code section array */
-char** 	getCodeSection								();
+char** 	    getCodeSection								();
 
 /**
  * should go over the instruction and increase the Command instructions count based on the given statment
  */
-void	increaseCommandInstructionsCountByStatement	(char*);
+void	    increaseCommandInstructionsCountByStatement	(char*);
 
-/** resets the Code Segment module, reintailzaing it, usually used when start to work with a new file */
-void 	resetCodeSegmentModule						();
+/** resets the Code Segment module, re-initialaizing it, usually used when start to work with a new file */
+void 	    resetCodeSegmentModule						();
 
-void 	addStatementToCodeSegment					(char*);
+commandLine addStatementToCodeSegment	(char* statement)
 	
-void 	initCodeSection								();
+void 	    initCodeSection								();
 
-void 	addToCodeSection							(CommandStatement);
+void 	    addToCodeSection							(CommandStatement);
 
-void 	addOperandValueToCodeSection				(OperandNode*, OperandPosition);
+void 	    addOperandValueToCodeSection				(OperandNode*, OperandPosition);
 
-void 	addOperandsValuesToCodeSection				(OperandNode*);
+void 	    addOperandsValuesToCodeSection				(OperandNode*);
 
 /**
  * Go through the operands list, and check wether all the operands match the allowed operands defined by the given CMD, print error for any unallowed operand
  * @param operandsList
  * @param cmd
  */
-void 	validateIfOperandsAreaAllowed				(OperandNode*, COMMANDS);
+void 	    validateIfOperandsAreaAllowed				(OperandNode*, COMMANDS);
 
 /**
  * Check if the given operand type is allowed for this command, at this position, errors if not
@@ -51,5 +52,5 @@ void 	validateIfOperandsAreaAllowed				(OperandNode*, COMMANDS);
  * @param cmd  which command
  * @param operandPosition  at which positon
  */
-void 	validateOperandAllowedForCommand			(OperandType, COMMANDS, OperandPosition);
+void 	    validateOperandAllowedForCommand			(OperandType, COMMANDS, OperandPosition);
 

@@ -30,17 +30,17 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
     command->op_code_3 = commandCode[2];
     command->op_code_4 = commandCode[3];
 
-    command->index_param_1_1 = 0;
-    command->index_param_1_2 = 0;
-    command->index_param_2_1 = 0;
-    command->index_param_2_2 = 0;
+    command->not_in_use_1 = 0;
+    command->not_in_use_2 = 0;
+    command->not_in_use_3 = 0;
+    command->not_in_use_4 = 0;
 
     /* index operand separate coding is not relevant
     if(indexOperandsList == NULL){
-        command->index_param_1_1 = 0;
-        command->index_param_1_2 = 0;
-        command->index_param_2_1 = 0;
-        command->index_param_2_2 = 0;
+        command->not_in_use_1 = 0;
+        command->not_in_use_2 = 0;
+        command->not_in_use_3 = 0;
+        command->not_in_use_4 = 0;
     } else {
         OperandType indexParam1Type;
         OperandType indexParam2Type;
@@ -53,10 +53,10 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
         indexParam1Value = int_to_bin_digit((unsigned int) indexParam1Type, 2);
         indexParam2Value = int_to_bin_digit((unsigned int) indexParam2Type, 2);
 
-        command->index_param_1_1 = indexParam1Value[0];
-        command->index_param_1_2 = indexParam1Value[1];
-        command->index_param_2_1 = indexParam2Value[0];
-        command->index_param_2_2 = indexParam2Value[1];
+        command->not_in_use_1 = indexParam1Value[0];
+        command->not_in_use_2 = indexParam1Value[1];
+        command->not_in_use_3 = indexParam2Value[0];
+        command->not_in_use_4 = indexParam2Value[1];
     }
      */
     return  *command;
@@ -67,10 +67,10 @@ char* getCommandBinaryString(CommandStatement *cmd){
     string = malloc(14 * sizeof(char));
     errorIfMallocFailed(string, "when tring to allocate memory to string of bmc.");
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
-                     cmd->index_param_1_1,/**bit 13:*/ /*TODO: should not be in use*/
-                     cmd->index_param_1_2,/**bit 12:*/ /*TODO: should not be in use*/
-                     cmd->index_param_2_1,/**bit 11:*/ /*TODO: should not be in use*/
-                     cmd->index_param_2_2,/**bit 10:*/ /*TODO: should not be in use*/
+                     cmd->not_in_use_1,/**bit 13:*/ /*TODO: should not be in use*/
+                     cmd->not_in_use_2,/**bit 12:*/ /*TODO: should not be in use*/
+                     cmd->not_in_use_3,/**bit 11:*/ /*TODO: should not be in use*/
+                     cmd->not_in_use_4,/**bit 10:*/ /*TODO: should not be in use*/
                      cmd->op_code_1,/**bit 9: op_code*/
                      cmd->op_code_2,/**bit 8: op_code*/
                      cmd->op_code_3,/**bit 7: op_code*/
