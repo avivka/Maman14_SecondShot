@@ -30,6 +30,12 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
     command->op_code_3 = commandCode[2];
     command->op_code_4 = commandCode[3];
 
+    command->index_param_1_1 = 0;
+    command->index_param_1_2 = 0;
+    command->index_param_2_1 = 0;
+    command->index_param_2_2 = 0;
+
+    /* index operand separate coding is not relevant
     if(indexOperandsList == NULL){
         command->index_param_1_1 = 0;
         command->index_param_1_2 = 0;
@@ -52,6 +58,7 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
         command->index_param_2_1 = indexParam2Value[0];
         command->index_param_2_2 = indexParam2Value[1];
     }
+     */
     return  *command;
 }
 

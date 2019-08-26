@@ -1,23 +1,21 @@
 #include "phase1.h"
 
-void			doPhase1					(char* fileName)
-{
-    FILE* 		fileToAssemble 		= NULL;
-    
-    if (open_or_create_file(&fileToAssemble,fileName) == 0)
+void			doPhase1					(char* fileName) {
+    FILE *fileToAssemble = NULL;
+
+    if (open_or_create_file(&fileToAssemble, fileName) == 0)
     {
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssemble, handleNextLinePhase1);
-        
+
         /** after we handled all the lines, update the final addresses in the symbols table */
         updateSymbolTableAddresses();
     }
-    
     else
     {
-        fprintf(stderr,"ERROR: The file %s could not be renamed to %s%s",fileName,fileName,".as");
+        ERROR_PROGRAM(("The file %s could not be renamed to %s%s",fileName,fileName,".as"));
     }
-    
+
     fclose(fileToAssemble);
 }
 
@@ -32,7 +30,7 @@ void			handleNextLinePhase1		(char* line)
         return;
     }
 
-    /** check if it data statment line, or command instruction line, and handle it as needed */
+    /** check if it data statement line, or command instruction line, and handle it as needed */
     if(type == COMMAND_STATEMENT)
     {
         increaseCommandInstructionsCountByStatement(line);

@@ -95,7 +95,7 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 					
 					if (tail->next == NULL)
 					{
-						ERROR_PROGRAM(("somthing went wrong with the macro's value"));
+						ERROR_PROGRAM(("something went wrong with the macro's value"));
 						
 						return NULL;
 					}
@@ -103,12 +103,12 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 				
 				else
 				{
-					ERROR_PROGRAM(("there is no secend operand in the macro definition"));
+					ERROR_PROGRAM(("there is no second operand in the macro definition"));
 					
 					return NULL;
 				}
 				
-				printf("check headlist good = %d label = %d value = %s", LABEL_OPERAND, headOfList->type, headOfList->value);
+				printf("check headlist good = %d \tlabel = %d \tvalue = %s\t", LABEL_OPERAND, headOfList->type, headOfList->value);
 				
 				return headOfList;
 			}
@@ -217,13 +217,13 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
     switch (statementType){
         case DATA_STATEMENT_TYPE_DATA:
             /**check if the operand is a number*/
-            if (!(isnumber(operandValue))) 
-            {
+            if (!(isnumber(operandValue))) {
                 if ((searchForSymbolByLabel(operandValue)) == NULL)
                 {
                     ERROR_PROGRAM(("invalid operand %s, should be macro or a number", operandValue));
-				}
+                }
             }
+            /** inserts the value of newNode->value with the '#' */
             newNode->value = operandValue;
             newNode->type = DIRECT_VALUE_OPERAND;
             break;
@@ -253,7 +253,6 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 				newNode->value = operandValue;
 				newNode->type = LABEL_OPERAND;
 			}
-			
 			else
 			{
 				newNode->value = operandValue;
@@ -264,19 +263,26 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			printf("check command! \n");
             if (isContainsChar(operandValue, '['))
             {
+                printf("check command 2 \n");
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
-           }
-           else if(isWordStartsWithChar(operandValue, '#') || isnumber(operandValue)){
-                newNode->value = substringFromTo(operandValue, 1, strlen(operandValue));
-                newNode->type = DIRECT_VALUE_OPERAND;
-            } else if(isRegisterValue(operandValue)){
+            }
+            else if(isWordStartsWithChar(operandValue, '#') || isnumber(operandValue))
+            {
+               /*TODO: check if what's after the # is a macro and get it's value*/
+               newNode->value = substringFromTo(operandValue, 1, strlen(operandValue));
+               newNode->type = DIRECT_VALUE_OPERAND;
+            }
+            else if(isRegisterValue(operandValue))
+            {
                 newNode->type = REGISTER_OPERAND;
                 newNode->value = operandValue;
             }
             else{
-                if(!(isnumber(operandValue))) {
-					if (!(validateLabel(operandValue))){
+                if(!(isnumber(operandValue)))
+                {
+					if (!(validateLabel(operandValue)))
+					{
 						ERROR_PROGRAM(("invalid label %s", operandValue));
 					}
                 }
@@ -296,7 +302,6 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 
 OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         char* indexOperandValue = "";
-        /*char* secondOperandValue; no need No need since there is no second operand*/
         char* walker = "";
         OperandNode* list = NULL;
         int labelLength = 0;

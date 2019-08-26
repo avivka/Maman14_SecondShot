@@ -13,12 +13,6 @@
 #define 	ASSEMBLER_TEXTUTILS_H
 
 /**
- * Getting the next word in input, start from startIndex.
- *  Returns the pointer to the beginning of the word
- * */
-char* 		getWord					(char*, int);
-
-/**
  * Gets an input, returns wether it contains the char
  * @param input  the input to check
  * @return 0 if do not contains comma, 1 the input contains comma

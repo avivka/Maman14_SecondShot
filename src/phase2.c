@@ -38,11 +38,10 @@ void			doPhase2			(char* fileName)
         
             return;
         }
-        
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
         createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
-        
+
         printf("check WTF \n");
         
         if (fileToAssembler != NULL)
@@ -54,8 +53,13 @@ void			doPhase2			(char* fileName)
 				printf("check went good \n");
 			}
 		}
-		        
+
         printf("check close phase2 \n");
+    }
+
+    else
+    {
+        ERROR_PROGRAM(("The file %s could not be opened",fileName));
     }
 }
 
@@ -99,13 +103,14 @@ void 			createEnteriesFile	(char *fileName)
     listNode*	walker 				= entryList->head;
     
     printf("check got to create \n");
-    
+
     /** if not entry statements nothing to do */
     if(walker == NULL){
         return;
     }
-    
-    buffer = (char * *) malloc(sizeof(char *) * list_size(entryList));
+    buffer = (char * *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL * list_size(entryList));
+    /*TODO: this change was done recently - added the max size of the label - see if it causes any issues*/
+
     errorIfMallocFailed(buffer, "new array of strings");
     
     while (walker)
@@ -131,20 +136,22 @@ void 			createExternalsFile	(char *fileName)
 	char** 		buffer				= NULL;
 	list* 		externalsList		= getExternalStatementsList();
     listNode* 	walker				= externalsList->head;
-    
+
     /** if not entry statements nothing to do */
     if(walker == NULL)
     {
        return;
     }
-    
+
+    /*buffer = (char**) malloc(sizeof(char *) * (getInstructionsCount() + getDataInstructionsCount()));*/
     buffer = (char**) malloc(sizeof(char *) * list_size(externalsList));
     errorIfMallocFailed(buffer, "new array of strings");
     
     while (walker)
     {
+        /*buffer[count] = (char *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL);*/
         buffer[count] = (char *) malloc(sizeof(char *));
-        errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
+        errorIfMallocFailed(buffer[count], "while trying to allocate memory to buffer[count]");
     
         sprintf(buffer[count], "%s", walker->data);
     
@@ -168,42 +175,42 @@ void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSi
 
     fileName = concat(fileName, ".ob");
     
-    if (open_or_create_file(&file,fileName) == 0)
-	{
-		firstLine = (char *)malloc(sizeof(char*));
-		errorIfMallocFailed(firstLine, "while tring to allocate memory to the first line");
-	
-		/** first put the total code instructions and total data instructions */
-		sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
-	
-		fputs(firstLine, file);
-		
-		/** write all the code section to the file line by line */
-		while (itteratorIndex < codeSegmentSize)
-		{
-		/** prints each line to the weird binary value */
-			from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
-			
-			itteratorIndex++;
-		}
-	
-		dataSegmentWalker = getDataSegmentHead();
-		
-		/** write all the data section to the file line by line */
-		while (dataSegmentWalker != NULL)
-		{
-			/** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
-			lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
-			
-			/** replace each line to it weird binary value */
-			from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
-			
-			/*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
-			dataSegmentWalker = dataSegmentWalker->next;
-		}
-		
-		free(firstLine);
-		
-		fclose(file);
+    if (open_or_create_file(&file,fileName) == 0)/*TODO: add error in case that the file cannot be opened because it shouldn't be there.*/
+    {
+        firstLine = (char *)malloc(sizeof(char*));
+        errorIfMallocFailed(firstLine, "while tring to allocate memory to the first line");
+
+        /** first put the total code instructions and total data instructions */
+        sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
+
+        fputs(firstLine, file);
+
+        /** write all the code section to the file line by line */
+        while (itteratorIndex < codeSegmentSize)
+        {
+        /** prints each line to the weird binary value */
+            from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
+
+            itteratorIndex++;
+        }
+
+        dataSegmentWalker = getDataSegmentHead();
+
+        /** write all the data section to the file line by line */
+        while (dataSegmentWalker != NULL)
+        {
+            /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
+            lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
+
+            /** replace each line to it weird binary value */
+            from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
+
+            /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
+            dataSegmentWalker = dataSegmentWalker->next;
+        }
+
+        free(firstLine);
+    
+        fclose(file);
 	}
 }

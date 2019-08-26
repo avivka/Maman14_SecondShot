@@ -1,42 +1,5 @@
 #include "TextUtils.h"
 
-char* 		getWord					(char *input, int startIndex)
-{
-    int 		i 			= 0;
-    char* 		word 		= NULL;
-
-    while ((input[startIndex]) && ((input[startIndex] == ' ') || (input[startIndex] == '\t')))
-    {
-        startIndex++;
-	}
-    
-    if (input[startIndex])
-    {
-        word = malloc((sizeof(char) * (strlen(input))) + 1);
-        errorIfMallocFailed(word, "While trying to allocate memory to create a new symbol.");
-    
-        if (!word)
-        {
-            ERROR_PROGRAM(("Memory allocation failed"));
-        
-            exit (0);
-        }
-        
-        while ((input[startIndex]) && (input[startIndex] != ' ') && (input[startIndex] != '\t') && (input[startIndex] != ','))
-        {
-            word[i] = input[startIndex];
-        
-            startIndex++;
-        
-            i++;
-        }
-        
-        word[i] = '\0';
-    }
-    
-    return word;
-}
-
 int 		isContainsComma			(char *input)
 {
     return isContainsChar(input, ',');

@@ -10,7 +10,6 @@ void 		writeToFile		(char *filename, char * *buffer, int bufferLength)
         fprintf(stderr, "error could not create file: %s \n", filename);
         exit(0);
     }
-    
     while (i < bufferLength)
     {
         fputs(buffer[i], file);

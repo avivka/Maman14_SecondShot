@@ -59,7 +59,6 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 void 		doWhileFileHaveLines			(FILE * file, void (*nextLineHandler)(char*))
 {
     char 	line[MAX_LINE_SIZE]				= "";
-  
     while(fgets(line, sizeof(line), file))
     {
         nextLineHandler(line);

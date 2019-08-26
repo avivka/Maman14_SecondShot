@@ -6,8 +6,8 @@ int			main			(int argc, char *argv[]) {
 
     if(argc < 2) 
     {
-        fprintf(stderr, "Error: Arguments weren't supplied, exiting code \n");
-    
+        ERROR_PROGRAM(("Arguments weren't supplied, exiting code \n"));
+
         exit (0);
     }
 
@@ -30,7 +30,7 @@ int			main			(int argc, char *argv[]) {
 		rename(*argv, fileName);
 		
         printf("\n Begin processing the following file: %s", *argv);
-        
+
         currentLine = 1;
         
         errorFlag = 0;

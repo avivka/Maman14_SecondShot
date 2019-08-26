@@ -24,7 +24,7 @@ void list_destroy(list *list)
 void list_append(list *list, char *element)
 {
     listNode *node = malloc(sizeof(listNode));
-    node->data = (char *) malloc(sizeof(char *));
+    node->data = (char *) malloc(sizeof(MAX_LINE_SIZE));
     node->next = NULL;
 
     strcpy(node->data, element);

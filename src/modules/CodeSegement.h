@@ -8,8 +8,6 @@
 
 /* Defines				*/
 
-#ifndef 	ASSEMBLER_CODESEGEMENT_H
-#define 	ASSEMBLER_CODESEGEMENT_H
 #define 	COMMAND_VALUE_LENGTH 			12
 #define 	COMMAND_ARE_BITS_LENGTH			2
 #define 	COMMAND_REGISTER_LENGTH			6
@@ -54,7 +52,4 @@ void 	validateIfOperandsAreaAllowed				(OperandNode*, COMMANDS);
  * @param operandPosition  at which positon
  */
 void 	validateOperandAllowedForCommand			(OperandType, COMMANDS, OperandPosition);
-
-#endif
-
 
