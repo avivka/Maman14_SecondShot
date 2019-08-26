@@ -281,7 +281,7 @@ void 		addOperandsValuesToCodeSection	(OperandNode* operandsList)
 
 void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition position)
 {
-	printf("check add \n");
+	printf("check add 2\n");
 	
     Symbol* 				symbol			= NULL;
     char* 					value			= "";

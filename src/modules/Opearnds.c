@@ -262,13 +262,13 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
 			break;
         case COMMAND_STATEMENT:
 			printf("check command! \n");
-            if (isContainsChar(operandValue, '[') || isnumber(operandValue))
+            if (isContainsChar(operandValue, '['))
             {
 				printf("check command 2 \n");
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
            }
-           else if(isWordStartsWithChar(operandValue, '#')){
+           else if(isWordStartsWithChar(operandValue, '#') || isnumber(operandValue)){
                 newNode->value = substringFromTo(operandValue, 1, strlen(operandValue));
                 newNode->type = DIRECT_VALUE_OPERAND;
             } else if(isRegisterValue(operandValue)){
@@ -307,9 +307,6 @@ OperandNode* getOperandListOfIndexOperand(char* indexOperandString){
         
         printf("ok \n");
         printf("check label = %s \n", label);
-        printf("check label = %s \n", label);
-        printf("check label = %s \n", label);
-        printf("ok \n");
 
         if(label == NULL){
             ERROR_PROGRAM(("index operand must have a label that defines where to index to"));
