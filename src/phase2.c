@@ -94,7 +94,7 @@ void 			handleNextLine		(char* line)
     {
         newLine = addStatementToCodeSegment(line);
         
-        from_line_to_bmc(&newLine, &decimalAddress, exFleName);
+        decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFleName);
     }
     
     else
@@ -200,7 +200,7 @@ void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSi
         while (itteratorIndex < codeSegmentSize)
         {
         /** prints each line to the weird binary value */
-            from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
+            data_from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
 
             itteratorIndex++;
         }
@@ -214,7 +214,7 @@ void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSi
             lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
 
             /** replace each line to it weird binary value */
-            from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
+            data_from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
 
             /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
             dataSegmentWalker = dataSegmentWalker->next;
