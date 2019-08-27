@@ -1,13 +1,15 @@
 /* Includes				*/
-#ifndef        ASSEMBLER_LIST_H
-#define        ASSEMBLER_LIST_H
 
 #include 	<stdlib.h>
 #include 	<string.h>
 #include 	<stdio.h>
 #include 	"../constants.h"
+#include	"Error.h"
 
 /* Defines				*/
+
+#ifndef        ASSEMBLER_LIST_H
+#define        ASSEMBLER_LIST_H
 
 /* Structures			*/
 

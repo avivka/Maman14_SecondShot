@@ -1,3 +1,5 @@
+/* Defines				*/
+
 #ifndef ASSEMBLER_STATEMENTS_TYPES_H
 #define ASSEMBLER_STATEMENTS_TYPES_H
 
@@ -15,6 +17,9 @@
  *   - DATA_STATEMENT_TYPE_DEFINE - statements that store macro definition
  *  We can also have INVALID_STATEMENT which the given statement is invalid
  */
+ 
+ /* Enums			*/
+ 
 typedef enum {
     DATA_STATEMENT_TYPE_DATA,
     DATA_STATEMENT_TYPE_STRING,

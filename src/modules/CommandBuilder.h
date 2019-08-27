@@ -1,9 +1,17 @@
-#ifndef ASSEMBLER_COMMANDBUILDER_H
+/* Includes				*/
 
 #include "../utils/Binary.h"
 #include "Opearnds.h"
 
-typedef struct {
+/* Defines				*/
+
+#ifndef ASSEMBLER_COMMANDBUILDER_H
+#define ASSEMBLER_COMMANDBUILDER_H
+
+/* Structures			*/
+
+typedef struct
+{
     unsigned int encoding_type_1: 1;
     unsigned int encoding_type_2: 1;
     unsigned int destination_operand_1: 1;
@@ -20,16 +28,18 @@ typedef struct {
     unsigned int not_in_use_2: 1;
 } CommandStatement;
 
+/* Enums				*/
 
-
-typedef  enum {
+typedef  enum
+{
     ABSOLUTE,
     EXTERNAL,
     RELOCATEABLE
 } STATEMENT_ENCODING_TYPE;
 
-CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* indexOperandsList);
+/* Prototypes	*/
 
-char* getCommandBinaryString(CommandStatement *cmd);
-#define ASSEMBLER_COMMANDBUILDER_H
+CommandStatement 	buildCommandStatement		(OperandType, OperandType, COMMANDS, STATEMENT_ENCODING_TYPE, OperandNode*);
+
+char* 				getCommandBinaryString		(CommandStatement*);
 #endif

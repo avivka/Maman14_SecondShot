@@ -1,7 +1,8 @@
 #include "phase1.h"
 
-void			doPhase1					(char* fileName) {
-    FILE *fileToAssemble = NULL;
+void			doPhase1					(char* fileName)
+{
+    FILE*		fileToAssemble 		= NULL;
 
     if (open_or_create_file(&fileToAssemble, fileName) == 0)
     {
@@ -11,6 +12,7 @@ void			doPhase1					(char* fileName) {
         /** after we handled all the lines, update the final addresses in the symbols table */
         updateSymbolTableAddresses();
     }
+
     else
     {
         ERROR_PROGRAM(("The file %s could not be renamed to %s%s",fileName,fileName,".as"));
@@ -51,7 +53,7 @@ void			handleNextLinePhase1		(char* line)
     printf("check currentline = %d \n", currentLine);
 }
 
-void			updateSymbolTableAddresses	()
+void			updateSymbolTableAddresses		()
 {
     Symbol* 	walker				= NULL;
     

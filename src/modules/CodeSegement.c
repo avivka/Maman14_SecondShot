@@ -358,8 +358,10 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
             printf("check dest register operand value:%s\n", value);
         }
     }
+    
     else if(operand->type == INDEX_OPERAND)
-    { /** addressing method type 2*/
+    { 
+		/** addressing method type 2*/
         char* 			indexLabel			= "";
         int 			indexLabelAddress	= 0;
         OperandNode*	indexOperands		= NULL;
@@ -375,7 +377,6 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
             }
         }
 
-        /*printf("check here's the operand's list of index: %s\n",indexOperands->value);*/
         printf("check %s %d \n", indexOperands->value, indexOperands->type);
 
         indexLabel = extractIndexOperandLabel(operand->value);
@@ -391,10 +392,12 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
             printf("check %d \n", symbol->address);
         }
 
-        if(symbol == NULL){
+        if(symbol == NULL)
+        {
             ERROR_PROGRAM(("Unknown symbol %s is a part of the index statement", indexLabel));
             return;
         }
+        
         printf("check here's the label that was found: %s %d \n", symbol->label, symbol->feature);
 
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
@@ -414,6 +417,7 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
 
             encoding_type = RELOCATEABLE;
         }
+        
         /***/
         indexLabelAddress = symbol->address;
         printf("check %d \n", indexLabelAddress);
@@ -452,23 +456,29 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         }
 
         codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));*/
+        
         addOperandsValuesToCodeSection(indexOperands);
+        
         return;
     }
     else
-    {  /** then its a label operand */
+    {  
+		/** then its a label operand */
         Symbol* 		symbol			= NULL;
 
         /** find the label in the symbols table */
         if(!(isnumber(operand->value)))
         {
             printf("check 2 %s \n", operand->value);
+        
             symbol = searchForSymbolByLabel(operand->value);
+        
             if(symbol == NULL)
             {
                 ERROR_PROGRAM(("Unknown symbol %s", operand->value));
                 return;
             }
+        
             /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
             if(symbol->feature == ext)
             {
@@ -476,13 +486,14 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
 
                 addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
             }
+        
             else
             {
                 encoding_type = RELOCATEABLE;
             }
         }
+        
         value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
-
     }
 
     /** combine statement and the encoding type bits */
@@ -500,11 +511,13 @@ void 		validateIfOperandsAreaAllowed	(OperandNode* operandsList, COMMANDS cmd)
     switch (operandsCount)
     {
         case 1:
+    
             validateOperandAllowedForCommand(operandsList->type, cmd, TARGET_OPERAND);
     
             break;
     
         case 2:
+    
             validateOperandAllowedForCommand(operandsList->type, cmd, SRC_OPERAND);
             validateOperandAllowedForCommand(operandsList->next->type, cmd, TARGET_OPERAND);
     

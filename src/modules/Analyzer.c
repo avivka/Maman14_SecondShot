@@ -2,25 +2,25 @@
 
 STATEMENT_TYPE 	getStatementTypeOfSentence			(char* sentence)
 {
- if(isStatementTypeDataStatement(sentence))
-     return DATA_STATEMENT_TYPE_DATA;
-
- if(isStatementTypeDataStatementEntry(sentence))
-     return  DATA_STATEMENT_TYPE_ENTRY;
-
- if(isStatementTypeDataStatementExtern(sentence))
-     return  DATA_STATEMENT_TYPE_EXTERN;
-
- if(isStatementTypeDataStatementString(sentence))
-     return  DATA_STATEMENT_TYPE_STRING;
-
- if(isStatementTypeDataStatementDefine(sentence))
-     return  DATA_STATEMENT_TYPE_DEFINE;
-
- if(isCommandStatement(sentence))
-     return COMMAND_STATEMENT;
- 
- return  INVALID_STATEMENT;
+	if(isStatementTypeDataStatement(sentence))
+		return DATA_STATEMENT_TYPE_DATA;
+	
+	if(isStatementTypeDataStatementEntry(sentence))
+		return  DATA_STATEMENT_TYPE_ENTRY;
+	
+	if(isStatementTypeDataStatementExtern(sentence))
+		return  DATA_STATEMENT_TYPE_EXTERN;
+	
+	if(isStatementTypeDataStatementString(sentence))
+		return  DATA_STATEMENT_TYPE_STRING;
+	
+	if(isStatementTypeDataStatementDefine(sentence))
+		return  DATA_STATEMENT_TYPE_DEFINE;
+	
+	if(isCommandStatement(sentence))
+		return COMMAND_STATEMENT;
+	
+	return  INVALID_STATEMENT;
 }
 
 int 			isDataStatement						(char *sentence)
@@ -72,7 +72,7 @@ int 			validateLabel						(char* label)
                    (strcmp(label, "dec") == 0) || (strcmp(label, "jmp") == 0) || (strcmp(label, "bne") == 0) || (strcmp(label, "red") == 0) ||
                    (strcmp(label, "prn") == 0) || (strcmp(label, "jsr") == 0) || (strcmp(label, "rts") == 0) || (strcmp(label, "stop") == 0 )))
         {
-            if ((!isalpha(label[0])))
+            if (!isalpha(label[0]))
             {
                 ERROR_PROGRAM(("Label Cannot start with digits"));
             

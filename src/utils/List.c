@@ -1,19 +1,24 @@
 #include "List.h"
 
-void list_new(list *list, int elementSize)
+void 	list_new		(list *list, int elementSize)
 {
     list->logicalLength = 0;
+    
     list->elementSize = elementSize;
+    
     list->head = list->tail = NULL;
 }
 
-void list_destroy(list *list)
+void 	list_destroy	(list *list)
 {
 	printf("check got to list destroy \n");
 	
     listNode *current;
-    while(list->head != NULL) {
+    
+    while(list->head != NULL)
+    {
         current = list->head;
+        
         list->head = current->next;
 
         free(current->data);
@@ -21,17 +26,25 @@ void list_destroy(list *list)
     }
 }
 
-void list_append(list *list, char *element)
+void 	list_append		(list *list, char *element)
 {
-    listNode *node = malloc(sizeof(listNode));
+    listNode* node = malloc(sizeof(listNode));
+    errorIfMallocFailed(node, "While trying to allocate new node.");
+    
     node->data = (char *) malloc(sizeof(MAX_LINE_SIZE));
+    errorIfMallocFailed(node->data, "While trying to allocate data for a new node.");
+    
     node->next = NULL;
 
     strcpy(node->data, element);
 
-    if(list->logicalLength == 0) {
+    if(list->logicalLength == 0)
+    {
         list->head = list->tail = node;
-    } else {
+    }
+    
+    else
+    {
         list->tail->next = node;
         list->tail = node;
     }
@@ -39,8 +52,7 @@ void list_append(list *list, char *element)
     list->logicalLength++;
 }
 
-int list_size(list *list)
+int 	list_size		(list *list)
 {
     return list->logicalLength;
 }
-

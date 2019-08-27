@@ -1,7 +1,7 @@
 #include "Binary.h"
 
 
-unsigned int* 	int_to_bin_digit							(unsigned int in, int count)
+unsigned int* 	int_to_bin_digit			(unsigned int in, int count)
 {						
     int 			i							= 0;
     unsigned int* 	out							= 0;
@@ -21,7 +21,7 @@ unsigned int* 	int_to_bin_digit							(unsigned int in, int count)
     return  out;		
 }		
 		
-char* 			decimal_to_binaryString						(int n, int numOfDigits)
+char* 			decimal_to_binaryString		(int n, int numOfDigits)
 {
     int 		c						= 0;
     int 		d						= 0;
@@ -53,7 +53,7 @@ char* 			decimal_to_binaryString						(int n, int numOfDigits)
     return  pointer;
 }
 
-int 			data_from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* decimalAddressCounter, FILE* fp)
+int 			data_from_binary_machine_code_to_fourth_base (char* binaryCode, int* decimalAddressCounter, FILE* fp)
 {
     int 		evenCounter						= 0;
     int			oddCounter						= evenCounter++;
@@ -93,7 +93,7 @@ int 			data_from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* dec
 
 /*Returns * or # or % or ! to the array. Reutrns 0 if all good.*/
 
-char			to_4_base_data									(char firstBit, char secondBit)
+char			to_4_base_data				(char firstBit, char secondBit)
 {
     secondBit 	= (secondBit - char_to_ascii) * 2;
     firstBit	= (firstBit - char_to_ascii);
@@ -135,7 +135,7 @@ char			to_4_base_data									(char firstBit, char secondBit)
     return '0';
 }
 
-int			printSignToFileData									(char *bmcsign, FILE* fp)
+int				printSignToFileData			(char *bmcsign, FILE* fp)
 {
     int i;
 

@@ -25,7 +25,7 @@ int			main			(int argc, char *argv[])
 			break;
 		}
 
-		fileName 	= is_extention_exists(*argv, ".as");
+		fileName = is_extention_exists(*argv, ".as");
 
 		printf("check the filename is - %s \n", fileName);
 
@@ -45,15 +45,26 @@ int			main			(int argc, char *argv[])
         /** rests line read, because reading the file from the start */
         currentLine = 1;
 
-        /** execute phase 2 of the assembler */
-        doPhase2(fileName);
-
-        printf("check phase2 done \n");
+		if(errorFlag == 0)
+		{
+			/** execute phase 2 of the assembler */        
+			doPhase2(fileName);
+			
+			printf("check phase2 done \n");
+			
+			if(errorFlag == 1)
+			{
+				deleteFile(fileName, ".ob");
+				
+				deleteFile(fileName, ".ext");
+				
+				deleteFile(fileName, ".ent");	
+			}
+		}
 
         /** clear up so we can process properly the next file*/
         resetDataSegmentModule();
         resetSymbolsModulesModule();
-        resetCodeSegmentModule();
 
         printf("\n Assembler completed processing file: %s", *argv);
 

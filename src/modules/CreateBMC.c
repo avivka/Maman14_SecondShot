@@ -6,12 +6,12 @@ int			from_line_to_bmc	(commandLine* nextLine, int decimalAddress, char* filenam
 											
 	create_basic_bmc (nextLine, &decimalAddress, filename);				 											/** Creates the first binary machine code from the line (COMMANDS based) */
 														
-	if (nextLine->srcoperand.value != NULL)													
+	if (nextLine->srcoperand.type != NO_OPERAND)													
 	{													
 		from_src_des_opr (nextLine, TRUE, &decimalAddress, filename);									/** Checks what kind of operand is it and transfers if to fourth base */
 	}					
 		
-	if (nextLine->desoperand.value != NULL)
+	if (nextLine->desoperand.type != NO_OPERAND)
 	{					
 		if (nextLine->srcoperand.type == REGISTER_OPERAND && nextLine->desoperand.type == REGISTER_OPERAND)								/** Checks if the source and destination operands are storage type */
 		{
@@ -89,7 +89,7 @@ short int 	from_src_des_opr	(commandLine* nextLine, boolean isSrc, int* decimalA
 				return src_des_storage(nextLine, decimalAddress, filename);
 
 			default:
-				ERROR_PROGRAM(("There is a problem with the source operand of the line"));
+				ERROR_PROGRAM(("There is a problem with the source operand"));
 		}
 	}
 
@@ -180,7 +180,7 @@ short int 	opr_direct			(char* label, boolean isIndex, int* decimalAddress, char
 }
 
 short int 	opr_index			(char* ope, int* decimalAddress, char* filename)							/* In case of index operand create the binary machine code for it and for the label */
-{ /*TODO: needs to be in enum? why is it passed as char*?*/
+{
 	char		label[MAX_SIZE_OF_LABEL]		= "";
 	int 		i						= 0;
 	int			j						= 0;

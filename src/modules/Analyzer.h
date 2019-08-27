@@ -1,9 +1,5 @@
 /* Includes				*/
 
-
-#ifndef 	ASSEMBLER_ANALYZER_H
-#define 	ASSEMBLER_ANALYZER_H
-
 #include 	<string.h>
 #include 	<stdio.h>
 #include 	<ctype.h>
@@ -14,8 +10,12 @@
 
 /* Defines				*/
 
+#ifndef 	ASSEMBLER_ANALYZER_H
+#define 	ASSEMBLER_ANALYZER_H
 #define 	MAX_SIZE_OF_LABEL 				31
 #define 	MAX_COMMAND_LENGTH				4
+
+/* Prototypes 	*/
 
 /**
  * Returns the type of the given statement

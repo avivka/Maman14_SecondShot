@@ -31,16 +31,13 @@ void			doPhase2			(char* fileName)
     if (open_or_create_file(&fileToAssembler,fileName) == 0) 
     {
         printf("check 14 again open or creation of %s was done successfully\n", fileName);
-        
-        /*fclose(fileToAssembler);*/
 		
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection(exFileName, dataSegmentSize);
        
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssembler, handleNextLine);
-        /*DoWhileFileHaveLines(renamedInputFile, handleNextLine);*/
-        /*fclose(fileToAssembler);*/
+     
         if (errorFlag == 1)
         {
             printf("didn't output files for file %s, because errors were found. see the errors output for more information.", fileName);
@@ -101,7 +98,7 @@ void 			handleNextLine		(char* line)
     }
     
     else
-    { /*TODO: add macro case and not call addStatementToCodeSegment(line) */
+    {
         ERROR_PROGRAM(("error invalid command"));
     }
     
@@ -119,12 +116,12 @@ void 			createEnteriesFile	(char *fileName)
     printf("check got to create \n");
 
     /** if not entry statements nothing to do */
-    if(walker == NULL){
+    if (walker == NULL)
+    {
         return;
     }
+    
     buffer = (char * *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL * list_size(entryList));
-    /*TODO: this change was done recently - added the max size of the label - see if it causes any issues*/
-
     errorIfMallocFailed(buffer, "new array of strings");
     
     while (walker)
@@ -152,18 +149,16 @@ void 			createExternalsFile	(char *fileName)
     listNode* 	walker				= externalsList->head;
 
     /** if not entry statements nothing to do */
-    if(walker == NULL)
+    if (walker == NULL)
     {
        return;
     }
 
-    /*buffer = (char**) malloc(sizeof(char *) * (getInstructionsCount() + getDataInstructionsCount()));*/
     buffer = (char**) malloc(sizeof(char *) * list_size(externalsList));
     errorIfMallocFailed(buffer, "new array of strings");
     
     while (walker)
     {
-        /*buffer[count] = (char *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL);*/
         buffer[count] = (char *) malloc(sizeof(char *));
         errorIfMallocFailed(buffer[count], "while trying to allocate memory to buffer[count]");
     
