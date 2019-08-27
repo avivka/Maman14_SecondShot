@@ -118,7 +118,8 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
 					IC += 1;
 				}
 			}
-			 
+            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement: %s\n", label);
+			 free(label);
             break;
             
         case 1:
@@ -149,16 +150,20 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
                 /** just increase by one */
                 IC++;
             }
-            
+            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 2: %s\n", label);
+            free(label);
             break;
         
         case 0:
         
             /** nothing to do */
+            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 3: %s\n", label);
+            free(label);
             break;
             
         default:
-        
+            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 4: %s\n", label);
+            free(label);
             ERROR_PROGRAM(("invalid number of operands for a command statement, got %d, expected to be between 0 to 2", operandsCount));
             break;
     }
@@ -206,8 +211,9 @@ commandLine addStatementToCodeSegment	(char* statement)
     if(descriptor == NULL)
     {
         ERROR_PROGRAM(("unknown command"));
-    
-            return newLine;
+        printf("check here's the label before I let it go in addStatementToCodeSegment 1: %s\n", label);
+        free(label);
+        return newLine;
     }
 
     /** initialaize line in order to handle command coding with CreateBMC functionalities*/
@@ -249,6 +255,8 @@ commandLine addStatementToCodeSegment	(char* statement)
     addOperandsValuesToCodeSection(operandsList);
     */
 
+    printf("check here's the label before I let it go in addStatementToCodeSegment 2: %s\n", label);
+    free(label);
     return newLine;
 }
 

@@ -87,6 +87,7 @@ void 			handleNextLine		(char* line)
     if (isDataStatement(line))
     {
         currentLine++;
+        printf("check currentLine after isDataStatement: %d\n", currentLine);
     
         return;
     }
@@ -100,6 +101,7 @@ void 			handleNextLine		(char* line)
         decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFileName);
 
         currentLine++;
+        printf("check currentLine after isCommandStatement: %d\n", currentLine);
 
         return;
     }

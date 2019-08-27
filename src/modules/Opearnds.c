@@ -108,7 +108,7 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
 					return NULL;
 				}
 				
-				printf("check headlist good = %d \tlabel = %d \tvalue = %s\t", LABEL_OPERAND, headOfList->type, headOfList->value);
+				printf("check headlist good = %d \tlabel = %d \tvalue = %s\n", LABEL_OPERAND, headOfList->type, headOfList->value);
 				
 				return headOfList;
 			}

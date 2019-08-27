@@ -16,8 +16,9 @@ void			doPhase1					(char* fileName) {
     {
         ERROR_PROGRAM(("The file %s could not be renamed to %s%s",fileName,fileName,".as"));
     }
-
+    printf("check about to close fileName: %s with this pointer:%p\n", fileName, (void*)fileToAssemble);
     fclose(fileToAssemble);
+    printf("check fileName: %s with this pointer:%p was closed successfully\n", fileName, (void*)fileToAssemble);
 }
 
 void			handleNextLinePhase1		(char* line)
@@ -28,6 +29,7 @@ void			handleNextLinePhase1		(char* line)
     if(isCommentStatementOrEmptyLine(line))
     {
         currentLine++;
+        printf("check currentLine after isCommentStatementOrEmptyLine: %d\n", currentLine);
         return;
     }
 
@@ -45,12 +47,12 @@ void			handleNextLinePhase1		(char* line)
     
     else
     {
-        printf("error invalid command at line");
+        printf("error invalid command at line\n");
     }
     
     currentLine++;
     
-    printf("check currentline = %d \n", currentLine);
+    printf("check currentline after data or macro sentence= %d \n", currentLine);
 }
 
 void			updateSymbolTableAddresses	()

@@ -412,12 +412,15 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
         /** if we already found the command return it */
         if(command != UNKNOWN_COMMAND)
         {
+            printf("check here's the label before I let it go in getCommandOfStatement 1: %s\n", label);
+            free(label);
             return  command;
         }
 
         iterationIndex++;
     }
-
+    printf("check here's the label before I let it go in getCommandOfStatement 2: %s\n", label);
+    free(label);
     return  UNKNOWN_COMMAND;
 }
 

@@ -14,7 +14,7 @@
 
 /* Defines				*/
 
-#define 	MAX_SIZE_OF_LABEL 				31
+#define 	MAX_SIZE_OF_LABEL 				255
 #define 	MAX_COMMAND_LENGTH				4
 
 /**
