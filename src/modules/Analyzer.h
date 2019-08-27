@@ -95,7 +95,7 @@ char* 			extractLabel						(char*);
 char* 			extractIndexOperandLabel			(char*);
 
 /** returns which command is used in this sentence, if any, otherwise returns UNKOWN command */
-COMMANDS 		getCommandOfStatement				(char*);
+command 		getCommandOfStatement				(char*);
 
 /** returns true if the given line is a comment line or empty line */
 boolean 		isCommentStatementOrEmptyLine		(char*);

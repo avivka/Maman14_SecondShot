@@ -1,19 +1,12 @@
 /* Includes				*/
+#ifndef        ASSEMBLER_PHASE1_H
+#define        ASSEMBLER_PHASE1_H
 
 #include 	"utils/FileReader.h"
 #include 	"utils/TextUtils.h"
 #include 	"modules/Analyzer.h"
 #include 	"modules/DataSegment.h"
 #include 	"modules/CodeSegement.h"
-
-/* Defines				*/
-
-#ifndef 	ASSEMBLER_PHASE1_H
-#define 	ASSEMBLER_PHASE1_H
-
-/* Extern Data Members	*/
-
-extern int currentLine;
 
 /* Function Declaration	*/
 

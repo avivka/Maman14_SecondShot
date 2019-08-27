@@ -1,4 +1,5 @@
 /* Includes				*/
+#ifndef        ASSEMBLER_WIERDBINARY_H
 
 #include 	<stdlib.h>
 #include 	<stdio.h>
@@ -7,7 +8,6 @@
 
 /* Defines				*/
 
-#ifndef 	ASSEMBLER_WIERDBINARY_H
 #define 	maxNumDecimalAddress 				1000
 #define		char_to_ascii						48
 #define 	NUM_OF_ACTIVE_BITS 					14
@@ -34,3 +34,4 @@ int				printSignToFile								(char*, FILE*);
 #define ASSEMBLER_WIERDBINARY_H
 
 #endif
+

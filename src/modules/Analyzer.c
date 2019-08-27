@@ -386,6 +386,7 @@ int 			isCommandStatement					(char *sentence)
 }
 
 COMMANDS 		getCommandOfStatement				(char* sentence)
+
 {
     int 		labelLength 				= 0;
     int 		iterationIndex 				= 0;

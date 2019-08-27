@@ -1,5 +1,6 @@
 /* Includes				*/
-
+#ifndef        ASSEMBLER_TEXTUTILS_H
+#define        ASSEMBLER_TEXTUTILS_H
 #include 	<stdlib.h>
 #include 	<stdio.h>
 #include 	<string.h>
@@ -8,9 +9,6 @@
 #include 	"../constants.h"
 
 /* Defines				*/
-
-#ifndef 	ASSEMBLER_TEXTUTILS_H
-#define 	ASSEMBLER_TEXTUTILS_H
 
 /**
  * Gets an input, returns wether it contains the char

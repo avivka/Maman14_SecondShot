@@ -31,7 +31,5 @@ typedef  enum {
 CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* indexOperandsList);
 
 char* getCommandBinaryString(CommandStatement *cmd);
-
 #define ASSEMBLER_COMMANDBUILDER_H
-
 #endif
