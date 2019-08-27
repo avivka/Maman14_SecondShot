@@ -53,6 +53,7 @@ void handleDataStatement(char* dataStatement){
     char *label;
     label = extractLabel(dataStatement);
     type = getStatementTypeOfSentence(dataStatement);
+    printf("check called from here! \n");
     operands = getOperandsListOfStatement(dataStatement, type, label);
     switch (type){
         case DATA_STATEMENT_TYPE_DATA:

@@ -67,12 +67,21 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
             Operandvalue = substringFromTo(statement, operandStartIndex, stringIterationIndex);
             temp = createOperandNode(Operandvalue, statementType);
             printf("check temp value = %s \n", temp->value);
-            if(headOfList == NULL){
+            
+            if(headOfList == NULL)
+            {
+				printf("check null  \n");
                 headOfList = tail = temp;
-            } else{
+            }
+            
+            else
+            {
+				printf("check not null \n");
                 tail->next = temp;
                 tail = temp;
             }
+            
+            printf("check %d \n", statementType);
 			
 			if (statementType == DATA_STATEMENT_TYPE_DEFINE)
 			{				
@@ -126,6 +135,8 @@ OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statemen
         }
     }
 
+	printf("check finish here \n");
+	
     return  headOfList;
 
 }
