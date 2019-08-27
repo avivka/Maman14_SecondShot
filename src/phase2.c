@@ -1,6 +1,6 @@
 #include "phase2.h"
 
-char* 	exFleName;
+char* 	exFileName;
 int		decimalAddress;
 
 void			doPhase2			(char* fileName)
@@ -9,7 +9,7 @@ void			doPhase2			(char* fileName)
     int 	dataSegmentSize		= 0;
     FILE* 	fileToAssembler		= NULL;
    
-    strcpy(exFleName, fileName);
+    strcpy(exFileName, fileName);
     
     if(fileToAssembler == NULL)
     {
@@ -94,7 +94,7 @@ void 			handleNextLine		(char* line)
     {
         newLine = addStatementToCodeSegment(line);
         
-        decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFleName);
+        decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFileName);
     }
     
     else

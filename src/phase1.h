@@ -1,6 +1,6 @@
 /* Includes				*/
-#ifndef        ASSEMBLER_PHASE1_H
-#define        ASSEMBLER_PHASE1_H
+#ifndef     ASSEMBLER_PHASE1_H
+#define     ASSEMBLER_PHASE1_H
 
 #include 	"utils/FileReader.h"
 #include 	"utils/TextUtils.h"
@@ -12,6 +12,7 @@
 
 void		doPhase1					(char*);
 void 		handleNextLinePhase1		(char*);
+
 /**
  * this method updates the symbols table addresses, after we know the exact length of the code segment, we can update each symbol its real address
 */
