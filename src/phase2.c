@@ -1,7 +1,7 @@
 #include "phase2.h"
 
-extern int 		decimalAddress;
-extern char* 	exFleName;
+char* 	exFleName;
+int		decimalAddress;
 
 void			doPhase2			(char* fileName)
 {

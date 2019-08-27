@@ -1,5 +1,7 @@
 #include 	"CreateBMC.h"
 
+extern int decimalAddress;
+
 int			from_line_to_bmc	(commandLine* nextLine, int* decimalAddress, char* filename) 		/** The main function of creation binary machine code */
 {												
 	create_basic_bmc (nextLine, &decimalAddress, filename);				 											/** Creates the first binary machine code from the line (COMMANDS based) */

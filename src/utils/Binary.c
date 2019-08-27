@@ -73,7 +73,7 @@ int 			data_from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* dec
 
     while (evenCounter < NUM_OF_ACTIVE_BITS)
     {
-		sign = to_4_base(binaryCode[evenCounter], binaryCode[(oddCounter)]);
+		sign = to_4_base_data(binaryCode[evenCounter], binaryCode[(oddCounter)]);
 		
 		if (sign == '0')
 		{
@@ -93,7 +93,7 @@ int 			data_from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* dec
 
 /*Returns * or # or % or ! to the array. Reutrns 0 if all good.*/
 
-char			to_4_base									(char firstBit, char secondBit)
+char			to_4_base_data									(char firstBit, char secondBit)
 {
     secondBit 	= (secondBit - char_to_ascii) * 2;
     firstBit	= (firstBit - char_to_ascii);
@@ -135,7 +135,7 @@ char			to_4_base									(char firstBit, char secondBit)
     return '0';
 }
 
-int			printSignToFile									(char *bmcsign, FILE* fp)
+int			printSignToFileData									(char *bmcsign, FILE* fp)
 {
     int i;
 

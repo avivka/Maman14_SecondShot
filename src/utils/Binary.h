@@ -28,8 +28,8 @@ unsigned int* 	int_to_bin_digit							(unsigned int, int);
  */
 char* 			decimal_to_binaryString						(int, int);
 int	 			data_from_binary_machine_code_to_fourth_base 	(char*, int*, FILE*);
-char 			to_4_base									(char, char);
-int				printSignToFile								(char*, FILE*);
+char 			to_4_base_data									(char, char);
+int				printSignToFileData								(char*, FILE*);
 
 #define ASSEMBLER_WIERDBINARY_H
 
