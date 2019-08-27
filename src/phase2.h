@@ -1,4 +1,6 @@
 /* Includes				*/
+#ifndef        ASSEMBLER_PHASE1_H
+#define        ASSEMBLER_PHASE1_H
 
 #include	"utils/FileReader.h"
 #include	"utils/FileWriter.h"
@@ -8,10 +10,6 @@
 #include	"modules/DataSegment.h"
 #include	"modules/CodeSegement.h"
 
-/* Defines				*/
-
-#ifndef 	ASSEMBLER_PHASE2_H
-#define 	ASSEMBLER_PHASE2_H
 
 /* Function Declaration	*/
 
@@ -20,4 +18,5 @@ void 		handleNextLine		(char*);
 void 		createEnteriesFile	(char*);
 void 		createExternalsFile	(char*);
 void 		createObjectFile	(char*, int, int);
+
 #endif

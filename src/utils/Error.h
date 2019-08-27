@@ -1,12 +1,11 @@
 /* Includes				*/
+#ifndef        ASSEMBLER_GENERALUTILS_H
+#define        ASSEMBLER_GENERALUTILS_H
 
 #include 	<stdio.h>
 #include 	<stdlib.h>
 
 /* Defines				*/
-
-#ifndef 	ASSEMBLER_GENERALUTILS_H
-#define 	ASSEMBLER_GENERALUTILS_H
 
 /* Extern Data Members	*/
 

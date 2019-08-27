@@ -1,5 +1,6 @@
 #ifndef ASSEMBLER_COMMANDSINDEX_H
 #define ASSEMBLER_COMMANDSINDEX_H
+
 #include "../constants.h"
 #include "../utils/Error.h"
 #include <string.h>

@@ -1,4 +1,7 @@
 /* Includes				*/
+#ifndef        ASSEMBLER_FILEREADER_H
+#define        ASSEMBLER_FILEREADER_H
+
 #include 	<stdio.h>
 #include 	<stdlib.h>
 #include 	<unistd.h>
@@ -7,9 +10,6 @@
 #include 	"TextUtils.h"
 
 /* Defines				*/
-
-#ifndef 	ASSEMBLER_FILEREADER_H
-#define 	ASSEMBLER_FILEREADER_H
 
 /* Function Declaration	*/
 
@@ -25,5 +25,3 @@ int 		open_or_create_file			(FILE**, char*);
 void doWhileFileHaveLines(FILE*, void (*nextLineHandler)(char*));
 /*void DoWhileFileHaveLines(char*, void (*nextLineHandler)(char*));*/
 #endif
-
-

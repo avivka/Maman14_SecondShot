@@ -10,8 +10,8 @@
 
 /* Defines				*/
 
-#ifndef 	ASSEMBLER_ANALYZER_H
-#define 	ASSEMBLER_ANALYZER_H
+#ifndef        ASSEMBLER_ANALYZER_H
+#define        ASSEMBLER_ANALYZER_H
 #define 	MAX_SIZE_OF_LABEL 				31
 #define 	MAX_COMMAND_LENGTH				4
 
@@ -96,7 +96,7 @@ char* 			extractIndexOperandLabel			(char*);
 boolean 		isCommentStatementOrEmptyLine		(char*);
 
 /** returns which command is used in this sentence, if any, otherwise returns UNKOWN command */
-COMMANDS 		getCommandOfStatement				(char*);
+command 		getCommandOfStatement				(char*);
 
 boolean			isnumber 							(char*);
 					

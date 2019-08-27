@@ -41,5 +41,4 @@ void addExternalStatementUsage(char* label, int addressOfUsage);
  * @param dataStatement a string of any data statement.
  */
 void handleDataStatement(char* dataStatement);
-
 #endif
