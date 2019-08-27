@@ -53,7 +53,7 @@ char* 			decimal_to_binaryString						(int n, int numOfDigits)
     return  pointer;
 }
 
-int 			from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* decimalAddressCounter, FILE* fp)
+int 			data_from_binary_machine_code_to_fourth_base 	(char* binaryCode, int* decimalAddressCounter, FILE* fp)
 {
     int 		evenCounter						= 0;
     int			oddCounter						= evenCounter++;

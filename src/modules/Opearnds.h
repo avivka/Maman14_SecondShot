@@ -30,8 +30,6 @@ typedef struct
     COMMANDS            command;
     OperandNode			srcoperand;
     OperandNode			desoperand;
-    OperandType			srctype;
-    OperandType			destype;
 } commandLine;
 
 

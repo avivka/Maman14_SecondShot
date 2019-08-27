@@ -12,7 +12,7 @@ int			to_decimal					(int power)											/* Calculates from power to decimal *
 	return j;	
 }	
 	
-int			from_command_to_binary	(char op[], COMMANDS commands)							/* Calculates the command value to binary */
+int			from_command_to_binary	(char op[], COMMANDS ope)							/* Calculates the command value to binary */
 {	
 	int			i				= OPCODE;	
 	int 		j				= FOURTH_BIT_VALUE;	

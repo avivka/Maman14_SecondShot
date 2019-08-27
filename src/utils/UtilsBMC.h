@@ -2,6 +2,7 @@
 
 #include 	<stdio.h>
 #include    "../modules/CommandsIndex.h"
+#include	"Binary.h"
 
 /*  Definitions	*/
 

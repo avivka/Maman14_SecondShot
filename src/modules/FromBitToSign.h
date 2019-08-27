@@ -3,6 +3,7 @@
 #include 	<stdio.h>
 #include 	"../utils/FileReader.h"
 #include    "SymbolsTable.h"
+#include	"../utils/Binary.h"
 
 /* Definitions		*/
 
