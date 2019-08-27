@@ -74,12 +74,15 @@ void handleDataStatement(char* dataStatement){
             ERROR_PROGRAM(("received invalid data statement %s", dataStatement));
             break;
     }
+    
+    printf("check done handleDataStatement \n");
 }
 
 void addDataSymbolIfLabelGiven(char* label){
     Symbol *newSymbol;
     if(label != NULL){
         newSymbol = buildSymbol(label, dat, getDataInstructionsCount());
+        printf("check label != null \n");
         addSymbolToTable(newSymbol);
     }
     else
@@ -159,9 +162,13 @@ void handleDataStatmentTypeExtern(OperandNode *operands){
             ERROR_PROGRAM(("Invalid operand value handling .extern statement, received %s, .extern operations can only use label operands. ", walker->value));
         }
         /** add the extern statment to the symbols table */
+        printf("check if calls the function \n");
+        
         addSymbolToTable(buildSymbol(walker->value, ext, 0));
         walker = walker->next;
     }
+    
+    printf("check finish while \n");
 }
 
 void handleDataStatmentTypeDefine(OperandNode *operands){

@@ -21,13 +21,30 @@ void 		resetCodeSegmentModule		()
     IC = 0; /* resets the instructions count */
 }
 
-void 		initCodeSection				()
+void 		initCodeSection				(char* fileName, int dataCounter)
 {
-    codeSection = (char**)malloc(IC * sizeof(char*));
+	char*	newFileName		= "";
+	FILE*	fileToAssembler	= NULL;
+	
+	newFileName = concat(fileName, ".ob");
+	
+	if (open_or_create_file(&fileToAssembler,fileName) == 0) 
+    {
+		fprintf(fileToAssembler, "\t %d %d", IC, dataCounter);
+		
+		fclose(fileToAssembler);
+	}
+	
+	else
+	{
+		ERROR_PROGRAM(("The file %s could not be opened",newFileName));
+	}
+	
+    /*codeSection = (char**)malloc(IC * sizeof(char*));
     printf("this is the IC size:%d\n", IC);
     errorIfMallocFailed(codeSection, "when tring to allocate memory for code section check.");
     
-    IC = 0;
+    IC = 0;*/
 }
 
 void 		increaseCommandInstructionsCountByStatement	(char* statement)

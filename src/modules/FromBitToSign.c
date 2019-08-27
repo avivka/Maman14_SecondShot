@@ -17,7 +17,7 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 		return -1;
 	}
 	
-	filenamewithextention = rename_file(filename, ".ob");
+	filenamewithextention = concat(filename, ".ob");
 	
 	if (open_or_create_file(&pf, filenamewithextention) == -1)
 	{

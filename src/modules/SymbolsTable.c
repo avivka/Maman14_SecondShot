@@ -47,6 +47,8 @@ void addSymbolToTable(Symbol *newSymbol){
 
     /** if no tail, it means we are setting the first item in the table */
     if(tableTail == NULL){
+		printf("check tail null \n");
+		
         tableHead = tableTail = newSymbol;
         tableHead->next = NULL;
         return;
@@ -56,6 +58,8 @@ void addSymbolToTable(Symbol *newSymbol){
     tableTail->next = newSymbol;
     tableTail = newSymbol;
     tableTail->next = NULL;
+    
+    printf("check done function addSymbolToTable \n");
 }
 
 Symbol* buildSymbol(char* label, labelFeature feature, int address){

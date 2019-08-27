@@ -30,7 +30,7 @@ void	    increaseCommandInstructionsCountByStatement	(char*);
 void 	    resetCodeSegmentModule						();
 
 commandLine addStatementToCodeSegment					(char*);
-void 	    initCodeSection								();
+void 	    initCodeSection								(char*, int);
 void 	    addToCodeSection							(CommandStatement);
 void 	    addOperandValueToCodeSection				(OperandNode*, OperandPosition);
 void 	    addOperandsValuesToCodeSection				(OperandNode*);

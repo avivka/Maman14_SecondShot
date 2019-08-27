@@ -1,15 +1,20 @@
 #include "phase2.h"
 
-char* 	exFileName;
-int		decimalAddress;
+char* 	exFileName		= "";
+int		decimalAddress	= 100;
 
 void			doPhase2			(char* fileName)
 {
-	int 	codeSegmentSize		= 0;
     int 	dataSegmentSize		= 0;
     FILE* 	fileToAssembler		= NULL;
    
-    strcpy(exFileName, fileName);
+    printf("check got to phase2 %s \n", fileName);    
+    
+    exFileName = fileName;
+    
+    printf("check ok \n");
+    
+    printf("check %s \n", exFileName);
     
     if(fileToAssembler == NULL)
     {
@@ -17,8 +22,6 @@ void			doPhase2			(char* fileName)
 	}
 
     printf("check 24 got to doPhase2\n");
-
-    codeSegmentSize = getInstructionsCount();
 
     dataSegmentSize = getDataInstructionsCount();
 
@@ -32,9 +35,8 @@ void			doPhase2			(char* fileName)
         /*fclose(fileToAssembler);*/
 		
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
-        initCodeSection();
-        
-        decimalAddress = 100;
+        initCodeSection(exFileName, dataSegmentSize);
+       
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssembler, handleNextLine);
         /*DoWhileFileHaveLines(renamedInputFile, handleNextLine);*/
@@ -47,7 +49,6 @@ void			doPhase2			(char* fileName)
         }
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
-        createObjectFile(fileName, codeSegmentSize, dataSegmentSize);
 
         printf("check WTF \n");
         
@@ -92,6 +93,8 @@ void 			handleNextLine		(char* line)
     
     else if (isCommandStatement(line))
     {
+		printf("check command statement \n");
+		
         newLine = addStatementToCodeSegment(line);
         
         decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFileName);
@@ -174,7 +177,7 @@ void 			createExternalsFile	(char *fileName)
     writeToFile(concat(fileName, ".ext"), buffer, count);
 }
 
-void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSize)
+/*void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSize)
 {
     FILE* 				file 				= NULL;
     int 				itteratorIndex		= 0;
@@ -186,42 +189,42 @@ void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSi
 
     fileName = concat(fileName, ".ob");
     
-    if (open_or_create_file(&file,fileName) == 0)/*TODO: add error in case that the file cannot be opened because it shouldn't be there.*/
-    {
+    if (open_or_create_file(&file,fileName) == 0)*//*TODO: add error in case that the file cannot be opened because it shouldn't be there.*/
+    /*{
         firstLine = (char *)malloc(sizeof(char*));
         errorIfMallocFailed(firstLine, "while tring to allocate memory to the first line");
-
+*/
         /** first put the total code instructions and total data instructions */
-        sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
+  /*      sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
 
         fputs(firstLine, file);
-
+*/
         /** write all the code section to the file line by line */
-        while (itteratorIndex < codeSegmentSize)
+  /*      while (itteratorIndex < codeSegmentSize)
         {
-        /** prints each line to the weird binary value */
-            data_from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
+    */    /** prints each line to the weird binary value */
+      /*      data_from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
 
             itteratorIndex++;
         }
 
         dataSegmentWalker = getDataSegmentHead();
-
+*/
         /** write all the data section to the file line by line */
-        while (dataSegmentWalker != NULL)
+  /*      while (dataSegmentWalker != NULL)
         {
-            /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
-            lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
+    */        /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
+      /*      lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
 
-            /** replace each line to it weird binary value */
-            data_from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
-
+        */    /** replace each line to it weird binary value */
+          /*  data_from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
+*/
             /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
-            dataSegmentWalker = dataSegmentWalker->next;
+  /*          dataSegmentWalker = dataSegmentWalker->next;
         }
 
         free(firstLine);
     
         fclose(file);
 	}
-}
+}*/

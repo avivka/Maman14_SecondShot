@@ -39,6 +39,8 @@ int			main			(int argc, char *argv[])
 
         /** execute phase 1 of the assembler */
         doPhase1(fileName);
+        
+        printf("check done phase 1 \n");
 
         /** rests line read, because reading the file from the start */
         currentLine = 1;

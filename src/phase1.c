@@ -47,6 +47,8 @@ void			handleNextLinePhase1		(char* line)
     }
     
     currentLine++;
+    
+    printf("check currentline = %d \n", currentLine);
 }
 
 void			updateSymbolTableAddresses	()
