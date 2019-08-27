@@ -2,6 +2,7 @@
 
 #include 	<stdio.h>
 #include    "../utils/UtilsBMC.h"
+#include    "FromBitToSign.h"
 #include    "Analyzer.h"
 #include    "Opearnds.h"
 
