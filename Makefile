@@ -19,8 +19,8 @@ CreateBMC.o: src/modules/CreateBMC.c src/modules/CreateBMC.h src/utils/UtilsBMC.
 UtilsBMC.o: src/utils/UtilsBMC.c src/utils/UtilsBMC.h
 	gcc -c -Wall -pedantic  src/utils/UtilsBMC.c -o UtilsBMC.o
 
-FromBitToSign.o: src/utils/FromBitToSign.c src/utils/FromBitToSign.h
-	gcc -c -Wall -pedantic  src/utils/FromBitToSign.c -o FromBitToSign.o
+FromBitToSign.o: src/modules/FromBitToSign.c src/modules/FromBitToSign.h
+	gcc -c -Wall -pedantic  src/modules/FromBitToSign.c -o FromBitToSign.o
 
 SymbolsTable.o: src/modules/SymbolsTable.c src/modules/SymbolsTable.h src/constants.h
 	gcc -c -Wall -pedantic  src/modules/SymbolsTable.c -o SymbolsTable.o

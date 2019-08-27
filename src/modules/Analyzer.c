@@ -372,19 +372,6 @@ boolean 		isCommentStatementOrEmptyLine		(char *sentence)
     }
 }
 
-int 			isCommandStatement					(char *sentence)
-{
-    COMMANDS 	command						= getCommandOfStatement(sentence);
-
-    if(command != UNKNOWN_COMMAND)
-    {
-        return 1;
-    }
-
-    return 0;
-
-}
-
 COMMANDS 		getCommandOfStatement				(char* sentence)
 
 {
@@ -432,6 +419,19 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
     }
 
     return  UNKNOWN_COMMAND;
+}
+
+int 			isCommandStatement					(char *sentence)
+{
+    COMMANDS 	command						= getCommandOfStatement(sentence);
+
+    if(command != UNKNOWN_COMMAND)
+    {
+        return 1;
+    }
+
+    return 0;
+
 }
 
 boolean			isnumber 							(char* str)

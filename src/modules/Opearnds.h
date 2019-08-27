@@ -25,6 +25,15 @@ typedef struct operand_node {
     struct operand_node *next;
 } OperandNode;
 
+typedef struct
+{
+    COMMANDS            command;
+    OperandNode			srcoperand;
+    OperandNode			desoperand;
+    OperandType			srctype;
+    OperandType			destype;
+} commandLine;
+
 
 /**
  * Gets a string pointer, pointing to the beging of operands section of a string

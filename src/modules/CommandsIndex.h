@@ -4,7 +4,7 @@
 #include "../constants.h"
 #include "../utils/Error.h"
 #include <string.h>
-#include "Opearnds.h"
+/*#include "Opearnds.h"*/
 #define  NO_OTHER_OPERAND -1
 
 /**
@@ -23,15 +23,6 @@ typedef struct command_descriptor {
     int allowedSrcOperands[4];
     int allowedDestOperands[4];
 } CommandDescriptor;
-
-typedef struct
-{
-    COMMANDS            command;
-    OperandNode			srcoperand;
-    OperandNode			desoperand;
-    OperandType			srctype;
-    OperandType			destype;
-} commandLine;
 
 /**
  * Init the map of the commands */

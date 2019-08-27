@@ -154,7 +154,6 @@ commandLine addStatementToCodeSegment	(char* statement)
     OperandNode* 		operandsSrcList			= NULL;
     OperandNode* 		operandsDesList			= NULL;
     CommandDescriptor*	descriptor				= NULL;
-    CommandStatement 	command;
     COMMANDS 			commandEnum;
     commandLine         newLine;
 
@@ -191,7 +190,7 @@ commandLine addStatementToCodeSegment	(char* statement)
     {
         ERROR_PROGRAM(("unknown command"));
     
-            return;
+            return newLine;
     }
 
     /** initialaize line in order to handle command coding with CreateBMC functionalities*/
