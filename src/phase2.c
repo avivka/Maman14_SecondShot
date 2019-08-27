@@ -1,14 +1,14 @@
 #include "phase2.h"
 
-extern int 		decimalAddress 	= 100;
-extern char* 	exFleName 		= "";
+extern int 		decimalAddress;
+extern char* 	exFleName;
 
 void			doPhase2			(char* fileName)
 {
 	int 	codeSegmentSize		= 0;
     int 	dataSegmentSize		= 0;
     FILE* 	fileToAssembler		= NULL;
-    
+   
     strcpy(exFleName, fileName);
     
     if(fileToAssembler == NULL)
@@ -33,6 +33,8 @@ void			doPhase2			(char* fileName)
 		
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection();
+        
+        decimalAddress = 100;
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssembler, handleNextLine);
         /*DoWhileFileHaveLines(renamedInputFile, handleNextLine);*/
@@ -92,7 +94,7 @@ void 			handleNextLine		(char* line)
     {
         newLine = addStatementToCodeSegment(line);
         
-        from_line_to_bmc(commandLine, &decimalAddress, exFleName);
+        from_line_to_bmc(&newLine, &decimalAddress, exFleName);
     }
     
     else

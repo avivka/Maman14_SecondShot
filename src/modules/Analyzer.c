@@ -1,5 +1,4 @@
-#include "Analyzer.h"
-
+#include 	"Analyzer.h"
 
 STATEMENT_TYPE 	getStatementTypeOfSentence			(char* sentence)
 {
@@ -386,7 +385,7 @@ int 			isCommandStatement					(char *sentence)
 
 }
 
-COMMANDS 		getCommandOfStatement				(char *sentence)
+COMMANDS 		getCommandOfStatement				(char* sentence)
 {
     int 		labelLength 				= 0;
     int 		iterationIndex 				= 0;

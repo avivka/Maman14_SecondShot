@@ -9,7 +9,7 @@
 
 /* Prototypes 	*/
 
-int			from_line_to_bmc	(commandLine*, int, list*, char*);				/* The main function of creation binary machine code */
+int			from_line_to_bmc	(commandLine*, int*, char*);				/* The main function of creation binary machine code */
 short int	create_basic_bmc	(commandLine*, int*, char*);					/* Creates the first binary machine code from operation */
 short int 	from_src_des_opr	(commandLine*, list*, boolean, int*, char*);	/* Use to check if the operand is SRC to DES and by the case call the right function */
 short int 	opr_immediate		(list*, char*, int*, char*);			/* In case of Immediate operand create the binary machine code for it */

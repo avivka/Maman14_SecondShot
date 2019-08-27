@@ -1,5 +1,9 @@
 /* Includes				*/
 
+
+#ifndef 	ASSEMBLER_ANALYZER_H
+#define 	ASSEMBLER_ANALYZER_H
+
 #include 	<string.h>
 #include 	<stdio.h>
 #include 	<ctype.h>
@@ -10,8 +14,6 @@
 
 /* Defines				*/
 
-#ifndef 	ASSEMBLER_ANALYZER_H
-#define 	ASSEMBLER_ANALYZER_H
 #define 	MAX_SIZE_OF_LABEL 				31
 #define 	MAX_COMMAND_LENGTH				4
 
@@ -92,11 +94,11 @@ char* 			extractLabel						(char*);
  */
 char* 			extractIndexOperandLabel			(char*);
 
-/** returns true if the given line is a comment line or empty line */
-boolean 		isCommentStatementOrEmptyLine		(char*);
-
 /** returns which command is used in this sentence, if any, otherwise returns UNKOWN command */
 COMMANDS 		getCommandOfStatement				(char*);
+
+/** returns true if the given line is a comment line or empty line */
+boolean 		isCommentStatementOrEmptyLine		(char*);
 
 boolean			isnumber 							(char*);
 					

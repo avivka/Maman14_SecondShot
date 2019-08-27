@@ -1,7 +1,7 @@
 all: assembler
 
-assembler: main.o phase2.o phase1.o CreateBMC.o UtilsBMC.o FromBitToSign.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o src/constants.h src/modules/statments_types.h
-	gcc -g -Wall -pedantic -ansi main.o phase2.o phase1.o CreateBMC.o UtilsBMC.o FromBitToSign.o SymbolsTable.o CodeSegement.o Analyzer.o CommandBuilder.o CommandsIndex.o DataSegment.o Opearnds.o TextUtils.o Binary.o FileReader.o FileWriter.o Error.o List.o  -o assembler -lm
+assembler: src/modules/statments_types.h src/constants.h List.o Error.o FileWriter.o FileReader.o Binary.o TextUtils.o CommandsIndex.o Analyzer.o Opearnds.o DataSegment.o CommandBuilder.o CodeSegement.o SymbolsTable.o FromBitToSign.o UtilsBMC.o CreateBMC.o phase1.o phase2.o main.o
+	gcc -g -Wall -pedantic -ansi List.o Error.o FileWriter.o FileReader.o Binary.o TextUtils.o CommandsIndex.o Analyzer.o Opearnds.o DataSegment.o CommandBuilder.o CodeSegement.o SymbolsTable.o FromBitToSign.o UtilsBMC.o CreateBMC.o phase1.o phase2.o main.o  -o assembler -lm
 	rm *.o
 
 main.o: src/main.c src/main.h src/constants.h
@@ -62,5 +62,5 @@ List.o: src/utils/List.c src/utils/List.h src/constants.h
 	gcc -c -Wall -pedantic  src/utils/List.c -o List.o
 
 clean:
-	rm assembler*
 	rm *.o
+	rm assembler*
