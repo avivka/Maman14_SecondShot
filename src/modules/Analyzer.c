@@ -116,7 +116,8 @@ char* 			extractLabel						(char* sentence)
     int 		i 							= 0;
     
     buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
-	errorIfMallocFailed(buff, "when tring to allocate memory for the label check.");
+
+	errorIfMallocFailed(buff, "when trying to allocate memory for the label check.");
 	
     if(strchr(sentence, ch))
     {
@@ -124,10 +125,13 @@ char* 			extractLabel						(char* sentence)
         {
             while(sentence[i] && sentence[i] != ':')
             {
+                printf("check here's the cells value that will be contained the label:%c %c\n", buff[i], sentence[i]);
                 buff[i] = sentence[i];
+                printf("check here's the value of buff[i] after the assignment %c\n", buff[i]);
     
                 i++;
             }
+            buff[i] = '\0';
         }
         
         else

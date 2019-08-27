@@ -42,10 +42,12 @@ int			main			(int argc, char *argv[])
         doPhase1(fileName);
         
         printf("check done phase 1 \n");
-
+        printSymbolTable();
         /** resets line read, because reading the file from the start */
         currentLine = 0;
         printf("check currentLine after scan 1: %d\n", currentLine);
+
+        /*TODO: Add if statement that checks if the scan failed and FREE the symbol table and the data segment if it happens*/
 
         /** execute phase 2 of the assembler */
         doPhase2(fileName);

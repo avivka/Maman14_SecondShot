@@ -34,7 +34,9 @@ void resetSymbolsModulesModule(){
     tableTail = NULL;
 }
 
-void addSymbolToTable(Symbol *newSymbol){
+void addSymbolToTable(Symbol *newSymbol)
+{
+    /*char*       label = "";*/
 	printf("check 3 \n");
     Symbol *isSymbolExists = searchForSymbolByLabel(newSymbol->label);
 
@@ -42,7 +44,11 @@ void addSymbolToTable(Symbol *newSymbol){
     if(isSymbolExists != NULL){
         ERROR_PROGRAM(("Requested label %s, already exists, can't declare the same label twice.", newSymbol->label));
     }
-
+    /*
+    label = concat(newSymbol->label, '\0');
+    free(newSymbol->label);
+    newSymbol->label = label;
+    */
 	printf("check important %s %d \n", newSymbol-> label, newSymbol-> address);
 
     /** if no tail, it means we are setting the first item in the table */
@@ -58,7 +64,7 @@ void addSymbolToTable(Symbol *newSymbol){
     tableTail->next = newSymbol;
     tableTail = newSymbol;
     tableTail->next = NULL;
-    
+
     printf("check done function addSymbolToTable \n");
 }
 
@@ -78,7 +84,7 @@ Symbol* searchForSymbolByLabel(char* label){
     currentSymbol = tableHead;
 
     while (currentSymbol){
-		
+		printf("check symbol table head pointer: %p\n", (void *)currentSymbol->label);
 		printf("check yyy %s %s \n", currentSymbol->label, label);
         /** if matches, meaning we found the requested label */
         if(strcmp(currentSymbol->label, label) == 0){
@@ -104,8 +110,20 @@ int getSymbolAddress(char *symbolLabel){
         ERROR_PROGRAM(("Unknown symbol %s", symbolLabel));
         return  0;
     }
+    printf("check here's the symbol in getSymbolAddress:%s\n", symbol->label);
 
     return  symbol->address;
 }
 
-
+void printSymbolTable ()
+{
+        Symbol *walker;
+        printf("check 22 attempt to print the Symbol table\n");
+        walker = getSymbolsTableHead();
+        printf("check 23 here's the label at the Symbol table's head %s\n", walker->label);
+        while (walker)
+        {
+            printf("%s \t %d \t %d \n", walker->label, walker->feature, walker->address);
+            walker = walker->next;
+        }
+}

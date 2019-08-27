@@ -233,6 +233,7 @@ OperandNode * createOperandNode(char *operandValue, STATEMENT_TYPE statementType
                 {
                     ERROR_PROGRAM(("invalid operand %s, should be macro or a number", operandValue));
                 }
+                printf("check here's the label after we searched it in createOperandNode: %s\n", operandValue);
             }
             /** inserts the value of newNode->value with the '#' */
             newNode->value = operandValue;

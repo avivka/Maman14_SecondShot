@@ -53,6 +53,8 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
     OperandNode* 	indexDesOperand = NULL;
     int 			operandsCount 	= 0;
 
+    printf("check here we try to get the label in command statement: %s %p\n", label, (void*)label);
+
     /** if statment has a label, add it to the symbols table */
     if(label != NULL)
     {		
@@ -116,7 +118,6 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
 				}
 			}
             printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement: %s\n", label);
-			 free(label);
             break;
             
         case 1:
@@ -148,21 +149,23 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
                 IC++;
             }
             printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 2: %s\n", label);
-            free(label);
             break;
         
         case 0:
         
             /** nothing to do */
             printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 3: %s\n", label);
-            free(label);
             break;
             
         default:
             printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 4: %s\n", label);
-            free(label);
             ERROR_PROGRAM(("invalid number of operands for a command statement, got %d, expected to be between 0 to 2", operandsCount));
             break;
+    }
+
+    if(label == NULL)
+    {
+        free(label);
     }
 }
 
@@ -395,7 +398,7 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         {
             printf("check 1 \n");
             symbol = searchForSymbolByLabel(indexLabel);
-
+            printf("check here's the label after searching it in addOperandValueToCodeSection: %s\n", symbol->label);
             printf("check %d \n", symbol->address);
         }
 
@@ -472,6 +475,7 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         {
             printf("check 2 %s \n", operand->value);
             symbol = searchForSymbolByLabel(operand->value);
+            printf("check Here's the label after we searched it again in addOperandValueToCodeSection: %s\n", symbol->label);
             if(symbol == NULL)
             {
                 ERROR_PROGRAM(("Unknown symbol %s", operand->value));
