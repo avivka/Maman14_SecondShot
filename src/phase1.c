@@ -7,6 +7,7 @@ void			doPhase1					(char* fileName) {
     {
         /** keeps reading line by line and handle each line */
         doWhileFileHaveLines(fileToAssemble, handleNextLinePhase1);
+        printf("check doWhileFileHaveLines was done for line %d\n", currentLine);
 
         /** after we handled all the lines, update the final addresses in the symbols table */
         updateSymbolTableAddresses();
@@ -34,6 +35,7 @@ void			handleNextLinePhase1		(char* line)
     if(type == COMMAND_STATEMENT)
     {
         increaseCommandInstructionsCountByStatement(line);
+        printf("check increaseCommandInstructionsCountByStatement is ended\n");
     }
     
     else if(type != INVALID_STATEMENT)
@@ -66,4 +68,5 @@ void			updateSymbolTableAddresses	()
         
         walker = walker->next;   
     }
+    printf("check updateSymbolTableAddresses is done\n");
 }

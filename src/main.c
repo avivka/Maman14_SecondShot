@@ -42,7 +42,7 @@ int			main			(int argc, char *argv[])
         
         printf("check done phase 1 \n");
 
-        /** rests line read, because reading the file from the start */
+        /** resets line read, because reading the file from the start */
         currentLine = 1;
 
         /** execute phase 2 of the assembler */

@@ -98,14 +98,16 @@ void 			handleNextLine		(char* line)
         newLine = addStatementToCodeSegment(line);
         
         decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFileName);
+
+        currentLine++;
+
+        return;
     }
     
     else
     { /*TODO: add macro case and not call addStatementToCodeSegment(line) */
         ERROR_PROGRAM(("error invalid command"));
     }
-    
-    currentLine++;
 }
 
 void 			createEnteriesFile	(char *fileName)
