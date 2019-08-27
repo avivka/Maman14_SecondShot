@@ -40,12 +40,16 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 {
     if (check_if_file_exists(filepathwithextention) == -1)
     {
-        *pf = fopen(filepathwithextention, "a+");
+		printf("check creating new file \n");
+		
+        *pf = fopen(filepathwithextention, "w+");
     }
 
     else
     {
-        *pf = fopen(filepathwithextention, "r+");
+		printf("check opening the file \n");
+		
+        *pf = fopen(filepathwithextention, "a+");
     }
 
     if (*pf == NULL)

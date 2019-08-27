@@ -17,24 +17,32 @@ int			from_command_to_binary	(char op[], COMMANDS ope)							/* Calculates the c
 	int			i				= OPCODE;	
 	int 		j				= FOURTH_BIT_VALUE;	
 	
+	printf("check %d \n", ope);
+	
 	while ( i != 0)	
 	{	
-		if (ope > j)	
+		if (ope >= j)	
 		{	
+			printf("check %d > %d \n", ope, j);
+			
 			op[OPCODE - i] = '1';	
 	
 			ope -= j;	
 		}	
 	
 		else	
-		{	
+		{			
 			op[OPCODE - i] = '0';	
 		}	
 	
+		printf("%c", op[OPCODE-i]);
+		
 		i--;	
 	
 		j /= 2;	
 	}	
+	
+	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 	
 	return 0;	
 }	
@@ -43,6 +51,8 @@ int			from_operand_to_binary		(char opr[], OperandType oprtype)							/* Calcula
 {	
 	int			i				= OPERAND;	
 	int 		j				= OPERAND;	
+	
+	printf("check got to operand %d \n", oprtype); 
 	
 	while ( i != 0)	
 	{	
@@ -58,10 +68,14 @@ int			from_operand_to_binary		(char opr[], OperandType oprtype)							/* Calcula
 			opr[OPERAND - i] = '0';	
 		}	
 	
+		printf("%c",opr[OPERAND - i]); 
+	
 		i--;	
 	
 		j /= 2;	
 	}	
+	
+	printf("\n");
 	
 	return 0;	
 }	
@@ -193,8 +207,8 @@ short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNega
 	return num;
 }
 
-int			print_extern				(char* label, int* decimalAddress, char* filename)					/* Print extern to file */
-{
+/*int			print_extern				(char* label, int* decimalAddress, char* filename)*/					/* Print extern to file */
+/*{
 	FILE*	pf								= NULL;
 	char*	fileNameWithExtention			= "";
 	
@@ -213,7 +227,7 @@ int			print_extern				(char* label, int* decimalAddress, char* filename)					/* 
 	free(fileNameWithExtention);
 
 	return 1;
-}
+}*/
 
 /*Symbol*		test_label					(char label[], Symbol* symbol)
 {

@@ -28,9 +28,12 @@ void 		initCodeSection				(char* fileName, int dataCounter)
 	
 	newFileName = concat(fileName, ".ob");
 	
-	if (open_or_create_file(&fileToAssembler,fileName) == 0) 
+	printf("check %s filename \n", newFileName);
+	
+	if (open_or_create_file(&fileToAssembler, newFileName) == 0) 
     {
-		fprintf(fileToAssembler, "\t %d %d", IC, dataCounter);
+		printf("check ic = %d DC= %d \n", IC, dataCounter);
+		fprintf(fileToAssembler, "\t %d %d \n", IC, dataCounter);
 		
 		fclose(fileToAssembler);
 	}
@@ -39,12 +42,6 @@ void 		initCodeSection				(char* fileName, int dataCounter)
 	{
 		ERROR_PROGRAM(("The file %s could not be opened",newFileName));
 	}
-	
-    /*codeSection = (char**)malloc(IC * sizeof(char*));
-    printf("this is the IC size:%d\n", IC);
-    errorIfMallocFailed(codeSection, "when tring to allocate memory for code section check.");
-    
-    IC = 0;*/
 }
 
 void 		increaseCommandInstructionsCountByStatement	(char* statement)
@@ -169,7 +166,6 @@ commandLine addStatementToCodeSegment	(char* statement)
 	char* 				label					= "";
     int 				operandsCount			= 0;
     OperandNode* 		operandsSrcList			= NULL;
-    OperandNode* 		operandsDesList			= NULL;
     CommandDescriptor*	descriptor				= NULL;
     COMMANDS 			commandEnum;
     commandLine         newLine;
@@ -180,41 +176,35 @@ commandLine addStatementToCodeSegment	(char* statement)
     trimwhitespace(statement);
     
     label = extractLabel(statement);
+    
+    printf("check called \n");
 
     operandsSrcList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
-
-    if(operandsSrcList ->next == NULL)
-    {
-        operandsDesList = operandsSrcList;
-
-        operandsSrcList = NULL;
-    }
-
-    else
-    {
-        operandsDesList = operandsSrcList ->next;
-
-        operandsSrcList->next = NULL;
-    }
+    
+    printf("check ok \n");
 
     operandsCount = countNumberOfOpearnds(operandsSrcList);
     
+    printf("check operand count = %d \n", operandsCount);
+    
     commandEnum = getCommandOfStatement(statement);
     
+    printf("check command enum = %d \n", commandEnum);
+    
     descriptor = getCommandDescriptor(commandEnum);
+    
+    printf("check descriptor != null \n");
     
     if(descriptor == NULL)
     {
         ERROR_PROGRAM(("unknown command"));
     
-            return newLine;
+        return newLine;
     }
 
     /** initialaize line in order to handle command coding with CreateBMC functionalities*/
 
     newLine.command = commandEnum;
-    newLine.srcoperand = *operandsSrcList;
-    newLine.desoperand = *operandsDesList;
 
     if(operandsCount != descriptor->numberOfOperands)
     {
@@ -223,31 +213,39 @@ commandLine addStatementToCodeSegment	(char* statement)
 
     /*
     validateIfOperandsAreaAllowed(operandsList, commandEnum);
+*/
 
     switch (operandsCount)
     {    
         case 0:
-            command = buildCommandStatement(NO_OPERAND, NO_OPERAND, commandEnum, ABSOLUTE, NULL);
-     
-            addToCodeSection(command);
-     
+        
+            newLine.desoperand.type 	= NO_OPERAND;
+            newLine.desoperand.value 	= "";
+                              
+            newLine.srcoperand.type 	= NO_OPERAND;
+            newLine.srcoperand.value 	= "";
+            
             break;
      
         case 1:
-            command = buildCommandStatement(NO_OPERAND, operandsList->type, commandEnum, ABSOLUTE, NULL);
+            
+            newLine.desoperand = *operandsSrcList;
+            
+            newLine.srcoperand.type 	= NO_OPERAND;
+            newLine.srcoperand.value 	= "";
 
             break;
         
         case 2:
-            command = buildCommandStatement(operandsList->type, operandsList->next->type, commandEnum, ABSOLUTE, NULL);
+			
+			newLine.desoperand = *operandsSrcList ->next;
+			
+			operandsSrcList->next = NULL;
+			
+            newLine.srcoperand = *operandsSrcList;
         
             break;
     }
-
-    addToCodeSection(command);
-    
-    addOperandsValuesToCodeSection(operandsList);
-    */
 
     return newLine;
 }
