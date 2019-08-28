@@ -133,7 +133,7 @@ void 			createEnteriesFile	(char *fileName)
         address = getSymbolAddress((char *)walker->data);
         
         buffer[count] = (char *) malloc(sizeof(char *));
-        errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
+        errorIfMallocFailed(buffer[count], "while trying to allocate memory to buffer[count]");
         
         if (address < maxNumDecimalAddress)
 		{

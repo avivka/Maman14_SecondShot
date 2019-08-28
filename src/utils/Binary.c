@@ -134,7 +134,7 @@ char			to_4_base_data				(char firstBit, char secondBit)
 
     return '0';
 }
-
+/*
 int				printSignToFileData			(char *bmcsign, FILE* fp)
 {
     int i;
@@ -154,4 +154,4 @@ int				printSignToFileData			(char *bmcsign, FILE* fp)
 
     return 0;
 }
-
+*/

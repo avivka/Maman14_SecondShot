@@ -10,6 +10,7 @@
 
 /* Structures			*/
 
+/*
 typedef struct
 {
     unsigned int encoding_type_1: 1;
@@ -26,7 +27,7 @@ typedef struct
     unsigned int not_in_use_4: 1;
     unsigned int not_in_use_1: 1;
     unsigned int not_in_use_2: 1;
-} CommandStatement;
+} CommandStatement;*/
 
 /* Enums				*/
 
@@ -38,8 +39,8 @@ typedef  enum
 } STATEMENT_ENCODING_TYPE;
 
 /* Prototypes	*/
-
+/*
 CommandStatement 	buildCommandStatement		(OperandType, OperandType, COMMANDS, STATEMENT_ENCODING_TYPE, OperandNode*);
 
-char* 				getCommandBinaryString		(CommandStatement*);
+char* 				getCommandBinaryString		(CommandStatement*);*/
 #endif

@@ -1,5 +1,5 @@
 #include "CommandBuilder.h"
-
+/*
 CommandStatement 	buildCommandStatement		(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* indexOperandsList)
 {
     unsigned int* 		srcOperand;
@@ -10,7 +10,7 @@ CommandStatement 	buildCommandStatement		(OperandType srcOperandType, OperandTyp
     CommandStatement* 	command;
     
     command = (CommandStatement*) malloc(sizeof(CommandStatement));
-    errorIfMallocFailed(command, "when tring to allocate memory for command.");
+    errorIfMallocFailed(command, "when trying to allocate memory for command.");
 
     srcOperand 			= int_to_bin_digit((unsigned int) srcOperandType, 2);
     destOperand 		= int_to_bin_digit((unsigned int) destOperandType, 2);
@@ -36,56 +36,33 @@ CommandStatement 	buildCommandStatement		(OperandType srcOperandType, OperandTyp
     command->not_in_use_3 = 0;
     command->not_in_use_4 = 0;
 
-    /* index operand separate coding is not relevant
-    if(indexOperandsList == NULL){
-        command->not_in_use_1 = 0;
-        command->not_in_use_2 = 0;
-        command->not_in_use_3 = 0;
-        command->not_in_use_4 = 0;
-    } else {
-        OperandType indexParam1Type;
-        OperandType indexParam2Type;
-        unsigned  int* indexParam1Value;
-        unsigned  int* indexParam2Value;
-
-        indexParam1Type = indexOperandsList->type;
-        indexParam2Type = indexOperandsList->next->type;
-
-        indexParam1Value = int_to_bin_digit((unsigned int) indexParam1Type, 2);
-        indexParam2Value = int_to_bin_digit((unsigned int) indexParam2Type, 2);
-
-        command->not_in_use_1 = indexParam1Value[0];
-        command->not_in_use_2 = indexParam1Value[1];
-        command->not_in_use_3 = indexParam2Value[0];
-        command->not_in_use_4 = indexParam2Value[1];
-    }
-     */
     return  *command;
 }
-
+*/
+/*
 char* 				getCommandBinaryString		(CommandStatement* cmd)
 {
     char* 		string 		= "";
 
     string = malloc(14 * sizeof(char));
-    errorIfMallocFailed(string, "when tring to allocate memory to string of bmc.");
+    errorIfMallocFailed(string, "when trying to allocate memory to string of bmc.");
 
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
-                     cmd->not_in_use_1,/**bit 13:*/
-                     cmd->not_in_use_2,/**bit 12:*/
-                     cmd->not_in_use_3,/**bit 11:*/
-                     cmd->not_in_use_4,/**bit 10:*/
-                     cmd->op_code_1,/**bit 9: op_code*/
-                     cmd->op_code_2,/**bit 8: op_code*/
-                     cmd->op_code_3,/**bit 7: op_code*/
-                     cmd->op_code_4,/**bit 6: op_code*/
-                     cmd->source_operand_1,/**bit 5: source operand addressing method code*/
-                     cmd->source_operand_2,/**bit 4: source operand addressing method code*/
-                     cmd->destination_operand_1,/**bit 3: destination operand addressing method code*/
-                     cmd->destination_operand_2,/**bit 2: destination operand addressing method code*/
-                     cmd->encoding_type_1,/**bit 1: A,R,E code*/
-                     cmd->encoding_type_2 /**bit 0: A,R,E code*/
+                     cmd->not_in_use_1,
+                     cmd->not_in_use_2,
+                     cmd->not_in_use_3,
+                     cmd->not_in_use_4,
+                     cmd->op_code_1,
+                     cmd->op_code_2,
+                     cmd->op_code_3,
+                     cmd->op_code_4,
+                     cmd->source_operand_1,
+                     cmd->source_operand_2,
+                     cmd->destination_operand_1,
+                     cmd->destination_operand_2,
+                     cmd->encoding_type_1,
+                     cmd->encoding_type_2
     );
     
     return  string;
-}
+}*/

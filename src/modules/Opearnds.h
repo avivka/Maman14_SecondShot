@@ -69,7 +69,7 @@ OperandNode* 	getOperandListOfIndexOperand(char*);
  * @param operand - must be of type of REGSITER_OPERAND
  * @return the int number of the registers
  */
-int 			getRegisterNumberOfOperand	(OperandNode*);
+/*int 			getRegisterNumberOfOperand	(OperandNode*);*/
 
 char* 			getOperandFromDefine 		(char*, int);
 

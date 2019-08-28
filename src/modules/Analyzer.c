@@ -161,7 +161,7 @@ char* 			extractIndexOperandLabel			(char* indexOperandValue)
 	int 		i 							= 0;
 	
 	buff = (char*)malloc(sizeof(char) * MAX_SIZE_OF_LABEL);
-	errorIfMallocFailed(buff, "when tring to allocate memory for the label check.");
+	errorIfMallocFailed(buff, "when trying to allocate memory for the label check.");
 	
 	while ((i < strlen(indexOperandValue)) && (indexOperandValue[i] != '['))
 	{

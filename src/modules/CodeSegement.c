@@ -4,21 +4,11 @@
 
 /** Instruction counter */
 static  int 		IC 				= 0;
-static 	char** 		codeSection;
+/*static 	char** 		codeSection;*/
 
 int 		getInstructionsCount		()
 {
     return  IC;
-}
-
-char** 		getCodeSection				()
-{
-    return  codeSection;
-}
-
-void 		resetCodeSegmentModule		()
-{
-    IC = 0; /* resets the instructions count */
 }
 
 void 		initCodeSection				(char* fileName, int dataCounter)
@@ -170,6 +160,7 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
     }
 }
 
+
 commandLine addStatementToCodeSegment	(char* statement)
 {
 	char* 				label					= "";
@@ -221,9 +212,7 @@ commandLine addStatementToCodeSegment	(char* statement)
         ERROR_PROGRAM(("invalid number of operands got %d, expected %d", operandsCount, descriptor->numberOfOperands));
     }
 
-    /*
-    validateIfOperandsAreaAllowed(operandsList, commandEnum);
-*/
+    validateIfOperandsAreaAllowed(operandsSrcList, commandEnum);
 
     switch (operandsCount)
     {    
@@ -262,32 +251,33 @@ commandLine addStatementToCodeSegment	(char* statement)
     return newLine;
 }
 
+/*
 void 		addToCodeSection			(CommandStatement cmd)
 {
     codeSection[IC] = getCommandBinaryString(&cmd);
 
     IC++;
-}
-
+} */
+/*
 void 		addOperandsValuesToCodeSection	(OperandNode* operandsList)
 {
 	printf("check add \n");
 	
     STATEMENT_ENCODING_TYPE encoding_type;
-
+*/
     /** nothing to do if no operands */
-    if(operandsList == NULL)
+/*    if(operandsList == NULL)
     {
 		printf("check return null \n");
 		
         return;
 	}
-
+*/
     /** two operands check*/
-    if(operandsList->next != NULL)
+/*    if(operandsList->next != NULL)
     {
-        /** if both operands are of type of register, we can combine them to a single word */
-        if(operandsList->next->type == REGISTER_OPERAND && operandsList->type == REGISTER_OPERAND)
+*/        /** if both operands are of type of register, we can combine them to a single word */
+/*      if(operandsList->next->type == REGISTER_OPERAND && operandsList->type == REGISTER_OPERAND)
         {
 			printf("check 2 registers");
 			
@@ -299,9 +289,9 @@ void 		addOperandsValuesToCodeSection	(OperandNode* operandsList)
             registerTwoValue = decimal_to_binaryString(getRegisterNumberOfOperand(operandsList->next), COMMAND_REGISTER_LENGTH);
             printf("check registerTwoValue:%s\n", registerTwoValue);
 
-
+*/
             /** registers are absolute encoded */
-            encoding_type = ABSOLUTE;
+/*            encoding_type = ABSOLUTE;
         
             codeSection[IC] = concat(concat(registerOneValue, registerTwoValue),decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
 
@@ -313,9 +303,9 @@ void 		addOperandsValuesToCodeSection	(OperandNode* operandsList)
         }
 
 		printf("check add to code section \n");
-		
+*/
         /** two operands different types, add each of them, first operand is treated as src operand, second as the target operand */
-        addOperandValueToCodeSection(operandsList, SRC_OPERAND);
+/*        addOperandValueToCodeSection(operandsList, SRC_OPERAND);
         printf("check operandsList on addOperandsValuesToCodeSection: %s\n", operandsList->value);
         addOperandValueToCodeSection(operandsList->next, TARGET_OPERAND);
         printf("check operandsList (next) on addOperandsValuesToCodeSection: %s\n", operandsList->next->value);
@@ -324,9 +314,9 @@ void 		addOperandsValuesToCodeSection	(OperandNode* operandsList)
     }
 
 	printf(" check single operand %s \n", operandsList->value);
-	
+*/
     /** if we are here we are handling a single operand add it value. single values are treated as target operands */
-    addOperandValueToCodeSection(operandsList, TARGET_OPERAND);
+/*    addOperandValueToCodeSection(operandsList, TARGET_OPERAND);
 }
 
 void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition position)
@@ -340,13 +330,13 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
     printf("check %d \n",operand->type);
 
     if(operand->type == DIRECT_VALUE_OPERAND)
-    { /** addressing method type 1*/
+    { *//** addressing method type 1*/
 
-        printf("check direct \n");
-        /** direct values  do not need to be reallocated they are absolute */
-        encoding_type = ABSOLUTE;
-        /** direct value of command statements may be numbers or macro, therefore we need to check that the value exists and convert it to number */
-        if (!isnumber(operand->value) && validateLabel(operand->value) && searchForSymbolByLabel(operand->value)->feature == macro)
+/*        printf("check direct \n");
+*/        /** direct values  do not need to be reallocated they are absolute */
+/*        encoding_type = ABSOLUTE;
+*/        /** direct value of command statements may be numbers or macro, therefore we need to check that the value exists and convert it to number */
+/*        if (!isnumber(operand->value) && validateLabel(operand->value) && searchForSymbolByLabel(operand->value)->feature == macro)
         {
             value = decimal_to_binaryString(getSymbolAddress(operand->value), COMMAND_VALUE_LENGTH);
         }
@@ -358,23 +348,23 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         printf("check direct operand bmc value:%s\n", value);
     }
     else if(operand->type == REGISTER_OPERAND)
-    { /** addressing method type 3*/
-        encoding_type = ABSOLUTE;
-        if(position == SRC_OPERAND){
+    {*/ /** addressing method type 3*/
+/*        encoding_type = ABSOLUTE;
+        if(position == SRC_OPERAND){*/
             /** src register operands should encode the binary value of register number, and pad the value with 6 zeros */
-            value = concat(decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH), decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH));
+/*            value = concat(decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH), decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH));
             printf("check src register operand value:%s\n", value);
         } else {
-            /** target register operands should start with 6 zeros, and then the binary value of the register value */
-            value = concat(decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH), decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH));
+*/            /** target register operands should start with 6 zeros, and then the binary value of the register value */
+/*            value = concat(decimal_to_binaryString(0, COMMAND_REGISTER_LENGTH), decimal_to_binaryString(getRegisterNumberOfOperand(operand), COMMAND_REGISTER_LENGTH));
             printf("check dest register operand value:%s\n", value);
         }
     }
     
     else if(operand->type == INDEX_OPERAND)
-    { 
-		/** addressing method type 2*/
-        char* 			indexLabel			= "";
+    {
+*/		/** addressing method type 2*/
+/*        char* 			indexLabel			= "";
         int 			indexLabelAddress	= 0;
         OperandNode*	indexOperands		= NULL;
         indexOperands = getOperandListOfIndexOperand(operand->value);
@@ -394,9 +384,9 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         indexLabel = extractIndexOperandLabel(operand->value);
 
         printf("check here's the indexLabel: %s\n", indexLabel);
-
+*/
         /** find the index label in the symbols table */
-        if(!(isnumber(indexLabel)))
+/*        if(!(isnumber(indexLabel)))
         {
             printf("check 1 \n");
             symbol = searchForSymbolByLabel(indexLabel);
@@ -411,16 +401,16 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         }
         
         printf("check here's the label that was found: %s %d \n", symbol->label, symbol->feature);
-
+*/
         /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-        if(symbol->feature == ext)
+/*        if(symbol->feature == ext)
         {
 			printf("check ext");
 			
             encoding_type = EXTERNAL;
-        
+*/
             /** add the external usage to the external symbols usage list*/
-            addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
+/*            addExternalStatementUsage(symbol->label, IC + MEMOERY_START_ADDRESS);
         }
 
         else
@@ -429,14 +419,14 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
 
             encoding_type = RELOCATEABLE;
         }
-        
+ */
         /***/
-        indexLabelAddress = symbol->address;
+ /*       indexLabelAddress = symbol->address;
         printf("check %d \n", indexLabelAddress);
         printf("check the label's address:%d\n", symbol->address);
-
+*/
         /** add the index label first */
-        codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+/*        codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
 
         printf("check the label's codeSection[IC]:%s\n", codeSection[IC]);
 
@@ -446,7 +436,7 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
 		
 		printf("check index operands = %s \n", indexOperands->value);
 		
-        /** add the index operands */
+*/        /** add the index operands */
 
         /*
         if (!(isnumber(indexOperands->value))) {*/
@@ -469,17 +459,17 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
 
         codeSection[IC] = concat(decimal_to_binaryString(indexLabelAddress, COMMAND_VALUE_LENGTH), decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));*/
         
-        addOperandsValuesToCodeSection(indexOperands);
+/*        addOperandsValuesToCodeSection(indexOperands);
         
         return;
     }
     else
     {  
-		/** then its a label operand */
-        Symbol* 		symbol			= NULL;
-
+*/		/** then its a label operand */
+/*        Symbol* 		symbol			= NULL;
+*/
         /** find the label in the symbols table */
-        if(!(isnumber(operand->value)))
+/*        if(!(isnumber(operand->value)))
         {
             printf("check 2 %s \n", operand->value);
         
@@ -490,9 +480,9 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
                 ERROR_PROGRAM(("Unknown symbol %s", operand->value));
                 return;
             }
-        
+*/
             /** if it an external symbol, we encode a different ARE bits, as it  external not relocatable */
-            if(symbol->feature == ext)
+ /*           if(symbol->feature == ext)
             {
                 encoding_type = EXTERNAL;
 
@@ -507,12 +497,12 @@ void 		addOperandValueToCodeSection	(OperandNode* operand, OperandPosition posit
         
         value = decimal_to_binaryString(symbol->address, COMMAND_VALUE_LENGTH);
     }
-
+*/
     /** combine statement and the encoding type bits */
-    codeSection[IC] = concat(value, decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
+/*    codeSection[IC] = concat(value, decimal_to_binaryString(encoding_type, COMMAND_ARE_BITS_LENGTH));
     
     IC++;
-}
+}*/
 
 void 		validateIfOperandsAreaAllowed	(OperandNode* operandsList, COMMANDS cmd)
 {
