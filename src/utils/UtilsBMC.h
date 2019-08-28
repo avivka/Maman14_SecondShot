@@ -23,17 +23,8 @@ int			to_decimal					(int);							/* Calculates from power to decimal */
 int			from_operation_to_binary	(char [], COMMANDS);			/* Calculates the operation value to binary */
 int			from_operand_to_binary		(char [], OperandType);			/* Calculates the operand value to binary */
 int			from_storage_to_binary		(char [], int);					/* Calculates the storage operand value to binary */
-/*int			print_extern				(char*, int*, char*);*/					/* Print extern to file */
 short int 	from_string_to_int			(char*);						/* Casting from string to integer */
 short int	from_binary_to_decimal		(char [], int*, int);			/* Calculate the  binary value in to decimal value */
 short int 	from_label_to_bmc			(int);							/* Calcules the label value in binary machine code */
 short int 	possitive_or_negative_num	(char*, boolean, boolean);		/* Calculate a index or number value */
 int			from_command_to_binary	    (char[], COMMANDS);
-/*Symbol*		test_label					(char*, Symbol*); TODO: need to be changed to symbolList
-void		printArray					(char []);
-void		printDecimal				(short int num);*/
-
-
-
-
-

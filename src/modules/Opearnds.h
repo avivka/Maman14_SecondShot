@@ -1,5 +1,4 @@
-#ifndef ASSEMBLER_OPEARNDS_H
-#define ASSEMBLER_OPEARNDS_H
+/* Includes 		*/
 
 #include <stdlib.h>
 #include <string.h>
@@ -10,11 +9,20 @@
 #include "SymbolsTable.h"
 #include "CommandsIndex.h"
 
+/* Definitions		*/
+
+#ifndef ASSEMBLER_OPEARNDS_H
+#define ASSEMBLER_OPEARNDS_H
+
+/* Enums			*/
+
 typedef enum
 {
     SRC_OPERAND,
     TARGET_OPERAND
 } OperandPosition;
+
+/* Structures		*/
 
 /**
  * OperandNode defines an operand node type, contains the type and the value of the current operand, references to the next operand.
@@ -32,6 +40,7 @@ typedef struct
     OperandNode			desoperand;
 } commandLine;
 
+/* Prototypes 	*/
 
 /**
  * Gets a string pointer, pointing to the beging of operands section of a string
@@ -39,29 +48,29 @@ typedef struct
  * @param statementType - the type of the statement that used these operands
  * @return a pointer to a list of operands that the string contained
  */
-OperandNode* getOperandsListOfStatement(char* statement, STATEMENT_TYPE statementType, char* label);
+OperandNode* 	getOperandsListOfStatement	(char*, STATEMENT_TYPE, char*);
 
 /**
  * Gets an operand list pointer, returns the total amount of operands in the list.
  * @param operandsList
  * @return total number of operands in the list.
  */
-int countNumberOfOpearnds(OperandNode* operandsList);
+int 			countNumberOfOpearnds		(OperandNode*);
 
 /**
  * Reads a value of INDEX operand, and returns a list of the 2 operands that the index operand points to
  * @param indexOperandString - string
  * @return list of operands
  */
-OperandNode* getOperandListOfIndexOperand(char* indexOperandString);
+OperandNode* 	getOperandListOfIndexOperand(char*);
 
 /**
  * Returns the integer number of the given register operand
  * @param operand - must be of type of REGSITER_OPERAND
  * @return the int number of the registers
  */
-int getRegisterNumberOfOperand(OperandNode *operand);
+int 			getRegisterNumberOfOperand	(OperandNode*);
 
-char* getOperandFromDefine (char*, int);
+char* 			getOperandFromDefine 		(char*, int);
 
 #endif

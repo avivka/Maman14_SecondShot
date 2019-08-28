@@ -30,8 +30,6 @@ char*		rename_file						(char *fileInitialName, char *fileExtension)
     
     else
     {
-        free(fileNameWithExtension);
-     
         return fileInitialName;
     }
 }
@@ -63,10 +61,25 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 void 		doWhileFileHaveLines			(FILE * file, void (*nextLineHandler)(char*))
 {
     char 	line[MAX_LINE_SIZE]				= "";
+    
     while(fgets(line, sizeof(line), file))
     {
         nextLineHandler(line);
     }
+}
+
+int			deleteFile						(char* filepath, char* filextention)
+{
+	char*		fileFullPath				= "";
+	
+	fileFullPath = concat(filepath, filextention);
+				
+	if (check_if_file_exists(fileFullPath) == 0)
+	{
+		remove(fileFullPath);
+	}
+	
+	return 0;
 }
 
 /*void DoWhileFileHaveLines(char* filename, void (*nextLineHandler)(char*)){

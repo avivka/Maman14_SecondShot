@@ -13,7 +13,7 @@
 #define 	COMMAND_ARE_BITS_LENGTH			2
 #define 	COMMAND_REGISTER_LENGTH			6
 
-/* Function Declaration	*/
+/* Prototypes	*/
 
 /** returns the current count of command instructions */
 int 	    getInstructionsCount						();

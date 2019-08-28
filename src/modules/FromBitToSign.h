@@ -7,8 +7,8 @@
 
 /* Definitions		*/
 
-#define 	maxNumDecimalAddress 						1000
-#define		char_to_ascii								48
+#define 	maxNumDecimalAddress 				1000
+#define		char_to_ascii						48
 
 /* Prototypes 	*/
 

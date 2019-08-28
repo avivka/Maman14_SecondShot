@@ -1,20 +1,21 @@
 #include "CommandBuilder.h"
 
+CommandStatement 	buildCommandStatement		(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* indexOperandsList)
+{
+    unsigned int* 		srcOperand;
+    unsigned int* 		destOperand;
+    unsigned int* 		commandCode;
+    unsigned int* 		encodingTypeValue;
 
-CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType destOperandType, COMMANDS commandOpCode, STATEMENT_ENCODING_TYPE encodingType, OperandNode* indexOperandsList){
-    unsigned int *srcOperand;
-    unsigned int *destOperand;
-    unsigned int *commandCode;
-    unsigned int *encodingTypeValue;
-
-    CommandStatement *command;
+    CommandStatement* 	command;
+    
     command = (CommandStatement*) malloc(sizeof(CommandStatement));
     errorIfMallocFailed(command, "when tring to allocate memory for command.");
 
-    srcOperand = int_to_bin_digit((unsigned int) srcOperandType, 2);
-    destOperand = int_to_bin_digit((unsigned int) destOperandType, 2);
-    commandCode = int_to_bin_digit((unsigned int) commandOpCode, 4);
-    encodingTypeValue = int_to_bin_digit((unsigned int) encodingType, 2);
+    srcOperand 			= int_to_bin_digit((unsigned int) srcOperandType, 2);
+    destOperand 		= int_to_bin_digit((unsigned int) destOperandType, 2);
+    commandCode 		= int_to_bin_digit((unsigned int) commandOpCode, 4);
+    encodingTypeValue 	= int_to_bin_digit((unsigned int) encodingType, 2);
 
     command->encoding_type_1 = encodingTypeValue[0];
     command->encoding_type_2 = encodingTypeValue[1];
@@ -62,10 +63,13 @@ CommandStatement buildCommandStatement(OperandType srcOperandType, OperandType d
     return  *command;
 }
 
-char* getCommandBinaryString(CommandStatement *cmd){
-    char *string;
+char* 				getCommandBinaryString		(CommandStatement* cmd)
+{
+    char* 		string 		= "";
+
     string = malloc(14 * sizeof(char));
     errorIfMallocFailed(string, "when tring to allocate memory to string of bmc.");
+
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
                      cmd->not_in_use_1,/**bit 13:*/ /*TODO: should not be in use*/
                      cmd->not_in_use_2,/**bit 12:*/ /*TODO: should not be in use*/
@@ -82,5 +86,6 @@ char* getCommandBinaryString(CommandStatement *cmd){
                      cmd->encoding_type_1,/**bit 1: A,R,E code*/
                      cmd->encoding_type_2 /**bit 0: A,R,E code*/
     );
+    
     return  string;
 }

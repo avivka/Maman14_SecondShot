@@ -25,7 +25,7 @@ int			main			(int argc, char *argv[])
 			break;
 		}
 
-		fileName 	= is_extention_exists(*argv, ".as");
+		fileName = is_extention_exists(*argv, ".as");
 
 		printf("check the filename is - %s \n", fileName);
 
@@ -49,15 +49,26 @@ int			main			(int argc, char *argv[])
 
         /*TODO: Add if statement that checks if the scan failed and FREE the symbol table and the data segment if it happens*/
 
-        /** execute phase 2 of the assembler */
-        doPhase2(fileName);
-
-        printf("check phase2 done \n");
+		if(errorFlag == 0)
+		{
+			/** execute phase 2 of the assembler */        
+			doPhase2(fileName);
+			
+			printf("check phase2 done \n");
+			
+			if(errorFlag == 1)
+			{
+				deleteFile(fileName, ".ob");
+				
+				deleteFile(fileName, ".ext");
+				
+				deleteFile(fileName, ".ent");	
+			}
+		}
 
         /** clear up so we can process properly the next file*/
         resetDataSegmentModule();
         resetSymbolsModulesModule();
-        resetCodeSegmentModule();
 
         printf("\n Assembler completed processing file: %s", *argv);
 

@@ -9,7 +9,7 @@ int 		isContainsChar			(char *input, char charToTest)
 {
     int 		i				= 0;
     
-    for(i =0; i < strlen(input); i++)
+    for(i = 0 ; i < strlen(input) ; i++)
     {
         if (input[i] == charToTest)
         {
@@ -22,7 +22,7 @@ int 		isContainsChar			(char *input, char charToTest)
 
 int 		isWordEndsWithChar		(char *word, char charToTest)
 {
-    if(word [strlen(word) - 1] == charToTest)
+    if (word [strlen(word) - 1] == charToTest)
     {
         return 1;
     }
@@ -32,7 +32,7 @@ int 		isWordEndsWithChar		(char *word, char charToTest)
 
 char 		getLastChar				(char *word)
 {
-    return  word [strlen(word) - 1];
+    return  word[strlen(word) - 1];
 }
 
 int 		isWordStartsWithChar	(char *word, char charToTest)
@@ -121,7 +121,7 @@ void 		validateStringIsNumber	(char *string)
     
     strtol(string, &ptr, 10);
     
-    if(strlen(ptr) != 0)
+    if (strlen(ptr) != 0)
     {
         ERROR_PROGRAM(("expected a number, but got %s", ptr));
     }

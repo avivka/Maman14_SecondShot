@@ -6,8 +6,6 @@
 #include    "Analyzer.h"
 #include    "Opearnds.h"
 
-/*  Structs     */
-
 /* Prototypes 	*/
 
 int			from_line_to_bmc	(commandLine*, int, char*);				/* The main function of creation binary machine code */
