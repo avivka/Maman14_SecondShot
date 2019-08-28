@@ -10,6 +10,11 @@ int 		getInstructionsCount		()
     return  IC;
 }
 
+void 		resetCodeSegmentModule		()
+{
+    IC = 0; /* resets the instructions count */
+}
+
 void 		initCodeSection				(char* fileName, int dataCounter)
 {
 	char*	newFileName		= "";
