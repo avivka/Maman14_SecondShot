@@ -11,6 +11,9 @@
 /** returns the current count of command instructions */
 int 	    getInstructionsCount						();
 
+/** resets the Code Segment module, re-initialaizing it, usually used when start to work with a new file */
+void 		resetCodeSegmentModule		                ();
+
 /**
  * should go over the instruction and increase the Command instructions count based on the given statement
  * @param the statement, which is a sentence that we're about to spilt to words.
