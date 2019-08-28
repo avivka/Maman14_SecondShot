@@ -71,10 +71,10 @@ char* 				getCommandBinaryString		(CommandStatement* cmd)
     errorIfMallocFailed(string, "when tring to allocate memory to string of bmc.");
 
     sprintf(string, "%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
-                     cmd->not_in_use_1,/**bit 13:*/ /*TODO: should not be in use*/
-                     cmd->not_in_use_2,/**bit 12:*/ /*TODO: should not be in use*/
-                     cmd->not_in_use_3,/**bit 11:*/ /*TODO: should not be in use*/
-                     cmd->not_in_use_4,/**bit 10:*/ /*TODO: should not be in use*/
+                     cmd->not_in_use_1,/**bit 13:*/
+                     cmd->not_in_use_2,/**bit 12:*/
+                     cmd->not_in_use_3,/**bit 11:*/
+                     cmd->not_in_use_4,/**bit 10:*/
                      cmd->op_code_1,/**bit 9: op_code*/
                      cmd->op_code_2,/**bit 8: op_code*/
                      cmd->op_code_3,/**bit 7: op_code*/

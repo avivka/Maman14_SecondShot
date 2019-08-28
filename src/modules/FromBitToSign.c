@@ -2,7 +2,7 @@
 
 extern int decimalAddress;
 
-/*Do binary movements and send 00 or 01 or 10 or 11 to the "to_4_base" function. Reutrns 0 if all good else returns -1.*/
+/** Do binary movements and send 00 or 01 or 10 or 11 to the "to_4_base" function. Returns 0 if all good else returns -1.*/
 
 int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decimalAddressCounter, char* filename)
 {
@@ -26,7 +26,7 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 	
 	if (*decimalAddressCounter < maxNumDecimalAddress)
 	{
-		fputc('0', pf);									/*puts 0 before the IC number if it is less then 1000*/							
+		fputc('0', pf);																					/** puts 0 before the IC number if it is less then 1000*/
 	}
 	
 	fprintf(pf, "%d", *decimalAddressCounter);
@@ -105,14 +105,14 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 	
 	fputc('\n', pf);
 
-	fclose(pf); /*TODO: write functions that deal properly with files cleanup (such as clean_output_files)*/
+	fclose(pf);
 	
 	return 0;
 }
 
-/*Returns * or # or % or ! to the array. Reutrns 0 if all good.*/
+/** Returns * or # or % or ! to the array. Returns 0 if all good.*/
 
-char			to_4_base					(char firstBit, char secondBit)
+char	to_4_base									(char firstBit, char secondBit)
 {	
 	secondBit 	= (secondBit - char_to_ascii) * 2;
 	firstBit	= (firstBit - char_to_ascii);
@@ -156,9 +156,9 @@ char			to_4_base					(char firstBit, char secondBit)
 	return '0';
 }
 
-/*Prints the array in the opposite way to the file. Returns 0 if all good, else returns -1.*/
+/** Prints the array in the opposite way to the file. Returns 0 if all good, else returns -1.*/
 
-int			printSignToFile					(char *bmcsign, FILE* fp)
+int		printSignToFile								(char *bmcsign, FILE* fp)
 {
 	int i;
 	

@@ -146,7 +146,7 @@ char*		is_extention_exists	    (char* s1, char* s2)
     char* 	str 					= "";
     char* 	cutExtention 			= "";
 
-    str = strstr(s1, s2); /**if exists - return the pointer to the second string in the first one*/
+    str = strstr(s1, s2); /** if exists - return the pointer to the second string in the first one*/
 
     if ((str != NULL) && (strcmp (str, s2) == 0))
     {		
@@ -155,7 +155,7 @@ char*		is_extention_exists	    (char* s1, char* s2)
     
     else
     {
-		/**means that the extention already exists in s1*/
+		/** means that the extention already exists in s1*/
 		printf("check is_extention_exists false \n");
 		
 		return s1;

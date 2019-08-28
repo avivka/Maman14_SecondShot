@@ -417,7 +417,6 @@ OperandNode* 	getOperandListOfIndexOperand	(char* indexOperandString)
 
         list = createOperandNode(indexOperandValue, COMMAND_STATEMENT);
 
-        /*TODO: may cause issues?*/
         list->next = NULL;
         
         printf("check all good!!!!!!!!!! \n\n\n\n");

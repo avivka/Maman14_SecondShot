@@ -2,8 +2,8 @@
 
 int			main			(int argc, char *argv[])
 {
-
-	char* 	fileName 		= "";
+	char* 	fileName 			= "";
+	char*	extendedFileName	= "";
 
     if(argc < 2)
     {
@@ -31,7 +31,7 @@ int			main			(int argc, char *argv[])
 
 		rename(*argv, fileName);
 		
-		/** checks if the file exists and delete them if do*/
+		/** checks if the file exists and delete them if so*/
 
 		deleteFile(fileName, ".ob");
 				
@@ -79,7 +79,13 @@ int			main			(int argc, char *argv[])
 
         printf("\n Assembler completed processing file: %s", *argv);
 
-        rename(fileName, concat(fileName, ".as"));
+		extendedFileName = concat(fileName, ".as");
+
+        rename(fileName, extendedFileName);
+
+        printf("check filename:%s\n", extendedFileName);
+
+        free(extendedFileName);
     }
 
     return  0;

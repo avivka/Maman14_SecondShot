@@ -78,7 +78,9 @@ int			deleteFile						(char* filepath, char* filextention)
 	{
 		remove(fileFullPath);
 	}
-	
+
+	free(fileFullPath);
+
 	return 0;
 }
 

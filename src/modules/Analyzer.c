@@ -136,7 +136,7 @@ char* 			extractLabel						(char* sentence)
         
         else
         {
-            ERROR_PROGRAM(("the label is contain spaces or tabs"));
+            ERROR_PROGRAM(("the label contains spaces or tabs"));
         
             return NULL;
         }
@@ -150,6 +150,7 @@ char* 			extractLabel						(char* sentence)
     
     else
     {
+        free(buff);
         return  NULL;
 	}
 }
@@ -381,7 +382,7 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
 {
     int 		labelLength 				= 0;
     int 		iterationIndex 				= 0;
-    char* 		poteinailCommandString 		= "";
+    char* 		potentialCommandString 		= "";
     char 		commandString[5] 			= "";
     char* 		label 						= "";
     COMMANDS 	command;
@@ -405,11 +406,11 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
 	
     iterationIndex = 0;
     
-    poteinailCommandString = sentence + labelLength;
+    potentialCommandString = sentence + labelLength;
     
-    while(iterationIndex < (strlen(poteinailCommandString)) && iterationIndex < MAX_COMMAND_LENGTH)
+    while(iterationIndex < (strlen(potentialCommandString)) && iterationIndex < MAX_COMMAND_LENGTH)
     {
-        commandString[iterationIndex] = poteinailCommandString[iterationIndex];
+        commandString[iterationIndex] = potentialCommandString[iterationIndex];
      
         command = commandStringToEnum(commandString);
 

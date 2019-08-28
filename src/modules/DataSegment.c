@@ -60,6 +60,10 @@ void 	handleDataStatement				(char* dataStatement)
     printf("check called from here! \n");
     
     operands = getOperandsListOfStatement(dataStatement, type, label);
+    if (type == DATA_STATEMENT_TYPE_ENTRY)
+    {
+        printf("check in which order the entry label is being checked: %s\t%d\n", operands->value, operands->type);
+    }
     
     switch (type)
     {

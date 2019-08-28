@@ -1,6 +1,6 @@
 #include	"UtilsBMC.h"
 
-int			to_decimal					(int power)											/* Calculates from power to decimal */
+int			to_decimal					(int power)											/** Calculates from power to decimal */
 {	
 	int			i, j;	
 	
@@ -12,7 +12,7 @@ int			to_decimal					(int power)											/* Calculates from power to decimal *
 	return j;	
 }	
 	
-int			from_command_to_binary	(char op[], COMMANDS ope)							/* Calculates the command value to binary */
+int			from_command_to_binary	(char op[], COMMANDS ope)							    /** Calculates the command value to binary */
 {	
 	int			i				= OPCODE;	
 	int 		j				= FOURTH_BIT_VALUE;	
@@ -47,7 +47,7 @@ int			from_command_to_binary	(char op[], COMMANDS ope)							/* Calculates the c
 	return 0;	
 }	
 	
-int			from_operand_to_binary		(char opr[], OperandType oprtype)							/* Calculates the operand value to binary */
+int			from_operand_to_binary		(char opr[], OperandType oprtype)					/** Calculates the operand value to binary */
 {	
 	int			i				= OPERAND;	
 	int 		j				= OPERAND;	
@@ -80,7 +80,7 @@ int			from_operand_to_binary		(char opr[], OperandType oprtype)							/* Calcula
 	return 0;	
 }	
 	
-int			from_storage_to_binary		(char storage[], int stoperand)						/* Calculates the storage operand value to binary */
+int			from_storage_to_binary		(char storage[], int stoperand)						/** Calculates the storage operand value to binary */
 {	
 	int			i				= STORAGE_OPERAND;	
 	int			j				= THIRD_BIT_VALUE;	
@@ -107,7 +107,7 @@ int			from_storage_to_binary		(char storage[], int stoperand)						/* Calculates
 	return 0;	
 }	
 	
-short int 	from_string_to_int			(char* str)											/* Casting from string to integer */
+short int 	from_string_to_int			(char* str)											/** Casting from string to integer */
 {	
 	short int 		num			= 0;	
 	int 			counter, i	= 0;	
@@ -135,7 +135,7 @@ short int 	from_string_to_int			(char* str)											/* Casting from string to 
 	
 	printf("check num = %d, j = %d \n", num, j);	
 	
-	for (counter = 0 ; i >= counter ; counter++)											/* Calculate the value from string */
+	for (counter = 0 ; i >= counter ; counter++)											/** Calculate the value from string */
 	{	
 		printf("check str[%d] = %d \n",counter, str[i]);	
 		num += (str[counter] - char_to_ascii) * j;	
@@ -150,7 +150,7 @@ short int 	from_string_to_int			(char* str)											/* Casting from string to 
 	return num;	
 }	
 	
-short int	from_binary_to_decimal		(char arr[], int* bitCounter, int useBits)			/* Calculate the  binary value in to decimal value */
+short int	from_binary_to_decimal		(char arr[], int* bitCounter, int useBits)			/** Calculate the  binary value in to decimal value */
 {	
 	short int		j, counter				= 0;	
 	
@@ -164,14 +164,16 @@ short int	from_binary_to_decimal		(char arr[], int* bitCounter, int useBits)			/
 	return counter;	
 }	
 	
-short int 	from_label_to_bmc			(int tblValue)										/* Calcules the label value in binary machine code */
+short int 	from_label_to_bmc			(int tblValue);
+
+short int   from_label_to_bmc           (int tblValue)                                      /** Calculate the label value in binary machine code */
 {
 	tblValue <<= 2;
 
 	return tblValue;
 }
 
-short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNegative) 	/* Calculate a index or number value */
+short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNegative)    /** Calculate a index or number value */
 {
 	unsigned short int	num			= 0;
 
@@ -207,7 +209,7 @@ short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNega
 	return num;
 }
 
-int			print_extern				(char* label, int* decimalAddress, char* filename)					/* Print extern to file */
+int			print_extern				(char* label, int* decimalAddress, char* filename)	/** Print extern to file */
 {
 	FILE*	pf								= NULL;
 	char*	fileNameWithExtention			= "";
@@ -227,7 +229,7 @@ int			print_extern				(char* label, int* decimalAddress, char* filename)					/* 
 	
 	if (*decimalAddress < maxNumDecimalAddress)
 	{
-		fputc('0', pf);									/*puts 0 before the IC number if it is less then 1000*/							
+		fputc('0', pf);									                                    /** puts 0 before the IC number if it is less then 1000*/
 	}
 	
 	fprintf(pf, "%d\n", *decimalAddress);

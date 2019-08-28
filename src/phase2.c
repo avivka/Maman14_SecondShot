@@ -157,7 +157,6 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int d
 {
     FILE* 				file 				= NULL;
     int 				decimalAddress		= decimalAddressCount;
-    char* 				firstLine			= NULL;
     char* 				lineValue			= NULL;
     char*	            newFileName		    = "";
     DataSegmentNode* 	dataSegmentWalker 	= NULL;
@@ -190,8 +189,6 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int d
 	{
 		ERROR_PROGRAM(("The file %s could not be opened",newFileName));
 	}
-
-        free(firstLine);
     
         fclose(file);
 }

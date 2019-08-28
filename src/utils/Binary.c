@@ -62,7 +62,7 @@ int 			data_from_binary_machine_code_to_fourth_base (char* binaryCode, int* deci
     if (*decimalAddressCounter < maxNumDecimalAddress)
     {
 
-        fputc('0', fp); 							/*puts 0 before the IC number if it is less then 1000*/
+        fputc('0', fp); 							/**puts 0 before the IC number if it is less then 1000*/
     }
 
     fprintf(fp, "%d", *decimalAddressCounter);
