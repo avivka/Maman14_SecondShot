@@ -25,15 +25,15 @@ void			doPhase1					(char* fileName)
 
 void			handleNextLinePhase1		(char* line)
 {
-    STATEMENT_TYPE type = getStatementTypeOfSentence(line);
 
     /** skip empty lines or comment lines */
     if(isCommentStatementOrEmptyLine(line))
     {
-        currentLine++;
         printf("check currentLine after isCommentStatementOrEmptyLine: %d\n", currentLine);
         return;
     }
+
+    STATEMENT_TYPE type = getStatementTypeOfSentence(line);
 
     /** check if it data statement line, or command instruction line, and handle it as needed */
     if(type == COMMAND_STATEMENT)
@@ -49,12 +49,10 @@ void			handleNextLinePhase1		(char* line)
     
     else
     {
-        printf("error invalid command at line\n");
+        ERROR_PROGRAM(("invalid command"));
     }
     
-    currentLine++;
-    
-    printf("check currentline after data or macro sentence= %d \n", currentLine);
+    printf("check currentline after data or macro sentence= %d %s\n", currentLine, line);
 }
 
 void			updateSymbolTableAddresses		()

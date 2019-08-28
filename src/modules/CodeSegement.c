@@ -134,7 +134,7 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
 				
 				else
 				{
-					/** increae by one for index label value, and by one for each of the two operands */
+					/** increase by one for index label value, and by one for each of the two operands */
 					IC += 2;
 				}
 				
@@ -163,6 +163,7 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
     {
         free(label);
     }
+    free(operandsList);
 }
 
 

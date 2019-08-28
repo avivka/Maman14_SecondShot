@@ -1,0 +1,120 @@
+.define sz = 2
+.define sz = 3
+.define
+.define N 2
+.define sz = 34fyf
+
+mov #5, #6
+mov#5, #6
+mov #5 #6
+mov LAB(#5, r5)
+
+
+prn
+prn   #-5,#-5
+mov   #-5, #-5
+mov   STR[5], STR[]
+mov   STR[5], STR[n]
+mov  STR[5], STR[3],
+move  STR[5], STR[3]
+
+
+
+MA$!N:         mov   r3, LIST[sz]
+MAIN         mov   r3, LIST[sz]
+MAIN:
+SuperCalifragilisticExpiAlidocious: .data	4
+
+
+; 48. this line is ok (comma within string is not a separator)
+STR1:   .string "abc, ,defg"
+
+
+cmp LAB(#5, r5)
+add LAB(#5, r5)
+add #5, #5
+sub #5, #5
+sub LAB(#5, r5)
+not #5, r5
+not LAB(#5, r5)
+clr #5, r5
+clr LAB(#5, r5)
+lea LAB(#5, r5)
+lea LAB(#5, r5) aghjksldf
+lea #5, r5
+lea#5, r5
+lea,r5, r5
+lea #5, r5 afdsjkhlajd;kf'
+lea r4, r5
+lea LABLE2, #5
+inc  LAB(#5, r5)
+inc  #5, r5
+prn  #5, r5
+red  #5, r5
+bne  #5, r5
+jmp  #5, r5
+jmp  LAB, r5
+jmp  LAB, LABLW
+jmp  #4, LABLW
+jmp  r5, LABLW
+jmp  r5(r5, LABLW)
+jmp  jmp(r5, LABLW)
+jmp  jmp(r5, LABLW) haskjd
+jmp  LABLE89(r5, LABLW
+jmp  jmp(r5, LABLW) .string "aviv"
+dec LAB(#5, r5)
+dec LAB(#5, r5) nasldkjaslkdja
+red LAB(#5, r5)
+prn LAB(#5, r5)
+rts LAB(#5, r5)
+stop LAB(#5, r5)
+dec WEIRED
+1main: mov r4,r5
+mov#5, r6
+clr                              eee                                          e                                                      e
+jmp aviv(j5,6)
+mov l1  (r4, r6)
+mov .data
+mov .data r4
+mov m@ain (l4, r5)
+cmp %6, r0
+add -3, -4
+sub 2, 3, 4, 5
+not                             3    ,   4
+lea "allon"
+inc
+dec
+jmp
+bne
+red
+prn
+jsr
+stop #5
+stop r4,r5
+rts
+stop", STOP},
+mov %r, #4
+mov #5, #6 , #7
+jmp lable((r4,r5))
+mov
+.mov #5, r6
+stop yay
+java script
+mov ,#5, #4
+stop (r4,r5)
+mov "aviv",r5
+mov mov #5,r7
+r0,r5
+lable(r3,r4)
+(mov) #4,r6
+mov                 (r4,r4)
+more r4,r5
+m    o    v    #5,r4
+mov#5 , #4
+main: mov -7, r5
+main: mov -7, r5
+lable: aviv: .data
+main: .data
+.data main:
+loop: mov e2, r4)
+labl: stop mov

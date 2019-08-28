@@ -75,15 +75,12 @@ void 			handleNextLine		(char* line)
     /** skip empty lines or comment lines */
     if (isCommentStatementOrEmptyLine(line))
     {
-        currentLine++;
-        
         return;
     }
 
     /** skip data statements lines we already handled them in phase 1 */
     if (isDataStatement(line))
     {
-        currentLine++;
         printf("check currentLine after isDataStatement: %d\n", currentLine);
     
         return;
@@ -97,7 +94,6 @@ void 			handleNextLine		(char* line)
         
         decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFileName);
 
-        currentLine++;
         printf("check currentLine after isCommandStatement: %d\n", currentLine);
 
         return;
@@ -105,7 +101,7 @@ void 			handleNextLine		(char* line)
     
     else
     {
-        ERROR_PROGRAM(("error invalid command"));
+        ERROR_PROGRAM(("invalid sentence"));
     }
 }
 

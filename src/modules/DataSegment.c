@@ -60,11 +60,18 @@ void 	handleDataStatement				(char* dataStatement)
     printf("check called from here! \n");
     
     operands = getOperandsListOfStatement(dataStatement, type, label);
+
+    if (operands == NULL)
+    {
+        Node_destroy(operands);
+        return;
+    }
+
     if (type == DATA_STATEMENT_TYPE_ENTRY)
     {
         printf("check in which order the entry label is being checked: %s\t%d\n", operands->value, operands->type);
     }
-    
+
     switch (type)
     {
         case DATA_STATEMENT_TYPE_DATA:
@@ -74,7 +81,7 @@ void 	handleDataStatement				(char* dataStatement)
             break;
             
         case  DATA_STATEMENT_TYPE_STRING:
-        
+
            handleDataTypeStatementOfString(operands, label);
            
             break;
@@ -103,6 +110,7 @@ void 	handleDataStatement				(char* dataStatement)
             
             break;
     }
+    Node_destroy(operands);
     
     printf("check done handleDataStatement \n");
 }
@@ -178,14 +186,18 @@ void 	handleDataTypeStatementOfString	(OperandNode *operand, char* label)
     {
         ERROR_PROGRAM((".string statements must exactly have one operand"));
     }
-    
+
+    printf("check operand type in handleDataTypeStatementOfString:%d\n", operand->type);
+
     if(operand->type != DIRECT_VALUE_OPERAND)
     {
             ERROR_PROGRAM(("Invalid operand value handling .string statement, received %s, .string operations can only use direct operand. ", operand->value));
     }
     
     stringIndex = 0;
-    
+
+    printf("check indexes in handleDataTypeStatementOfString: start: %d end: %zu",stringIndex, strlen(operand->value));
+
     while (stringIndex < strlen(operand->value))
     {
         /** add each character to the data segment */
@@ -309,6 +321,8 @@ void 	addDataSegmentNode				(int valueToAdd)
 {
     DataSegmentNode *newNode = malloc(sizeof(DataSegmentNode));
     errorIfMallocFailed(newNode, "when trying to allocate memory for a new DataSegmentNode");
+
+    printf("check I'm in addDataSegmentNode\n");
 
     newNode->value = valueToAdd;
 

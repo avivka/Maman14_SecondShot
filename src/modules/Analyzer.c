@@ -131,6 +131,10 @@ char* 			extractLabel						(char* sentence)
     
                 i++;
             }
+            if (sentence[i] == ':' && ((!isspace(sentence[i+1])) && sentence[i+1] != '\n'))
+            {
+                ERROR_PROGRAM(("label should end with : and then have ' '."));
+            }
             buff[i] = '\0';
         }
         
@@ -355,12 +359,14 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
 
 boolean 		isCommentStatementOrEmptyLine		(char *sentence)
 {
-    if(sentence[0] == ';' || sentence[0] == '\n') 
+    printf("check im in isCommentStatementOrEmptyLine %c\n", sentence[0]);
+    if(sentence[0] == ';' || sentence[0] == '\n')
     {
+        printf("check whats the char :0 : %c\n", sentence[0]);
         return TRUE;
     }
     
-    else 
+    else
     {
         while(sentence && isspace(sentence[0]))
         {
@@ -369,6 +375,7 @@ boolean 		isCommentStatementOrEmptyLine		(char *sentence)
         
         if(sentence[0] == ';' || sentence[0] == '\0')
         {
+            printf("check empty or ; line: I should be backslash 0 or ';' and then return TRUE");
             return TRUE;
         }
         
@@ -393,10 +400,13 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
     sentence =  trimwhitespace(sentence);
     
     label = extractLabel(sentence);
-    
+
+    printf("check thats the label in getCommandOfStatement: %s\n",label);
+
     /** figure label offset */
     if(label == NULL)
     {
+        free(label);
         labelLength = 0;
 	}
 	
