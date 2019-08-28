@@ -27,7 +27,7 @@ typedef struct
     listNode*			tail;
 } list;
 
-/* Function Declaration	*/
+/** Function Declaration	*/
 
 /**
  * Creates a  list

@@ -7,12 +7,6 @@
 #include 	"CommandBuilder.h"
 #include    "CreateBMC.h"
 
-/* Defines				*/
-/*
-#define 	COMMAND_VALUE_LENGTH 			12
-#define 	COMMAND_ARE_BITS_LENGTH			2
-#define 	COMMAND_REGISTER_LENGTH			6
-*/
 /* Prototypes	*/
 
 /** returns the current count of command instructions */
@@ -27,10 +21,6 @@ void	    increaseCommandInstructionsCountByStatement	(char*);
 commandLine addStatementToCodeSegment					(char*);
 
 void 	    initCodeSection								(char*, int);
-
-/*void 	    addOperandValueToCodeSection				(OperandNode*, OperandPosition);*/
-
-/*void 	    addOperandsValuesToCodeSection				(OperandNode*);*/
 
 /**
  * Go through the operands list, and check weather all the operands match the allowed operands defined by the given CMD, print error for any un-allowed operand

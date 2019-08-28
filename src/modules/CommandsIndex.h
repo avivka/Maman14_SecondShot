@@ -5,8 +5,7 @@
 #include 	<string.h>
 
 /* Defines				*/
-/*
-#define 	O_OTHER_OPERAND					-1*/
+
 #ifndef 	ASSEMBLER_COMMANDSINDEX_H
 #define 	ASSEMBLER_COMMANDSINDEX_H
 

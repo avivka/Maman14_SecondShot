@@ -26,5 +26,4 @@ char* 		rename_file					(char *, char*);
  */
 void 		doWhileFileHaveLines		(FILE*, void (*nextLineHandler)(char*));
 
-/*void DoWhileFileHaveLines(char*, void (*nextLineHandler)(char*));*/
 #endif

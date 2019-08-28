@@ -64,13 +64,6 @@ int 			countNumberOfOpearnds		(OperandNode*);
  */
 OperandNode* 	getOperandListOfIndexOperand(char*);
 
-/**
- * Returns the integer number of the given register operand
- * @param operand - must be of type of REGSITER_OPERAND
- * @return the int number of the registers
- */
-/*int 			getRegisterNumberOfOperand	(OperandNode*);*/
-
 char* 			getOperandFromDefine 		(char*, int);
 
 #endif
