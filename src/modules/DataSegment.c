@@ -288,11 +288,6 @@ list* 	getEntryStatementsList			()
     return  &entryStatementsList;
 }
 
-list* 	getExternalStatementsList		()
-{
-    return  &externalStatementsList;
-}
-
 void 	addDataSegmentNode				(int valueToAdd)
 {
     DataSegmentNode *newNode = malloc(sizeof(DataSegmentNode));

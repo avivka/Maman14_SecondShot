@@ -16,7 +16,6 @@
 void		doPhase2			            (char*);
 void 		handleNextLine		            (char*);
 void 		createEnteriesFile	            (char*);
-void 		createExternalsFile	            (char*);
-void 		printDataSegmentToObjectFile	(char*, int);
+void 		printDataSegmentToObjectFile	(char*, int, int);
 
 #endif
