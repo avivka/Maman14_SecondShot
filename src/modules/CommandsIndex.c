@@ -2,7 +2,7 @@
 
 /* Static Data Members	*/
 
-static CommandDescriptor commands[16];
+static CommandDescriptor commands[COMMAND_DESCRIPTOR_MAX_USE];
 
 void 		initCommandsDescriptors		()
 {	

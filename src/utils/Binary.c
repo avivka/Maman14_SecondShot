@@ -28,7 +28,7 @@ char* 			decimal_to_binaryString		(int n, int numOfDigits)
     int 		count					= 0;
     char* 		pointer					= NULL;
 
-    pointer = (char*)malloc(numOfDigits+1);
+    pointer = (char*) malloc (numOfDigits + 1);
     errorIfMallocFailed(pointer, "couldn't allocate memory for a new binary string");
 
     for (c = numOfDigits - 1 ; c >= 0 ; c--)
@@ -37,18 +37,18 @@ char* 			decimal_to_binaryString		(int n, int numOfDigits)
 
         if (d & 1)
         {
-            *(pointer+count) = 1 + '0';
+            *(pointer + count) = 1 + '0';
 		}
         
         else
         {
-            *(pointer+count) = 0 + '0';
+            *(pointer + count) = 0 + '0';
 		}
 
         count++;
     }
     
-    *(pointer+count) = '\0';
+    *(pointer + count) = '\0';
 
     return  pointer;
 }
@@ -88,7 +88,7 @@ int 			data_from_binary_machine_code_to_fourth_base (char* binaryCode, int* deci
 
     fputc('\n', fp);
 
-    return 0;
+    return TRUE;
 }
 
 /*Returns * or # or % or ! to the array. Reutrns 0 if all good.*/
@@ -134,24 +134,3 @@ char			to_4_base_data				(char firstBit, char secondBit)
 
     return '0';
 }
-/*
-int				printSignToFileData			(char *bmcsign, FILE* fp)
-{
-    int i;
-
-    for (i = (NUM_OF_ACTIVE_BITS/2 - 1) ; i >= 0 ; i--)
-    {
-        if(bmcsign[i] != '0')
-        {
-            fputc(bmcsign[i], fp);
-        }
-
-        else
-        {
-            return -1;
-        }
-    }
-
-    return 0;
-}
-*/
