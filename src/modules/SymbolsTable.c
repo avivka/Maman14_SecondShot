@@ -56,7 +56,7 @@ void 	addSymbolToTable				(Symbol* newSymbol)
     {
         ERROR_PROGRAM(("Requested label %s, already exists, can't declare the same label twice.", newSymbol->label));
     }
-    
+
 	printf("check important %s %d \n", newSymbol-> label, newSymbol-> address);
 
     /** if no tail, it means we are setting the first item in the table */

@@ -42,7 +42,6 @@ int			main			(int argc, char *argv[])
         doPhase1(fileName);
         
         printf("check done phase 1 \n");
-        printSymbolTable();
         /** resets line read, because reading the file from the start */
         currentLine = 0;
         printf("check currentLine after scan 1: %d\n", currentLine);
