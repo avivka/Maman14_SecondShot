@@ -168,7 +168,9 @@ short int 	opr_direct			(char* label, boolean isIndex, int* decimalAddress, char
 																							
 	if (currentSymbol->feature == ext)																		/* Adds the correct value of the ARE in case of external label */
 	{																								
-		bmc += 1;																						
+		bmc += 1;	
+		
+		print_extern(label, decimalAddress, filename); 																					
 	}																						
 
 	else																									/* Adds the correct value of the ARE in unexternal cases */

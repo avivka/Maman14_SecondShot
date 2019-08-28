@@ -30,6 +30,14 @@ int			main			(int argc, char *argv[])
 		printf("check the filename is - %s \n", fileName);
 
 		rename(*argv, fileName);
+		
+		/** checks if the file exists and delete them if do*/
+
+		deleteFile(fileName, ".ob");
+				
+		deleteFile(fileName, ".ext");
+		
+		deleteFile(fileName, ".ent");
 
         printf("\n Begin processing the following file: %s\n", *argv);
 

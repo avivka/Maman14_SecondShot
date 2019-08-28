@@ -206,3 +206,33 @@ short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNega
 
 	return num;
 }
+
+int			print_extern				(char* label, int* decimalAddress, char* filename)					/* Print extern to file */
+{
+	FILE*	pf								= NULL;
+	char*	fileNameWithExtention			= "";
+	
+	fileNameWithExtention = concat(filename, ".ext");
+	
+	if (open_or_create_file(&pf, fileNameWithExtention) == -1)
+	{
+		return -1;
+	}
+	
+	printf("check \t\t\t\t\t\t\t\t %s %d\n", label, *decimalAddress);
+	
+	fputs(label, pf);
+	
+	fputc('\t', pf);
+	
+	if (*decimalAddress < maxNumDecimalAddress)
+	{
+		fputc('0', pf);									/*puts 0 before the IC number if it is less then 1000*/							
+	}
+	
+	fprintf(pf, "%d\n", *decimalAddress);
+	
+	fclose(pf);
+	
+	return 1;
+}

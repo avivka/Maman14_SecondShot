@@ -35,8 +35,6 @@ DataSegmentNode* 	getDataSegmentHead			();
  */
 list* 				getEntryStatementsList		();
 
-list* 				getExternalStatementsList	();
-
 void 				addExternalStatementUsage	(char*, int);
 
 /**

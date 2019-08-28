@@ -45,8 +45,8 @@ void			doPhase2			(char* fileName)
             return;
         }
         createEnteriesFile(fileName);
-        createExternalsFile(fileName);
-        printDataSegmentToObjectFile(exFileName,dataSegmentSize);
+        printDataSegmentToObjectFile(exFileName,dataSegmentSize, decimalAddress);
+        
         printf("check WTF \n");
         
         if (fileToAssembler != NULL)
@@ -125,7 +125,7 @@ void 			createEnteriesFile	(char *fileName)
         return;
     }
     
-    buffer = (char * *) malloc(sizeof(char) * MAX_SIZE_OF_LABEL * list_size(entryList));
+    buffer = (char**) malloc(sizeof(char) * MAX_SIZE_OF_LABEL * list_size(entryList));
     errorIfMallocFailed(buffer, "new array of strings");
     
     while (walker)
@@ -135,7 +135,15 @@ void 			createEnteriesFile	(char *fileName)
         buffer[count] = (char *) malloc(sizeof(char *));
         errorIfMallocFailed(buffer[count], "while tring to allocate memory to buffer[count]");
         
-        sprintf(buffer[count], "%s \t %d", walker->data, address);
+        if (address < maxNumDecimalAddress)
+		{
+			sprintf(buffer[count], "%s \t 0%d", walker->data, address);									/*puts 0 before the IC number if it is less then 1000*/							
+		}
+        
+        else
+        {
+			sprintf(buffer[count], "%s \t %d", walker->data, address);
+        }
         
         walker = walker->next;
         
@@ -145,41 +153,10 @@ void 			createEnteriesFile	(char *fileName)
     writeToFile (concat(fileName, ".ent"), buffer, count);
 }
 
-void 			createExternalsFile	(char *fileName)
-{
-	int 		count				= 0;
-	char** 		buffer				= NULL;
-	list* 		externalsList		= getExternalStatementsList();
-    listNode* 	walker				= externalsList->head;
-
-    /** if not entry statements nothing to do */
-    if (walker == NULL)
-    {
-       return;
-    }
-
-    buffer = (char**) malloc(sizeof(char *) * list_size(externalsList));
-    errorIfMallocFailed(buffer, "new array of strings");
-    
-    while (walker)
-    {
-        buffer[count] = (char *) malloc(sizeof(char *));
-        errorIfMallocFailed(buffer[count], "while trying to allocate memory to buffer[count]");
-    
-        sprintf(buffer[count], "%s", walker->data);
-    
-        walker = walker->next;
-    
-        count++;
-    }
-
-    writeToFile(concat(fileName, ".ext"), buffer, count);
-}
-
-void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize)
+void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int decimalAddressCount)
 {
     FILE* 				file 				= NULL;
-    int 				decimalAddress		= getInstructionsCount();
+    int 				decimalAddress		= decimalAddressCount;
     char* 				firstLine			= NULL;
     char* 				lineValue			= NULL;
     char*	            newFileName		    = "";
@@ -218,26 +195,3 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize)
     
         fclose(file);
 }
-
-
-  /*int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decimalAddressCounter, char* filename)
-{
-	int 	counter 						= 0;
-	char 	number 							= '\0';
-	char	bmcsign[NUM_OF_ACTIVE_BITS/2]	= "";
-	char*	filenamewithextention			= "";
-	FILE	*pf								= NULL;
-
-	if (binaryCode == -1)
-	{
-		return -1;
-	}
-
-	filenamewithextention = concat(filename, ".ob");
-
-	if (open_or_create_file(&pf, filenamewithextention) == -1)
-	{
-		return -1;
-	}
-   	fclose(pf);
-*/
