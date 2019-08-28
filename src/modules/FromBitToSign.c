@@ -107,6 +107,8 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 
 	fclose(pf);
 	
+	free(filenamewithextention);
+	
 	return 0;
 }
 

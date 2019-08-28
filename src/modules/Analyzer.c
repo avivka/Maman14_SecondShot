@@ -172,6 +172,8 @@ char* 			extractIndexOperandLabel			(char* indexOperandValue)
 	
 	if(strlen(buff) == 0)
 	{
+		free (buff);
+		
 		return  NULL;
 	}
 	

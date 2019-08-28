@@ -33,7 +33,7 @@ commandLine addStatementToCodeSegment					(char*);
 void 	    initCodeSection								(char*, int);
 void 	    addToCodeSection							(CommandStatement);
 void 	    addOperandValueToCodeSection				(OperandNode*, OperandPosition);
-void 	    addOperandsValuesToCodeSection				(OperandNode*);
+/*void 	    addOperandsValuesToCodeSection				(OperandNode*);*/
 
 /**
  * Go through the operands list, and check wether all the operands match the allowed operands defined by the given CMD, print error for any unallowed operand

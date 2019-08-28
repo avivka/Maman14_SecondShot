@@ -83,8 +83,6 @@ int			main			(int argc, char *argv[])
 
         rename(fileName, extendedFileName);
 
-        printf("check filename:%s\n", extendedFileName);
-
         free(extendedFileName);
     }
 

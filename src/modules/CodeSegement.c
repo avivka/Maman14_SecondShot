@@ -42,6 +42,7 @@ void 		initCodeSection				(char* fileName, int dataCounter)
 	{
 		ERROR_PROGRAM(("The file %s could not be opened",newFileName));
 	}
+	
 	free(newFileName);
 }
 

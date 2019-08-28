@@ -36,30 +36,6 @@ CommandStatement 	buildCommandStatement		(OperandType srcOperandType, OperandTyp
     command->not_in_use_3 = 0;
     command->not_in_use_4 = 0;
 
-    /* index operand separate coding is not relevant
-    if(indexOperandsList == NULL){
-        command->not_in_use_1 = 0;
-        command->not_in_use_2 = 0;
-        command->not_in_use_3 = 0;
-        command->not_in_use_4 = 0;
-    } else {
-        OperandType indexParam1Type;
-        OperandType indexParam2Type;
-        unsigned  int* indexParam1Value;
-        unsigned  int* indexParam2Value;
-
-        indexParam1Type = indexOperandsList->type;
-        indexParam2Type = indexOperandsList->next->type;
-
-        indexParam1Value = int_to_bin_digit((unsigned int) indexParam1Type, 2);
-        indexParam2Value = int_to_bin_digit((unsigned int) indexParam2Type, 2);
-
-        command->not_in_use_1 = indexParam1Value[0];
-        command->not_in_use_2 = indexParam1Value[1];
-        command->not_in_use_3 = indexParam2Value[0];
-        command->not_in_use_4 = indexParam2Value[1];
-    }
-     */
     return  *command;
 }
 
