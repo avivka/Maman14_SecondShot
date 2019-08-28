@@ -236,5 +236,7 @@ int			print_extern				(char* label, int* decimalAddress, char* filename)	/** Pri
 	
 	fclose(pf);
 	
+	free(fileNameWithExtention);
+	
 	return 1;
 }

@@ -1,9 +1,9 @@
 /* Includes				*/
 #ifndef 	ASSEMBLER_CONSTANTS_H
 #define 	ASSEMBLER_CONSTANTS_H
+#define 	MEMOERY_START_ADDRESS 		100
 #define 	MAX_LINE_SIZE 				80
 #define 	MAX_LABEL_SIZE 				80
-#define 	MEMOERY_START_ADDRESS 		100
 #define 	MAX_FILE_NAME_SIZE 			80
 #define 	NUMBER_ZERO_ASCII_CODE 		48
 #define 	NUMBER_SEVEN_ASCII_CODE 	55

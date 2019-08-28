@@ -17,5 +17,6 @@ void		doPhase2			            (char*);
 void 		handleNextLine		            (char*);
 void 		createEnteriesFile	            (char*);
 void 		printDataSegmentToObjectFile	(char*, int, int);
+int			resetICAndCounter				();
 
 #endif

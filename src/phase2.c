@@ -1,7 +1,7 @@
 #include "phase2.h"
 
 char* 	exFileName		= "";
-int		decimalAddress	= 100;
+int		decimalAddress	= MEMOERY_START_ADDRESS;
 
 void			doPhase2			(char* fileName)
 {
@@ -116,6 +116,7 @@ void 			createEnteriesFile	(char *fileName)
     char** 		buffer 				= NULL;
     list* 		entryList 			= getEntryStatementsList();
     listNode*	walker 				= entryList->head;
+    char*		filename			= "";
     
     printf("check got to create \n");
 
@@ -149,8 +150,12 @@ void 			createEnteriesFile	(char *fileName)
         
         count++;
     }
+    
+    filename = concat(fileName, ".ent");
 
-    writeToFile (concat(fileName, ".ent"), buffer, count);
+    writeToFile (filename, buffer, count);
+    
+    free(filename);
 }
 
 void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int decimalAddressCount)
@@ -191,4 +196,15 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int d
 	}
     
         fclose(file);
+        
+        free(newFileName);
+}
+
+int				resetICAndCounter				()
+{
+	resetCodeSegmentModule();
+	
+	decimalAddress = MEMOERY_START_ADDRESS;
+	
+	return 0;
 }

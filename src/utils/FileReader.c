@@ -30,6 +30,8 @@ char*		rename_file						(char *fileInitialName, char *fileExtension)
     
     else
     {
+		free (fileNameWithExtension);
+		
         return fileInitialName;
     }
 }
