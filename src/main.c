@@ -76,7 +76,8 @@ int			main			(int argc, char *argv[])
         /** clear up so we can process properly the next file*/
         resetDataSegmentModule();
         resetSymbolsModulesModule();
-
+		resetICAndCounter();
+		
         printf("\n Assembler completed processing file: %s", *argv);
 
 		extendedFileName = concat(fileName, ".as");

@@ -1,7 +1,7 @@
 #include "phase2.h"
 
 char* 	exFileName		= "";
-int		decimalAddress	= 100;
+int		decimalAddress	= MEMOERY_START_ADDRESS;
 
 void			doPhase2			(char* fileName)
 {
@@ -198,4 +198,13 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int d
         fclose(file);
         
         free(newFileName);
+}
+
+int				resetICAndCounter				()
+{
+	resetCodeSegmentModule();
+	
+	decimalAddress = MEMOERY_START_ADDRESS;
+	
+	return 0;
 }
