@@ -179,13 +179,15 @@ void 			createExternalsFile	(char *fileName)
 void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize)
 {
     FILE* 				file 				= NULL;
-    int 				decimalAddress		= MEMOERY_START_ADDRESS;
+    int 				decimalAddress		= getInstructionsCount();
     char* 				firstLine			= NULL;
     char* 				lineValue			= NULL;
     char*	            newFileName		    = "";
     DataSegmentNode* 	dataSegmentWalker 	= NULL;
 
     newFileName = concat(fileName, ".ob");
+
+    printf("check the starting DecimalAddress: %d", decimalAddress);
 
 	printf("check %s filename in printDataSegmentToObjectFile\n", newFileName);
 
@@ -194,7 +196,8 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize)
         dataSegmentWalker = getDataSegmentHead();
 
         /** write all the data section to the file line by line */
-        while (dataSegmentWalker != NULL) {
+        while (dataSegmentWalker != NULL)
+        {
             /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
             lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
             printf("check line value: %s\n", lineValue);

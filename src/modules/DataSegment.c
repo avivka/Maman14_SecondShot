@@ -125,7 +125,8 @@ void 	addDataSymbolIfLabelGiven		(char* label)
 void 	handleDataTypeStatementOfData	(OperandNode *operands, char* label)
 {
     OperandNode* 	temp 		= operands;
-    
+    int             macroValue  = 0;
+
     addDataSymbolIfLabelGiven(label);
 
     if (operands == NULL)
@@ -141,12 +142,23 @@ void 	handleDataTypeStatementOfData	(OperandNode *operands, char* label)
         {
             ERROR_PROGRAM(("Invalid operand value handling .data statement, received %s, .data operations can only use direct(numeric) operands. ", temp->value));
         }
-        
-        /** for each operand add it to the code segment, cast the string value to int, and increase the data count */
-        addDataSegmentNode(atoi(temp->value));
-        
-        increaseDataInstructionsCount();
-        
+        /** if the value is macro then add it as its number.*/
+        if (!(isnumber(temp->value)))
+        {
+            macroValue = getSymbolAddress(temp->value);
+            printf("This is the macro value that was found in getSymbolAddress:%d\n", macroValue);
+            addDataSegmentNode(macroValue);
+            increaseDataInstructionsCount();
+        }
+        else
+        {
+            /** for each operand add it to the code segment, cast the string value to int, and increase the data count */
+            addDataSegmentNode(atoi(temp->value));
+            printf("check value of data segment node:%s\n", temp->value);
+
+            increaseDataInstructionsCount();
+        }
+
         /** advance to the next operand */
         temp = temp->next;
     }
@@ -198,6 +210,7 @@ void 	handleDataStatmentTypeEntry		(OperandNode *operand)
     if(operand->type != LABEL_OPERAND){
         ERROR_PROGRAM(("Invalid operand value handling .entry statement, received %s, .entry operations can only use label operand. ", operand->value));
     }
+    printf("check here's the entry value before I insert it to the list:%s\n", operand->value);
 
     /** add the entry label to the entries list */
     addLabelToEntriesList(operand->value);
