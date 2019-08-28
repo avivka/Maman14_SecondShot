@@ -1,7 +1,7 @@
 all: assembler
 
-assembler: src/modules/statments_types.h src/constants.h List.o Error.o FileWriter.o FileReader.o Binary.o TextUtils.o CommandsIndex.o Analyzer.o Opearnds.o DataSegment.o CommandBuilder.o CodeSegement.o SymbolsTable.o FromBitToSign.o UtilsBMC.o CreateBMC.o phase1.o phase2.o main.o
-	gcc -g -Wall -pedantic -ansi List.o Error.o FileWriter.o FileReader.o Binary.o TextUtils.o CommandsIndex.o Analyzer.o Opearnds.o DataSegment.o CommandBuilder.o CodeSegement.o SymbolsTable.o FromBitToSign.o UtilsBMC.o CreateBMC.o phase1.o phase2.o main.o  -o assembler -lm
+assembler: src/modules/statments_types.h src/constants.h List.o Error.o FileWriter.o FileReader.o Binary.o TextUtils.o CommandsIndex.o Analyzer.o Opearnds.o DataSegment.o CodeSegement.o SymbolsTable.o FromBitToSign.o UtilsBMC.o CreateBMC.o phase1.o phase2.o main.o
+	gcc -g -Wall -pedantic -ansi List.o Error.o FileWriter.o FileReader.o Binary.o TextUtils.o CommandsIndex.o Analyzer.o Opearnds.o DataSegment.o CodeSegement.o SymbolsTable.o FromBitToSign.o UtilsBMC.o CreateBMC.o phase1.o phase2.o main.o  -o assembler -lm
 	rm *.o
 
 main.o: src/main.c src/main.h src/constants.h
@@ -30,9 +30,6 @@ CodeSegement.o: src/modules/CodeSegement.c src/modules/CodeSegement.h src/consta
 
 Analyzer.o: src/modules/Analyzer.c src/modules/Analyzer.h src/constants.h src/modules/statments_types.h
 	gcc -c -Wall -pedantic  src/modules/Analyzer.c -o Analyzer.o
-
-CommandBuilder.o: src/modules/CommandBuilder.c src/modules/CommandBuilder.h src/constants.h
-	gcc -c -Wall -pedantic  src/modules/CommandBuilder.c -o CommandBuilder.o
 
 CommandsIndex.o: src/modules/CommandsIndex.c src/modules/CommandsIndex.h src/constants.h
 	gcc -c -Wall -pedantic  src/modules/CommandsIndex.c -o CommandsIndex.o
