@@ -66,6 +66,4 @@ OperandNode* 	getOperandListOfIndexOperand(char*);
 
 char* 			getOperandFromDefine 		(char*, int);
 
-void 	        Node_destroy	            (OperandNode*);
-
 #endif

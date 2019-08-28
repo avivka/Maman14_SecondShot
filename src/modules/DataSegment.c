@@ -63,7 +63,7 @@ void 	handleDataStatement				(char* dataStatement)
 
     if (operands == NULL)
     {
-        Node_destroy(operands);
+
         return;
     }
 
@@ -110,7 +110,7 @@ void 	handleDataStatement				(char* dataStatement)
             
             break;
     }
-    Node_destroy(operands);
+
     
     printf("check done handleDataStatement \n");
 }

@@ -110,7 +110,7 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
 
             if (statementType == DATA_STATEMENT_TYPE_DEFINE) {
                 if (headOfList == NULL) {
-                    Node_destroy(headOfList);
+
                     ERROR_PROGRAM(("something went wrong with the macro's label"));
                 }
 
@@ -127,12 +127,12 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
 
                     if (tail->next == NULL) {
                         ERROR_PROGRAM(("something went wrong with the macro's value"));
-                        Node_destroy(headOfList);
+
                         return NULL;
                     }
                 } else {
                     ERROR_PROGRAM(("there is no second operand in the macro definition"));
-                    Node_destroy(headOfList);
+
                     return NULL;
                 }
 
@@ -505,29 +505,4 @@ int 			countNumberOfOpearnds			(OperandNode* operandsList)
     }
     
     return count;
-}
-
-void 	        Node_destroy	                (OperandNode *operand)
-{
-    printf("check got to node destroy \n");
-
-    OperandNode *current;
-
-    while(operand->next != NULL)
-    {
-        printf("check pointer to next node in operandList (on destruction):%p\n",(void*)operand->next);
-        current = operand->next;
-
-        printf("\tcheck pointer to next's next node in operandList (on destruction):%p\n",(void*)current->next);
-        operand->next->next = current->next;
-
-        printf("\t\tNode destruction I'm about to free this one:%p\n",(void*)current->next->value);
-        free(current->next->value);
-        printf("\t\tNode destruction I'm about to free the second one:%p\n",(void*)current->next);
-        free(current->next);
-    }
-    printf("\t\t\tNode destruction I'm about to free the label %s of this list:\n",current->value);
-    free(current->value);
-    printf("\t\t\tNode destruction I'm about to free the node %p of this list:\n",(void*)current);
-    free(current);
 }
