@@ -13,10 +13,10 @@
 
 /* Function Declaration	*/
 
-void		doPhase2			(char*);
-void 		handleNextLine		(char*);
-void 		createEnteriesFile	(char*);
-void 		createExternalsFile	(char*);
-void 		createObjectFile	(char*, int, int);
+void		doPhase2			            (char*);
+void 		handleNextLine		            (char*);
+void 		createEnteriesFile	            (char*);
+void 		createExternalsFile	            (char*);
+void 		printDataSegmentToObjectFile	(char*, int);
 
 #endif

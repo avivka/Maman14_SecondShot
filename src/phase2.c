@@ -49,12 +49,12 @@ void			doPhase2			(char* fileName)
         }
         createEnteriesFile(fileName);
         createExternalsFile(fileName);
-
+        printDataSegmentToObjectFile(exFileName,dataSegmentSize);
         printf("check WTF \n");
         
         if (fileToAssembler != NULL)
 		{
-			printf("check closed corectly \n");
+			printf("check closed correctly \n");
 			
 			if(fclose(fileToAssembler) == 0)
 			{
@@ -181,54 +181,65 @@ void 			createExternalsFile	(char *fileName)
     writeToFile(concat(fileName, ".ext"), buffer, count);
 }
 
-/*void 			createObjectFile	(char *fileName, int codeSegmentSize, int dataSegmentSize)
+void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize)
 {
     FILE* 				file 				= NULL;
-    int 				itteratorIndex		= 0;
     int 				decimalAddress		= MEMOERY_START_ADDRESS;
-    char** 				codeSegment			= getCodeSection();
     char* 				firstLine			= NULL;
     char* 				lineValue			= NULL;
+    char*	            newFileName		    = "";
     DataSegmentNode* 	dataSegmentWalker 	= NULL;
 
-    fileName = concat(fileName, ".ob");
-    
-    if (open_or_create_file(&file,fileName) == 0)*//*TODO: add error in case that the file cannot be opened because it shouldn't be there.*/
-    /*{
-        firstLine = (char *)malloc(sizeof(char*));
-        errorIfMallocFailed(firstLine, "while tring to allocate memory to the first line");
-*/
-        /** first put the total code instructions and total data instructions */
-  /*      sprintf(firstLine, "%d %d \n", codeSegmentSize, dataSegmentSize);
+    newFileName = concat(fileName, ".ob");
 
-        fputs(firstLine, file);
-*/
-        /** write all the code section to the file line by line */
-  /*      while (itteratorIndex < codeSegmentSize)
-        {
-    */    /** prints each line to the weird binary value */
-      /*      data_from_binary_machine_code_to_fourth_base(codeSegment[itteratorIndex], &decimalAddress, file);
+	printf("check %s filename in printDataSegmentToObjectFile\n", newFileName);
 
-            itteratorIndex++;
-        }
-
+    if (open_or_create_file(&file,newFileName) == 0)/*TODO: add error in case that the file cannot be opened because it shouldn't be there.*/
+    {
         dataSegmentWalker = getDataSegmentHead();
-*/
-        /** write all the data section to the file line by line */
-  /*      while (dataSegmentWalker != NULL)
-        {
-    */        /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
-      /*      lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
 
-        */    /** replace each line to it weird binary value */
-          /*  data_from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
-*/
+        /** write all the data section to the file line by line */
+        while (dataSegmentWalker != NULL) {
+            /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
+            lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
+            printf("check line value: %s\n", lineValue);
+
+            /** replace each line to it weird binary value */
+            data_from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);
+
             /*** put the correct address for each line, which is the memory start + where the code section ended + the current place in data section */
-  /*          dataSegmentWalker = dataSegmentWalker->next;
+            dataSegmentWalker = dataSegmentWalker->next;
         }
+    }
+	else
+	{
+		ERROR_PROGRAM(("The file %s could not be opened",newFileName));
+	}
 
         free(firstLine);
     
         fclose(file);
+}
+
+
+  /*int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decimalAddressCounter, char* filename)
+{
+	int 	counter 						= 0;
+	char 	number 							= '\0';
+	char	bmcsign[NUM_OF_ACTIVE_BITS/2]	= "";
+	char*	filenamewithextention			= "";
+	FILE	*pf								= NULL;
+
+	if (binaryCode == -1)
+	{
+		return -1;
 	}
-}*/
+
+	filenamewithextention = concat(filename, ".ob");
+
+	if (open_or_create_file(&pf, filenamewithextention) == -1)
+	{
+		return -1;
+	}
+   	fclose(pf);
+*/
