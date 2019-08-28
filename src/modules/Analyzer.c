@@ -137,7 +137,7 @@ char* 			extractLabel						(char* sentence)
         else
         {
             ERROR_PROGRAM(("the label contains spaces or tabs"));
-        
+            free(buff);
             return NULL;
         }
         
@@ -378,7 +378,6 @@ boolean 		isCommentStatementOrEmptyLine		(char *sentence)
 }
 
 COMMANDS 		getCommandOfStatement				(char* sentence)
-
 {
     int 		labelLength 				= 0;
     int 		iterationIndex 				= 0;
@@ -401,7 +400,8 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
 	
     else
     {
-        labelLength = strlen(label) + 2; /** length of the label, + 1 for the :, + for the space after the label, guaranteed to be single space due to removeExtraSpaces*/
+        /** length of the label, + 1 for the :, + for the space after the label, guaranteed to be single space due to removeExtraSpaces*/
+        labelLength = strlen(label) + 2;
 	}
 	
     iterationIndex = 0;
