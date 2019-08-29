@@ -40,7 +40,7 @@ int			from_command_to_binary	(char op[], COMMANDS ope)							    /** Calculates 
 	}	
 
 	
-	return 0;	
+	return TRUE;	
 }	
 	
 int			from_operand_to_binary		(char opr[], OperandType oprtype)					/** Calculates the operand value to binary */
@@ -70,7 +70,7 @@ int			from_operand_to_binary		(char opr[], OperandType oprtype)					/** Calculat
 	}	
 
 	
-	return 0;	
+	return TRUE;	
 }	
 	
 int			from_storage_to_binary		(char storage[], int stoperand)						/** Calculates the storage operand value to binary */
@@ -97,7 +97,7 @@ int			from_storage_to_binary		(char storage[], int stoperand)						/** Calculate
 		j /= 2;	
 	}	
 	
-	return 0;	
+	return TRUE;	
 }	
 	
 short int 	from_string_to_int			(char* str)											/** Casting from string to integer */

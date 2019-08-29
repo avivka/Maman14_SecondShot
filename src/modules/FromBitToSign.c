@@ -100,7 +100,7 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 	
 	free(filenamewithextention);
 	
-	return 0;
+	return TRUE;
 }
 
 /** Returns * or # or % or ! to the array. Returns 0 if all good.*/
@@ -116,33 +116,23 @@ char	to_4_base									(char firstBit, char secondBit)
 		case 0:
 				/* return * to the array*/
 				return '*';
-				
-				break;
 			
 		case 1:
 				/* return # to the array*/
 				return '#';
-				
-				break;
 		
 		case 2:
 				/* return % to the array*/
 				return '%';
 				
-				break;
-				
 		case 3:
 				/* return ! to the array*/
 				return '!';
-				
-				break; 
 		
 		default:
 				/* write error*/
 				ERROR_PROGRAM(("There is a problem with the translation to 4 base \n"));
 				return '0';
-				
-				break;
 	}
 
 }
@@ -167,5 +157,5 @@ int		printSignToFile								(char *bmcsign, FILE* fp)
 		}
 	}
 	
-	return 0;
+	return TRUE;
 }

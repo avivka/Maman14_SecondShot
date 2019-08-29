@@ -1,15 +1,25 @@
 /* Includes				*/
+
 #ifndef 	ASSEMBLER_CONSTANTS_H
 #define 	ASSEMBLER_CONSTANTS_H
-#define 	MEMOERY_START_ADDRESS 		100
-#define 	MAX_LINE_SIZE 				80
-#define 	MAX_FILE_NAME_SIZE 			80
-#define 	NUMBER_ZERO_ASCII_CODE 		48
-#define 	NUMBER_SEVEN_ASCII_CODE 	55
-#define 	MACHINE_CODE_LINE_LENGTH	14
+
+#define 	MEMOERY_START_ADDRESS 						100
+#define 	MAX_LINE_SIZE 								80
+#define 	MAX_LABEL_SIZE 								80
+#define 	MAX_FILE_NAME_SIZE 							80
+#define 	NUMBER_ZERO_ASCII_CODE 						48
+#define 	NUMBER_SEVEN_ASCII_CODE 					55
+#define 	NUMBER_NINE_ASCII_CODE	 					57
+#define 	COMMAND_DESCRIPTOR_MAX_USE 					16
+#define 	MACHINE_CODE_LINE_LENGTH					14
+#define 	STRING_EXTERN_DEFINE_CASES_CHARS_IN_USE		7
+#define 	ENTRY_CASE_CHARS_IN_USE						6
+#define 	DATA_CASE_CHARS_IN_USE						5
+#define 	STOP_COMMAND_LENGTH							4
+#define 	ALL_THE_COMMANDS_LENGTH						3
 
 
-/* Emuns			*/
+/* Enums			*/
 /** a simple boolean definition */
 typedef enum { FALSE, TRUE } boolean;
 

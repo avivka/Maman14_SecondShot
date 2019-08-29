@@ -36,7 +36,7 @@ int 			isDataStatement						(char *sentence)
 			return  1;
 		}
 
-    return 0;
+    return TRUE;
 }
 
 int 			validateLabel						(char* label)
@@ -47,11 +47,11 @@ int 			validateLabel						(char* label)
     {
         if((strlen(label) == 2 && label[0] == 'r'))
         {
-            if((label[1] >= 1 && label[1] <= '7'))
+            if((label[1] >= 1 && label[1] <= NUMBER_SEVEN_ASCII_CODE))
             {
                 ERROR_PROGRAM(("Label cant be named as register"));
 
-                return 0;
+                return TRUE;
             }
             
             else if (isalpha(label[1]) || isdigit(label[1]))
@@ -64,7 +64,7 @@ int 			validateLabel						(char* label)
               ERROR_PROGRAM(("Label Cannot contain signs"));
 			}
 
-            return 0;
+            return TRUE;
         }
         
         else if (!((strcmp(label, "mov") == 0) || (strcmp(label, "cmp") == 0) || (strcmp(label, "add") == 0) || (strcmp(label, "sub") == 0) ||
@@ -76,7 +76,7 @@ int 			validateLabel						(char* label)
             {
                 ERROR_PROGRAM(("Label Cannot start with digits"));
             
-                return 0;
+                return TRUE;
             }
             
             for (i = 1; i < (strlen(label)); i++)
@@ -85,7 +85,7 @@ int 			validateLabel						(char* label)
                 {
                     ERROR_PROGRAM(("Label contains signs"));
                  
-                    return 0;
+                    return TRUE;
                 }
             }
             
@@ -96,7 +96,7 @@ int 			validateLabel						(char* label)
         {
             ERROR_PROGRAM(("Label cannot be named as an instruction"));
         
-            return 0;
+            return TRUE;
         }
         
     }
@@ -105,7 +105,7 @@ int 			validateLabel						(char* label)
     {
         ERROR_PROGRAM(("Label is too long (more than 30 chars)"));
     
-        return 0;
+        return TRUE;
     }
 }
 
@@ -195,7 +195,7 @@ int 			isStatementTypeDataStatement		(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return 0;
+        return TRUE;
 	}
 
     if(result)
@@ -204,7 +204,7 @@ int 			isStatementTypeDataStatement		(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return 0;
+                return TRUE;
             }
             
             i++;
@@ -215,7 +215,7 @@ int 			isStatementTypeDataStatement		(char* sentence)
     
     else
     {
-		return 0;
+		return TRUE;
 	}
 }
 
@@ -229,7 +229,7 @@ int 			isStatementTypeDataStatementString	(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return 0;
+        return TRUE;
 	}
 
     if(result)
@@ -238,7 +238,7 @@ int 			isStatementTypeDataStatementString	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return 0;
+                return TRUE;
             }
             
             i++;
@@ -249,7 +249,7 @@ int 			isStatementTypeDataStatementString	(char* sentence)
     
     else
     {
-        return 0;
+        return TRUE;
 	}
 }
 
@@ -263,7 +263,7 @@ int 			isStatementTypeDataStatementEntry	(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return 0;
+        return TRUE;
 	}
     
     if(result)
@@ -272,7 +272,7 @@ int 			isStatementTypeDataStatementEntry	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return 0;
+                return TRUE;
             }
             
             i++;
@@ -283,7 +283,7 @@ int 			isStatementTypeDataStatementEntry	(char* sentence)
     
     else
     {
-        return 0;
+        return TRUE;
 	}
 }
 
@@ -297,7 +297,7 @@ int 			isStatementTypeDataStatementExtern	(char* sentence)
  
     if(strlen(sentence) == 0)
     {
-        return 0;
+        return TRUE;
 	}
     
     if(result)
@@ -306,7 +306,7 @@ int 			isStatementTypeDataStatementExtern	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return 0;
+                return TRUE;
             }
             
             i++;
@@ -317,7 +317,7 @@ int 			isStatementTypeDataStatementExtern	(char* sentence)
     
     else
     {
-        return 0;
+        return TRUE;
 	}
 }
 
@@ -331,7 +331,7 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return 0;
+        return TRUE;
 	}
 
     if(result)
@@ -340,7 +340,7 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return 0;
+                return TRUE;
             }
             
             i++;
@@ -351,7 +351,7 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
     
     else
     {
-        return 0;
+        return TRUE;
 	}
 }
 
@@ -383,11 +383,11 @@ boolean 		isCommentStatementOrEmptyLine		(char *sentence)
 
 COMMANDS 		getCommandOfStatement				(char* sentence)
 {
-    int 		labelLength 				= 0;
-    int 		iterationIndex 				= 0;
-    char* 		potentialCommandString 		= "";
-    char 		commandString[5] 			= "";
-    char* 		label 						= "";
+    int 		labelLength 							= 0;
+    int 		iterationIndex 							= 0;
+    char* 		potentialCommandString 					= "";
+    char* 		label			 						= "";
+    char 		commandString[DATA_CASE_CHARS_IN_USE]	= "";
     COMMANDS 	command;
     
     removeExtraSpaces(sentence);
@@ -442,7 +442,7 @@ int 			isCommandStatement					(char *sentence)
         return 1;
     }
 
-    return 0;
+    return TRUE;
 
 }
 
@@ -462,7 +462,7 @@ boolean			isnumber 							(char* str)
 
 boolean			check_if_number						(char num)
 {
-	if (!(num >= 48 && num <= 57))
+	if (!(num >= NUMBER_ZERO_ASCII_CODE && num <= NUMBER_NINE_ASCII_CODE))
 		{
 			return FALSE;
 		}

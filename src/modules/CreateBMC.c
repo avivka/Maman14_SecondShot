@@ -61,7 +61,7 @@ short int	create_basic_bmc	(commandLine* nextLine, int* decimalAddress, char* fi
 	
 	from_binary_machine_code_to_fourth_base(counter, decimalAddress, filename);
 
-	return 0;
+	return TRUE;
 }
 
 short int 	from_src_des_opr	(commandLine* nextLine, boolean isSrc, int* decimalAddress, char* filename)		/** Use to check if the operand is SRC to DES and by the case call the right function */

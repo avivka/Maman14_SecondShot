@@ -4,7 +4,6 @@
 #include 	"Opearnds.h"
 #include 	"DataSegment.h"
 #include 	"SymbolsTable.h"
-#include 	"CommandBuilder.h"
 #include    "CreateBMC.h"
 
 /* Prototypes	*/

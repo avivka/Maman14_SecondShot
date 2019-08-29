@@ -397,7 +397,7 @@ int 			getRegisterNumberOfOperand		(OperandNode *operand)
     {
         ERROR_PROGRAM(("called getRegisterNumberOfOperand with non register operand"));
     
-        return 0;
+        return TRUE;
     }
     
     return atoi(&operand->value[1]);
@@ -412,23 +412,23 @@ int 			instructionLengthByStatmentType(STATEMENT_TYPE statementType, char *state
     {
         case DATA_STATEMENT_TYPE_DATA:
     
-            return  5; /** instruction of .data is 5 chars long */
+            return  DATA_CASE_CHARS_IN_USE; /** instruction of .data is 5 chars long */
     
         case DATA_STATEMENT_TYPE_STRING:
     
-            return  7;  /** instruction of .string is 7 chars long */
+            return  STRING_EXTERN_DEFINE_CASES_CHARS_IN_USE;  /** instruction of .string is 7 chars long */
     
         case DATA_STATEMENT_TYPE_ENTRY:
     
-            return  6; /** instruction of .entry is 6 chars long */
+            return  ENTRY_CASE_CHARS_IN_USE; /** instruction of .entry is 6 chars long */
     
         case DATA_STATEMENT_TYPE_EXTERN:
     
-            return  7; /** instruction of .extern is 7 chars long */
+            return  STRING_EXTERN_DEFINE_CASES_CHARS_IN_USE; /** instruction of .extern is 7 chars long */
     
         case DATA_STATEMENT_TYPE_DEFINE:
     
-            return  7; /** instruction of .define is 7 chars long */
+            return  STRING_EXTERN_DEFINE_CASES_CHARS_IN_USE; /** instruction of .define is 7 chars long */
     
         case COMMAND_STATEMENT:
     
@@ -437,10 +437,10 @@ int 			instructionLengthByStatmentType(STATEMENT_TYPE statementType, char *state
     
              if(cmdType == stop)
              {
-                 return  4;
+                 return  STOP_COMMAND_LENGTH;
 			 }
             
-            return  3; /** all other command statements are 3 letters */
+            return  ALL_THE_COMMANDS_LENGTH; /** all other command statements are 3 letters */
         
         default:
         
