@@ -57,7 +57,7 @@ void 	handleDataStatement				(char* dataStatement)
     OperandNode*		operands		= NULL;
     char*				label			= extractLabel(dataStatement);
    
-    printf("check called from here! \n");
+
     
     operands = getOperandsListOfStatement(dataStatement, type, label);
 
@@ -67,10 +67,6 @@ void 	handleDataStatement				(char* dataStatement)
         return;
     }
 
-    if (type == DATA_STATEMENT_TYPE_ENTRY)
-    {
-        printf("check in which order the entry label is being checked: %s\t%d\n", operands->value, operands->type);
-    }
 
     switch (type)
     {
@@ -112,7 +108,7 @@ void 	handleDataStatement				(char* dataStatement)
     }
 
     
-    printf("check done handleDataStatement \n");
+
 }
 
 void 	addDataSymbolIfLabelGiven		(char* label)
@@ -122,8 +118,7 @@ void 	addDataSymbolIfLabelGiven		(char* label)
     if(label != NULL)
     {
         newSymbol = buildSymbol(label, dat, getDataInstructionsCount());
-        
-        printf("check label != null \n");
+
         
         addSymbolToTable(newSymbol);
     }
@@ -158,7 +153,6 @@ void 	handleDataTypeStatementOfData	(OperandNode *operands, char* label)
         if (!(isnumber(temp->value)))
         {
             macroValue = getSymbolAddress(temp->value);
-            printf("This is the macro value that was found in getSymbolAddress:%d\n", macroValue);
             addDataSegmentNode(macroValue);
             increaseDataInstructionsCount();
         }
@@ -166,7 +160,6 @@ void 	handleDataTypeStatementOfData	(OperandNode *operands, char* label)
         {
             /** for each operand add it to the code segment, cast the string value to int, and increase the data count */
             addDataSegmentNode(atoi(temp->value));
-            printf("check value of data segment node:%s\n", temp->value);
 
             increaseDataInstructionsCount();
         }
@@ -187,7 +180,6 @@ void 	handleDataTypeStatementOfString	(OperandNode *operand, char* label)
         ERROR_PROGRAM((".string statements must exactly have one operand"));
     }
 
-    printf("check operand type in handleDataTypeStatementOfString:%d\n", operand->type);
 
     if(operand->type != DIRECT_VALUE_OPERAND)
     {
@@ -196,7 +188,6 @@ void 	handleDataTypeStatementOfString	(OperandNode *operand, char* label)
     
     stringIndex = 0;
 
-    printf("check indexes in handleDataTypeStatementOfString: start: %d end: %zu",stringIndex, strlen(operand->value));
 
     while (stringIndex < strlen(operand->value))
     {
@@ -226,7 +217,6 @@ void 	handleDataStatmentTypeEntry		(OperandNode *operand)
     if(operand->type != LABEL_OPERAND){
         ERROR_PROGRAM(("Invalid operand value handling .entry statement, received %s, .entry operations can only use label operand. ", operand->value));
     }
-    printf("check here's the entry value before I insert it to the list:%s\n", operand->value);
 
     /** add the entry label to the entries list */
     addLabelToEntriesList(operand->value);
@@ -249,22 +239,18 @@ void 	handleDataStatmentTypeExtern	(OperandNode *operands)
         }
         
         /** add the extern statment to the symbols table */
-        printf("check if calls the function \n");
         
         addSymbolToTable(buildSymbol(walker->value, ext, 0));
         
         walker = walker->next;
     }
-    
-    printf("check finish while \n");
+
 }
 
 void 	handleDataStatmentTypeDefine	(OperandNode *operands)
 {
     OperandNode* 	walker 		= operands;
-    
-    printf("check type = %d \tvalue = %s \t", walker->type, walker->value);
-    printf("check type = %d \tvalue = %s \t", walker->next->type, walker->next->value);
+
     
     if (operands == NULL)
     {
@@ -299,7 +285,6 @@ void 	handleDataStatmentTypeDefine	(OperandNode *operands)
 		}
 		
 		/** add the define statment to the symbols table */
-		printf("check here's the macro info: %s\t%d\n",walker->value, atoi(walker->next->value));
 		
 		addSymbolToTable(buildSymbol(walker->value, macro, atoi(walker->next->value)));
 		
@@ -322,7 +307,6 @@ void 	addDataSegmentNode				(int valueToAdd)
     DataSegmentNode *newNode = malloc(sizeof(DataSegmentNode));
     errorIfMallocFailed(newNode, "when trying to allocate memory for a new DataSegmentNode");
 
-    printf("check I'm in addDataSegmentNode\n");
 
     newNode->value = valueToAdd;
 

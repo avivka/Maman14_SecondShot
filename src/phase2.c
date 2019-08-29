@@ -7,21 +7,10 @@ void			doPhase2			(char* fileName)
 {
     int 	dataSegmentSize		= 0;
     FILE* 	fileToAssembler		= NULL;
-   
-    printf("check got to phase2 %s \n", fileName);    
+
     
     exFileName = fileName;
-    
-    printf("check ok \n");
-    
-    printf("check %s \n", exFileName);
-    
-    if(fileToAssembler == NULL)
-    {
-		printf("check is null 1!\n");
-	}
 
-    printf("check 24 got to doPhase2\n");
 
     dataSegmentSize = getDataInstructionsCount();
 
@@ -30,7 +19,6 @@ void			doPhase2			(char* fileName)
     
     if (open_or_create_file(&fileToAssembler,fileName) == 0) 
     {
-        printf("check 14 again open or creation of %s was done successfully\n", fileName);
 		
         /** creates the proper size for the codeSegment as we now know it, and resets the IC count to 0, so we can build the code segement statement after statement */
         initCodeSection(exFileName, dataSegmentSize);
@@ -46,20 +34,7 @@ void			doPhase2			(char* fileName)
         }
         createEnteriesFile(fileName);
         printDataSegmentToObjectFile(exFileName,dataSegmentSize, decimalAddress);
-        
-        printf("check WTF \n");
-        
-        if (fileToAssembler != NULL)
-		{
-			printf("check closed correctly \n");
-			
-			if(fclose(fileToAssembler) == 0)
-			{
-				printf("check went good \n");
-			}
-		}
 
-        printf("check close phase2 \n");
     }
 
     else
@@ -81,20 +56,17 @@ void 			handleNextLine		(char* line)
     /** skip data statements lines we already handled them in phase 1 */
     if (isDataStatement(line))
     {
-        printf("check currentLine after isDataStatement: %d\n", currentLine);
     
         return;
     }
     
     else if (isCommandStatement(line))
     {
-		printf("check command statement \n");
 		
         newLine = addStatementToCodeSegment(line);
         
         decimalAddress = from_line_to_bmc(&newLine, decimalAddress, exFileName);
 
-        printf("check currentLine after isCommandStatement: %d\n", currentLine);
 
         return;
     }
@@ -113,8 +85,7 @@ void 			createEnteriesFile	(char *fileName)
     list* 		entryList 			= getEntryStatementsList();
     listNode*	walker 				= entryList->head;
     char*		filename			= "";
-    
-    printf("check got to create \n");
+
 
     /** if not entry statements nothing to do */
     if (walker == NULL)
@@ -164,11 +135,8 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int d
 
     newFileName = concat(fileName, ".ob");
 
-    printf("check the starting DecimalAddress: %d", decimalAddress);
 
-	printf("check %s filename in printDataSegmentToObjectFile\n", newFileName);
-
-    if (open_or_create_file(&file,newFileName) == 0)/*TODO: add error in case that the file cannot be opened because it shouldn't be there.*/
+    if (open_or_create_file(&file,newFileName) == 0)
     {
         dataSegmentWalker = getDataSegmentHead();
 
@@ -177,7 +145,6 @@ void 			printDataSegmentToObjectFile	(char *fileName, int dataSegmentSize, int d
         {
             /** turn each value in data segment to it binary value in MACHINE_CODE_LINE_LENGTH bits */
             lineValue = decimal_to_binaryString(dataSegmentWalker->value, MACHINE_CODE_LINE_LENGTH);
-            printf("check line value: %s\n", lineValue);
 
             /** replace each line to it weird binary value */
             data_from_binary_machine_code_to_fourth_base(lineValue, &decimalAddress, file);

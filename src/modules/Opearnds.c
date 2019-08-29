@@ -21,9 +21,6 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
 	
 	/** first get rid o any extra spaces */
 	removeExtraSpaces(statement);
-
-	
-	printf("\n\n\n\n\n\n check!!!!!!!!!!!!!!!!!!! \n\n\n\n\n\n\n");
     
     /** figure label offset */
     if(label == NULL)
@@ -37,33 +34,27 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
     
     else
     {
-        printf("check label at start of getOperandsListOfStatement:%s\n", label);
         labelLength = strlen(label) + 2;	 /** length of the label, + 1 for the :, + for the space after the label, guaranteed to be single space due to removeExtraSpaces*/
-        printf("check what's the label's length including : and ' ':%d\n", labelLength);
 	}
 
     instructionLength = instructionLengthByStatmentType(statementType, statement);
 
-    printf("check Here's the length of instruction: %d\n", instructionLength);
     
     stringIterationIndex = labelLength + instructionLength +1; /** the label length + the instruction length + one for the space before the operand  e.g: MAIN: sub */
     
     /** iterate over each char in the statement, starting from the first char that should be included in the operand's section.*/
     operandStartIndex = stringIterationIndex;
 
-    printf("check is %d less then %zu ????\n", stringIterationIndex, strlen(statement));
 
     while (stringIterationIndex <= strlen(statement)) {
         /** if we hit parentheses it a suspected index addressing method, Keep collecting the whole expression as a whole */
         if (isCharsEqual(statement[stringIterationIndex], '[')) {
-            printf("\n\n\n check got to '[' sign \n");
             /** continue until either we reached the end of the string, or we found our closing pair of parentheses*/
             while (!isCharsEqual(statement[stringIterationIndex], ']') && stringIterationIndex < strlen(statement) &&
                    (!isCharsEqual(statement[stringIterationIndex], '\n'))) {/**changed back from '[' to ']'*/
                 stringIterationIndex++;
             }
 
-            printf("check %c \n", statement[stringIterationIndex]);
 
             /** if we hit the end without the last char to be the closing parentheses, error */
             if (!isCharsEqual(statement[stringIterationIndex], ']')) {
@@ -78,35 +69,29 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
         if (isspace(statement[stringIterationIndex]) || isCharsEqual(statement[stringIterationIndex], ',') == TRUE ||
             isCharsEqual(statement[stringIterationIndex], '\0') == TRUE) {
             /** zero length operand value, means we actually have no operand */
-            printf("check is %d = %d in getOperandsListOfStatement??\n", operandStartIndex, stringIterationIndex);
             if (operandStartIndex == stringIterationIndex) {
                 break;
             }
 
-            printf("check operand LALA IMPORTANT %c %c %d %d\n", statement[operandStartIndex],
-                   statement[stringIterationIndex], operandStartIndex, stringIterationIndex);
 
             /** add the operand to the list */
             Operandvalue = substringFromTo(statement, operandStartIndex, stringIterationIndex);
-            printf("check if Operandvalue includes newline:%s\n", Operandvalue);
 
             temp = createOperandNode(Operandvalue, statementType);
 
-            printf("check temp value = %s \n", temp->value);
-
             if (headOfList == NULL) {
-                printf("check null  \n");
+
 
                 headOfList = tail = temp;
             } else {
-                printf("check not null \n");
+
 
                 tail->next = temp;
 
                 tail = temp;
             }
 
-            printf("check %d \n", statementType);
+
 
             if (statementType == DATA_STATEMENT_TYPE_DEFINE) {
                 if (headOfList == NULL) {
@@ -114,13 +99,13 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
                     ERROR_PROGRAM(("something went wrong with the macro's label"));
                 }
 
-                printf("check %s \n", headOfList->value);
+
 
                 validateLabel(headOfList->value);
 
                 Operandvalue = getOperandFromDefine(statement, stringIterationIndex);
 
-                printf("check v = %s \n", Operandvalue);
+
 
                 if ((strcmp(Operandvalue, ""))) {
                     tail->next = createOperandNode(Operandvalue, DATA_STATEMENT_TYPE_DEFINE);
@@ -135,9 +120,6 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
 
                     return NULL;
                 }
-
-                printf("check headlist good = %d \tlabel = %d \tvalue = %s\n", LABEL_OPERAND, headOfList->type,
-                       headOfList->value);
 
                 return headOfList;
             }
@@ -155,7 +137,6 @@ OperandNode* 	getOperandsListOfStatement		(char* statement, STATEMENT_TYPE state
 
             operandStartIndex = stringIterationIndex;
 
-            printf("check operand start index:%d\n", operandStartIndex);
 
         } else {
             stringIterationIndex++;
@@ -170,8 +151,6 @@ char* 			getOperandFromDefine 			(char* operand, int index)
 	int				endOperand 		= 0; 
 	char*			operandValue	= "";
 	
-	printf("check got here %c %d \n", operand[index], index);
-	
 	while(isspace(operand[index]) || isCharsEqual(operand[index], '\0') == TRUE)
 	{
 		if(operand[index] == '\0')
@@ -181,8 +160,7 @@ char* 			getOperandFromDefine 			(char* operand, int index)
 		}
                 
 		index++;
-		
-		printf("check index = %d \n", index);
+
 	}
 	
 	if(operand[index] != '=')
@@ -201,11 +179,9 @@ char* 			getOperandFromDefine 			(char* operand, int index)
 		}
                 
 		index++;
-		
-		printf("check %d %c \n", index, operand[index]);
+
 	}
-	
-	printf("check out of while \n");
+
 	
 	endOperand = index;
 	
@@ -213,12 +189,10 @@ char* 			getOperandFromDefine 			(char* operand, int index)
 	{
 		endOperand++;
 	}
-	
-	printf("check end = %d \n", index);
+
 	
 	operandValue = substringFromTo(operand, index, endOperand);
-	
-	printf("check operand = %s \n", operandValue);
+
 	
 	while(isspace(operand[endOperand]) || operand[endOperand] == '\0')
 	{
@@ -229,8 +203,7 @@ char* 			getOperandFromDefine 			(char* operand, int index)
 		
 		endOperand++;
 	}
-	
-	printf("check end = %d \n", endOperand);
+
 	
 	if(operand[endOperand] != '\0')
 	{
@@ -248,7 +221,6 @@ OperandNode* 	createOperandNode				(char *operandValue, STATEMENT_TYPE statement
     
     newNode->next =NULL;	 /** dangling pointers protection */
 
-	printf("check stat = %d \n", statementType);
 	
     switch (statementType)
     {
@@ -261,7 +233,6 @@ OperandNode* 	createOperandNode				(char *operandValue, STATEMENT_TYPE statement
                 {
                     ERROR_PROGRAM(("invalid operand %s, should be macro or a number", operandValue));
                 }
-                printf("check here's the label after we searched it in createOperandNode: %s\n", operandValue);
             }
             
             /** inserts the value of newNode->value with the '#' */
@@ -319,12 +290,10 @@ OperandNode* 	createOperandNode				(char *operandValue, STATEMENT_TYPE statement
 			break;
         
         case COMMAND_STATEMENT:
-		
-			printf("check command! \n");
+
         
             if (isContainsChar(operandValue, '['))
             {
-                printf("check command 2 \n");
                 newNode->type = INDEX_OPERAND;
                 newNode->value = operandValue;
             }
@@ -375,9 +344,6 @@ OperandNode* 	getOperandListOfIndexOperand	(char* indexOperandString)
         int 			operandEndIndex 	= 0;
         int 			operandStartIndex 	= 0;
         char* 			label 				= extractIndexOperandLabel(indexOperandString);
-        
-        printf("ok \n");
-        printf("check label = %s \n", label);
 
         if(label == NULL)
         {
@@ -386,18 +352,13 @@ OperandNode* 	getOperandListOfIndexOperand	(char* indexOperandString)
             return NULL;
         }
 
-		printf("ok \n");
-		printf("check %lu \n",strlen(label));
-		printf("ok \n");
         
         labelLength = strlen(label);
-        
-        printf("check %d",labelLength);
+
         
          /** label length + open [ brace */
         operandStartIndex = operandEndIndex = labelLength + 1;
-        
-        printf("check good to go \n");
+
         
         walker = indexOperandString + labelLength + 1;
         
@@ -406,18 +367,14 @@ OperandNode* 	getOperandListOfIndexOperand	(char* indexOperandString)
             operandStartIndex++;
             walker++;
         }
-		
-		printf("check %d, %d \n",operandEndIndex, operandStartIndex);
+
 
         indexOperandValue = substringFromTo(indexOperandString, operandEndIndex, operandStartIndex);
-        
-        printf("!!!!check %s \n", indexOperandValue);
 
         list = createOperandNode(indexOperandValue, COMMAND_STATEMENT);
 
         list->next = NULL;
-        
-        printf("check all good!!!!!!!!!! \n\n\n\n");
+
 
         free(label);
         return list;
@@ -450,7 +407,6 @@ int 			instructionLengthByStatmentType(STATEMENT_TYPE statementType, char *state
 {
     COMMANDS cmdType;
 
-    printf("check here's the statement type in instructionLengthByStatmentType:%d\n", statementType);
 
     switch(statementType)
     {

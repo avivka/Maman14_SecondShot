@@ -27,7 +27,6 @@ int			main			(int argc, char *argv[])
 
 		fileName = is_extention_exists(*argv, ".as");
 
-		printf("check the filename is - %s \n", fileName);
 
 		rename(*argv, fileName);
 		
@@ -42,26 +41,20 @@ int			main			(int argc, char *argv[])
         printf("\nBegin processing the following file: %s\n", *argv);
 
         currentLine = 1;
-        printf("check currentLine before scan 1: %d\n", currentLine);
 
         errorFlag = 0;
 
         /** execute phase 1 of the assembler */
         doPhase1(fileName);
-        
-        printf("check done phase 1 \n");
+
         /** resets line read, because reading the file from the start */
         currentLine = 1;
-        printf("check currentLine after scan 1: %d\n", currentLine);
-
-        /*TODO: Add if statement that checks if the scan failed and FREE the symbol table and the data segment if it happens*/
 
 		if(errorFlag == 0)
 		{
-			/** execute phase 2 of the assembler */        
+			/** execute phase 2 of the assembler */
 			doPhase2(fileName);
-			
-			printf("check phase2 done \n");
+
 			
 			if(errorFlag == 1)
 			{
@@ -78,7 +71,7 @@ int			main			(int argc, char *argv[])
         resetSymbolsModulesModule();
 		resetICAndCounter();
 		
-        printf("\nAssembler completed processing file: %s", *argv);
+        printf("\nAssembler completed processing file: %s\n", *argv);
 
 		extendedFileName = concat(fileName, ".as");
 

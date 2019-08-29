@@ -156,7 +156,7 @@ char*		is_extention_exists	    (char* s1, char* s2)
     else
     {
 		/** means that the extention already exists in s1*/
-		printf("check is_extention_exists false \n");
+
 		
 		return s1;
 	}

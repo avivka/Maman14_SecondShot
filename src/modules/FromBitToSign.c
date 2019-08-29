@@ -37,20 +37,17 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 	
 	while (counter < (NUM_OF_ACTIVE_BITS / 2))
 	{
-		printf("check binarycode = %d \n", binaryCode);
 		
 		if (binaryCode % 2 == 1)
 		{
 
 			if (number == '\0')
 			{
-				printf("check non, 1 \n");
 				number = '1';
 			}
 			
 			else
-			{	
-				printf("check sign = %c 1 \n", number);
+			{
 							
 				bmcsign[counter] = to_4_base(number, '1');
 				
@@ -62,8 +59,6 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 				
 				number = '\0';
 				
-				printf("check %c %d \n", bmcsign[counter], counter);
-				
 				counter++;
 			}
 		}
@@ -72,13 +67,11 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 		{		
 			if (number == '\0')
 			{
-				printf("check non, 0 \n");
 				number = '0';
 			}
 			
 			else
-			{		
-				printf("check sign = %c 0 \n", number);	
+			{
 					
 				bmcsign[counter] = to_4_base(number, '0');
 				
@@ -89,8 +82,7 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 				}
 				
 				number = '\0';
-				
-				printf("check %c %d \n", bmcsign[counter], counter);
+
 				
 				counter++;
 			}
@@ -99,7 +91,6 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 		binaryCode>>= 1;
 	}
 
-	printf("check decimal address = %d \n", (*decimalAddressCounter));
 
 	printSignToFile(bmcsign, pf);
 	
@@ -118,8 +109,7 @@ char	to_4_base									(char firstBit, char secondBit)
 {	
 	secondBit 	= (secondBit - char_to_ascii) * 2;
 	firstBit	= (firstBit - char_to_ascii);
-	
-	printf("check to 4 base first = %d second = %d \n", firstBit, secondBit);
+
 		
 	switch(secondBit + firstBit)
 	{
@@ -154,8 +144,7 @@ char	to_4_base									(char firstBit, char secondBit)
 				
 				break;
 	}
-	
-	return '0';
+
 }
 
 /** Prints the array in the opposite way to the file. Returns 0 if all good, else returns -1.*/
@@ -167,8 +156,7 @@ int		printSignToFile								(char *bmcsign, FILE* fp)
 	for (i = ((NUM_OF_ACTIVE_BITS / 2) - 1) ; i >= 0 ; i--)
 	{
 		if(bmcsign[i] != '0')
-		{					
-			printf("check %c", bmcsign[i]);
+		{
 			
 			fputc(bmcsign[i], fp);
 		}

@@ -47,7 +47,7 @@ void 	resetSymbolsModulesModule		()
 
 void 	addSymbolToTable				(Symbol* newSymbol)
 {
-	printf("check 3 \n");
+
 
     Symbol *isSymbolExists = searchForSymbolByLabel(newSymbol->label);
 
@@ -57,12 +57,10 @@ void 	addSymbolToTable				(Symbol* newSymbol)
         ERROR_PROGRAM(("Requested label %s, already exists, can't declare the same label twice.", newSymbol->label));
     }
 
-	printf("check important %s %d \n", newSymbol-> label, newSymbol-> address);
 
     /** if no tail, it means we are setting the first item in the table */
     if(tableTail == NULL)
     {
-		printf("check tail null \n");
 		
         tableHead = tableTail = newSymbol;
         
@@ -78,7 +76,6 @@ void 	addSymbolToTable				(Symbol* newSymbol)
     
     tableTail->next = NULL;
 
-    printf("check done function addSymbolToTable \n");
 }
 
 Symbol* buildSymbol						(char* label, labelFeature feature, int address)
@@ -103,12 +100,10 @@ Symbol* searchForSymbolByLabel			(char* label)
 
     while (currentSymbol)
     {
-		printf("check yyy %s %s \n", currentSymbol->label, label);
 		
         /** if matches, meaning we found the requested label */
         if(strcmp(currentSymbol->label, label) == 0)
         {
-            printf("check true \n");
             return  currentSymbol; /** returns pointer to the symbol with the requested label */
         }
         
@@ -117,15 +112,13 @@ Symbol* searchForSymbolByLabel			(char* label)
     }
 
     /** could'nt find a symbol with the request label, returns NULL **/
-    printf("check false \n");
     return  NULL;
 }
 
 int 	getSymbolAddress				(char* symbolLabel)
 {
     Symbol* 	symbol 		= NULL;
-    
-    printf("check 4 \n");
+
     
     symbol = searchForSymbolByLabel(symbolLabel);
 
@@ -134,7 +127,6 @@ int 	getSymbolAddress				(char* symbolLabel)
         ERROR_PROGRAM(("Unknown symbol %s", symbolLabel));
         return  0;
     }
-    printf("check here's the symbol in getSymbolAddress:%s\n", symbol->label);
 
     return  symbol->address;
 }

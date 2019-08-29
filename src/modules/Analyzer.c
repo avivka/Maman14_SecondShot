@@ -125,9 +125,7 @@ char* 			extractLabel						(char* sentence)
         {
             while(sentence[i] && sentence[i] != ':')
             {
-                printf("check here's the cells value that will be contained the label:%c %c\n", buff[i], sentence[i]);
                 buff[i] = sentence[i];
-                printf("check here's the value of buff[i] after the assignment %c\n", buff[i]);
     
                 i++;
             }
@@ -359,10 +357,8 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
 
 boolean 		isCommentStatementOrEmptyLine		(char *sentence)
 {
-    printf("check im in isCommentStatementOrEmptyLine %c\n", sentence[0]);
     if(sentence[0] == ';' || sentence[0] == '\n')
     {
-        printf("check whats the char :0 : %c\n", sentence[0]);
         return TRUE;
     }
     
@@ -375,7 +371,6 @@ boolean 		isCommentStatementOrEmptyLine		(char *sentence)
         
         if(sentence[0] == ';' || sentence[0] == '\0')
         {
-            printf("check empty or ; line: I should be backslash 0 or ';' and then return TRUE");
             return TRUE;
         }
         
@@ -401,7 +396,6 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
     
     label = extractLabel(sentence);
 
-    printf("check thats the label in getCommandOfStatement: %s\n",label);
 
     /** figure label offset */
     if(label == NULL)
@@ -429,14 +423,12 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
         /** if we already found the command return it */
         if(command != UNKNOWN_COMMAND)
         {
-            printf("check here's the label before I let it go in getCommandOfStatement 1: %s\n", label);
             free(label);
             return  command;
         }
 
         iterationIndex++;
     }
-    printf("check here's the label before I let it go in getCommandOfStatement 2: %s\n", label);
     free(label);
     return  UNKNOWN_COMMAND;
 }

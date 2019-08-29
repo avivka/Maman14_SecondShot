@@ -11,7 +11,7 @@ void 	list_new		(list *list, int elementSize)
 
 void 	list_destroy	(list *list)
 {
-	printf("check got to list destroy \n");
+
 	
     listNode *current;
     
