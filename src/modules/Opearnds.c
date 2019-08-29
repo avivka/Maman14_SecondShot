@@ -441,7 +441,7 @@ int 			getRegisterNumberOfOperand		(OperandNode *operand)
     {
         ERROR_PROGRAM(("called getRegisterNumberOfOperand with non register operand"));
     
-        return TRUE;
+        return 0;
     }
     
     return atoi(&operand->value[1]);

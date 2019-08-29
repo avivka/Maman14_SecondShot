@@ -4,7 +4,7 @@ int 		check_if_file_exists			(char *fullDirectory)
 {
     if( access (fullDirectory, F_OK ) != -1 )
     {
-        return TRUE;
+        return 0;
     }
 
     else
@@ -57,7 +57,7 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
         return -1;
     }
 
-    return TRUE;
+    return 0;
 }
 
 void 		doWhileFileHaveLines			(FILE * file, void (*nextLineHandler)(char*))
@@ -83,7 +83,7 @@ int			deleteFile						(char* filepath, char* filextention)
 
 	free(fileFullPath);
 
-	return TRUE;
+	return 0;
 }
 
 

@@ -36,7 +36,7 @@ int 			isDataStatement						(char *sentence)
 			return  1;
 		}
 
-    return TRUE;
+    return 0;
 }
 
 int 			validateLabel						(char* label)
@@ -51,7 +51,7 @@ int 			validateLabel						(char* label)
             {
                 ERROR_PROGRAM(("Label cant be named as register"));
 
-                return TRUE;
+                return 0;
             }
             
             else if (isalpha(label[1]) || isdigit(label[1]))
@@ -64,7 +64,7 @@ int 			validateLabel						(char* label)
               ERROR_PROGRAM(("Label Cannot contain signs"));
 			}
 
-            return TRUE;
+            return 0;
         }
         
         else if (!((strcmp(label, "mov") == 0) || (strcmp(label, "cmp") == 0) || (strcmp(label, "add") == 0) || (strcmp(label, "sub") == 0) ||
@@ -76,7 +76,7 @@ int 			validateLabel						(char* label)
             {
                 ERROR_PROGRAM(("Label Cannot start with digits"));
             
-                return TRUE;
+                return 0;
             }
             
             for (i = 1; i < (strlen(label)); i++)
@@ -85,7 +85,7 @@ int 			validateLabel						(char* label)
                 {
                     ERROR_PROGRAM(("Label contains signs"));
                  
-                    return TRUE;
+                    return 0;
                 }
             }
             
@@ -96,7 +96,7 @@ int 			validateLabel						(char* label)
         {
             ERROR_PROGRAM(("Label cannot be named as an instruction"));
         
-            return TRUE;
+            return 0;
         }
         
     }
@@ -105,7 +105,7 @@ int 			validateLabel						(char* label)
     {
         ERROR_PROGRAM(("Label is too long (more than 30 chars)"));
     
-        return TRUE;
+        return 0;
     }
 }
 
@@ -131,6 +131,14 @@ char* 			extractLabel						(char* sentence)
     
                 i++;
             }
+            
+            printf("\t check %c %c \n\n\n\n\n\n", sentence[i], sentence[i+1]);
+            
+            if (sentence[i] == ':' && ((!isspace(sentence[i+1])) && sentence[i+1] != '\n'))
+            {
+				ERROR_PROGRAM(("label should end with ';' and then have ' '"));
+			}
+            
             buff[i] = '\0';
         }
         
@@ -193,7 +201,7 @@ int 			isStatementTypeDataStatement		(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return TRUE;
+        return 0;
 	}
 
     if(result)
@@ -202,7 +210,7 @@ int 			isStatementTypeDataStatement		(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return TRUE;
+                return 0;
             }
             
             i++;
@@ -213,7 +221,7 @@ int 			isStatementTypeDataStatement		(char* sentence)
     
     else
     {
-		return TRUE;
+		return 0;
 	}
 }
 
@@ -227,7 +235,7 @@ int 			isStatementTypeDataStatementString	(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return TRUE;
+        return 0;
 	}
 
     if(result)
@@ -236,7 +244,7 @@ int 			isStatementTypeDataStatementString	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return TRUE;
+                return 0;
             }
             
             i++;
@@ -247,7 +255,7 @@ int 			isStatementTypeDataStatementString	(char* sentence)
     
     else
     {
-        return TRUE;
+        return 0;
 	}
 }
 
@@ -261,7 +269,7 @@ int 			isStatementTypeDataStatementEntry	(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return TRUE;
+        return 0;
 	}
     
     if(result)
@@ -270,7 +278,7 @@ int 			isStatementTypeDataStatementEntry	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return TRUE;
+                return 0;
             }
             
             i++;
@@ -281,7 +289,7 @@ int 			isStatementTypeDataStatementEntry	(char* sentence)
     
     else
     {
-        return TRUE;
+        return 0;
 	}
 }
 
@@ -295,7 +303,7 @@ int 			isStatementTypeDataStatementExtern	(char* sentence)
  
     if(strlen(sentence) == 0)
     {
-        return TRUE;
+        return 0;
 	}
     
     if(result)
@@ -304,7 +312,7 @@ int 			isStatementTypeDataStatementExtern	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return TRUE;
+                return 0;
             }
             
             i++;
@@ -315,7 +323,7 @@ int 			isStatementTypeDataStatementExtern	(char* sentence)
     
     else
     {
-        return TRUE;
+        return 0;
 	}
 }
 
@@ -329,7 +337,7 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
     
     if(strlen(sentence) == 0)
     {
-        return TRUE;
+        return 0;
 	}
 
     if(result)
@@ -338,7 +346,7 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
         {
             if(result[i] != string[i])
             {
-                return TRUE;
+                return 0;
             }
             
             i++;
@@ -349,7 +357,7 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
     
     else
     {
-        return TRUE;
+        return 0;
 	}
 }
 
@@ -381,11 +389,11 @@ boolean 		isCommentStatementOrEmptyLine		(char *sentence)
 
 COMMANDS 		getCommandOfStatement				(char* sentence)
 {
-    int 		labelLength 							= 0;
-    int 		iterationIndex 							= 0;
-    char* 		potentialCommandString 					= "";
-    char* 		label			 						= "";
-    char 		commandString[DATA_CASE_CHARS_IN_USE]	= "";
+    int 		labelLength 								= 0;
+    int 		iterationIndex 								= 0;
+    char* 		potentialCommandString 						= "";
+    char 		commandString[DATA_CASE_CHARS_IN_USE] 		= "";
+    char* 		label	 									= "";
     COMMANDS 	command;
     
     removeExtraSpaces(sentence);
@@ -440,7 +448,7 @@ int 			isCommandStatement					(char *sentence)
         return 1;
     }
 
-    return TRUE;
+    return 0;
 
 }
 

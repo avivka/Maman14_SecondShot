@@ -206,5 +206,5 @@ int				resetICAndCounter				()
 	
 	decimalAddress = MEMOERY_START_ADDRESS;
 	
-	return TRUE;
+	return 0;
 }

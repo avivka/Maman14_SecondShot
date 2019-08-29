@@ -109,7 +109,7 @@ int 	from_binary_machine_code_to_fourth_base 	(int short binaryCode, int* decima
 	
 	free(filenamewithextention);
 	
-	return TRUE;
+	return 0;
 }
 
 /** Returns * or # or % or ! to the array. Returns 0 if all good.*/
@@ -179,5 +179,5 @@ int		printSignToFile								(char *bmcsign, FILE* fp)
 		}
 	}
 	
-	return TRUE;
+	return 0;
 }
