@@ -15,7 +15,7 @@ extern int errorFlag;
 
 /* Macro				*/
 
-#define ERROR_PROGRAM(printfArgs) printf("\n Error:"); printf printfArgs; printf(" at line %d \n", currentLine); errorFlag = 1; printf("check ptp %d \n", errorFlag);
+#define ERROR_PROGRAM(printfArgs) printf("\n Error:"); printf printfArgs; printf(" at line %d \n", currentLine); errorFlag = 1;
 
 /* Function Declaration	*/
 

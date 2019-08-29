@@ -16,14 +16,12 @@ int			from_command_to_binary	(char op[], COMMANDS ope)							    /** Calculates 
 {	
 	int			i				= OPCODE;	
 	int 		j				= FOURTH_BIT_VALUE;	
-	
-	printf("check %d \n", ope);
+
 	
 	while ( i != 0)	
 	{	
 		if (ope >= j)	
-		{	
-			printf("check %d > %d \n", ope, j);
+		{
 			
 			op[OPCODE - i] = '1';	
 	
@@ -34,15 +32,13 @@ int			from_command_to_binary	(char op[], COMMANDS ope)							    /** Calculates 
 		{			
 			op[OPCODE - i] = '0';	
 		}	
-	
-		printf("%c", op[OPCODE-i]);
+
 		
 		i--;	
 	
 		j /= 2;	
 	}	
-	
-	printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+
 	
 	return 0;	
 }	
@@ -51,8 +47,7 @@ int			from_operand_to_binary		(char opr[], OperandType oprtype)					/** Calculat
 {	
 	int			i				= OPERAND;	
 	int 		j				= OPERAND;	
-	
-	printf("check got to operand %d \n", oprtype); 
+
 	
 	while ( i != 0)	
 	{	
@@ -67,15 +62,13 @@ int			from_operand_to_binary		(char opr[], OperandType oprtype)					/** Calculat
 		{	
 			opr[OPERAND - i] = '0';	
 		}	
-	
-		printf("%c",opr[OPERAND - i]); 
+
 	
 		i--;	
 	
 		j /= 2;	
 	}	
-	
-	printf("\n");
+
 	
 	return 0;	
 }	
@@ -112,40 +105,33 @@ short int 	from_string_to_int			(char* str)											/** Casting from string to
 	short int 		num			= 0;	
 	int 			counter, i	= 0;	
 	int				j			= 1;	
-		
-	printf("check got to from string to int \n");	
+
 	
 	if (str[i] == '#')	
 	{	
 		i++;	
 	}	
-	
-	printf("check string to int i = %d \n", i);	
+
 	
 	while(str[i] != '\0')	
-	{	
-		printf("check %c \n", str[i]);	
+	{
 	
 		i++;	
 	}	
 	
 	i--;	
-	
-	printf("check i = %d \n", i);	
-	
-	printf("check num = %d, j = %d \n", num, j);	
+
+
 	
 	for (counter = 0 ; i >= counter ; counter++)											/** Calculate the value from string */
-	{	
-		printf("check str[%d] = %d \n",counter, str[i]);	
+	{
 		num += (str[counter] - char_to_ascii) * j;	
 	
 		j *= 10;	
-	
-		printf("check num = %d, j = %d \n", num, j);	
+
 	}	
 	
-	printf("check final num = %d break \n", num);	
+
 	
 	return num;	
 }	
@@ -177,9 +163,8 @@ short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNega
 {
 	unsigned short int	num			= 0;
 
-	num = from_string_to_int(opr);
 
-	printf("check num = %d \n", num);
+
 
 	if (isNegative)
 	{
@@ -187,16 +172,13 @@ short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNega
 
 		num = ~num;
 
-		printf("check negative number = %d \n", num);
 	}
 
 	if (isIndex)
 	{
-		printf("check index \n");
 
 		num <<= 2;
 
-		printf("check num = %d \n", num);
 
 		if(isNegative)
 		{
@@ -204,7 +186,6 @@ short int 	possitive_or_negative_num	(char* opr, boolean isIndex, boolean isNega
 		}
 	}
 
-	printf("check num = %d \n", num);
 
 	return num;
 }
@@ -220,8 +201,7 @@ int			print_extern				(char* label, int* decimalAddress, char* filename)	/** Pri
 	{
 		return -1;
 	}
-	
-	printf("check \t\t\t\t\t\t\t\t %s %d\n", label, *decimalAddress);
+
 	
 	fputs(label, pf);
 	

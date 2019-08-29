@@ -1,8 +1,7 @@
 #include 	"CreateBMC.h"
 
 int			from_line_to_bmc	(commandLine* nextLine, int decimalAddress, char* filename) 		/** The main function of creation binary machine code */
-{		
-	printf("check got to from line to bmc \n");
+{
 											
 	create_basic_bmc (nextLine, &decimalAddress, filename);				 											/** Creates the first binary machine code from the line (COMMANDS based) */
 														
@@ -39,8 +38,7 @@ short int	create_basic_bmc	(commandLine* nextLine, int* decimalAddress, char* fi
 	counter += from_binary_to_decimal(op, &bitCounter, OPCODE - 1);										/** Transfer from binary to decimal */
 	
 	if(nextLine->srcoperand.type != NO_OPERAND)
-	{					
-		printf("check src operand type = %d \n", nextLine->srcoperand.type);
+	{
 		
 		from_operand_to_binary (opr, nextLine->srcoperand.type);														/** Transfer operand to binary */
 						
@@ -53,15 +51,13 @@ short int	create_basic_bmc	(commandLine* nextLine, int* decimalAddress, char* fi
 	}
 	
 	if(nextLine->desoperand.type != NO_OPERAND)
-	{					
-		printf("check des operand type = %d \n", nextLine->desoperand.type);
+	{
 		
 		from_operand_to_binary (opr, nextLine->desoperand.type);														/** Transfer operand to binary */
 
 		counter += from_binary_to_decimal(opr, &bitCounter, OPERAND - 1);										/** Transfer from binary to decimal */
 	}
-	
-	printf("check counter = %d \n", counter);
+
 	
 	from_binary_machine_code_to_fourth_base(counter, decimalAddress, filename);
 
@@ -72,7 +68,6 @@ short int 	from_src_des_opr	(commandLine* nextLine, boolean isSrc, int* decimalA
 {
 	if (isSrc)
 	{
-		printf("check src %d \n", nextLine->srcoperand.type);
 
 		switch (nextLine->srcoperand.type)
 		{
@@ -95,7 +90,6 @@ short int 	from_src_des_opr	(commandLine* nextLine, boolean isSrc, int* decimalA
 
 	else 																																			/** In case that the operand type's is destination */
 	{
-		printf("check des %d \n", nextLine->desoperand.type);
 
 		switch (nextLine->desoperand.type)
 		{
@@ -130,7 +124,6 @@ short int 	opr_immediate		(char* opr, int* decimalAddress, char* filename)						
 		
 	if ((opr[0] >= FIRST_SMALL_LETTER_ASCII && opr[0] <= LAST_SMALL_LETTER_ASCII) || (opr[0] >= FIRST_CAPITAL_LETTER_ASCII && opr[0] <= LAST_CAPITAL_LETTER_ASCII)) 	/* Checks if the character is a letter */
 	{
-		printf("check got here \n");
 		
 		currentSymbol = searchForSymbolByLabel(opr);																	/** Checks if the label is in the table */
 		
@@ -139,7 +132,6 @@ short int 	opr_immediate		(char* opr, int* decimalAddress, char* filename)						
 	
 	if (opr[0] == '-')																										/** Checks if the number is negative */
 	{
-		printf("check got to negative \n");
 		
 		return from_binary_machine_code_to_fourth_base (possitive_or_negative_num(&opr[1], TRUE, TRUE), decimalAddress, filename);	/** Calculates the negative number */
 	}
@@ -164,9 +156,9 @@ short int 	opr_direct			(char* label, boolean isIndex, int* decimalAddress, char
 		return -1;
 	}
 																							
-	bmc = from_label_to_bmc(currentSymbol->address);														/* Move the bits to make place for ARE */
+	bmc = from_label_to_bmc(currentSymbol->address);														/** Move the bits to make place for ARE */
 																							
-	if (currentSymbol->feature == ext)																		/* Adds the correct value of the ARE in case of external label */
+	if (currentSymbol->feature == ext)																		/** Adds the correct value of the ARE in case of external label */
 	{																								
 		bmc += 1;	
 		

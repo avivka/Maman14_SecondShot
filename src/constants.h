@@ -2,6 +2,7 @@
 
 #ifndef 	ASSEMBLER_CONSTANTS_H
 #define 	ASSEMBLER_CONSTANTS_H
+
 #define 	MEMOERY_START_ADDRESS 						100
 #define 	MAX_LINE_SIZE 								80
 #define 	MAX_FILE_NAME_SIZE 							80
@@ -13,11 +14,11 @@
 #define 	STRING_EXTERN_DEFINE_CASES_CHARS_IN_USE		7
 #define 	ENTRY_CASE_CHARS_IN_USE						6
 #define 	DATA_CASE_CHARS_IN_USE						5
-#define 	STOP_COMMAD_LENGTH							4
+#define 	STOP_COMMAND_LENGTH							4
 #define 	ALL_THE_COMMANDS_LENGTH						3
 
 
-/* Emuns			*/
+/* Enums			*/
 /** a simple boolean definition */
 typedef enum { FALSE, TRUE } boolean;
 

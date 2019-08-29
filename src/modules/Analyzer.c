@@ -125,20 +125,16 @@ char* 			extractLabel						(char* sentence)
         {
             while(sentence[i] && sentence[i] != ':')
             {
-                printf("check here's the cells value that will be contained the label:%c %c\n", buff[i], sentence[i]);
                 buff[i] = sentence[i];
-                printf("check here's the value of buff[i] after the assignment %c\n", buff[i]);
     
                 i++;
             }
-            
-            printf("\t check %c %c \n\n\n\n\n\n", sentence[i], sentence[i+1]);
-            
+
             if (sentence[i] == ':' && ((!isspace(sentence[i+1])) && sentence[i+1] != '\n'))
             {
-				ERROR_PROGRAM(("label should end with ';' and then have ' '"));
-			}
-            
+                ERROR_PROGRAM(("label should end with : and then have ' '."));
+            }
+
             buff[i] = '\0';
         }
         
@@ -363,12 +359,12 @@ int 			isStatementTypeDataStatementDefine	(char* sentence)
 
 boolean 		isCommentStatementOrEmptyLine		(char *sentence)
 {
-    if(sentence[0] == ';' || sentence[0] == '\n') 
+    if(sentence[0] == ';' || sentence[0] == '\n')
     {
         return TRUE;
     }
     
-    else 
+    else
     {
         while(sentence && isspace(sentence[0]))
         {
@@ -401,10 +397,12 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
     sentence =  trimwhitespace(sentence);
     
     label = extractLabel(sentence);
-    
+
+
     /** figure label offset */
     if(label == NULL)
     {
+        free(label);
         labelLength = 0;
 	}
 	
@@ -427,14 +425,12 @@ COMMANDS 		getCommandOfStatement				(char* sentence)
         /** if we already found the command return it */
         if(command != UNKNOWN_COMMAND)
         {
-            printf("check here's the label before I let it go in getCommandOfStatement 1: %s\n", label);
             free(label);
             return  command;
         }
 
         iterationIndex++;
     }
-    printf("check here's the label before I let it go in getCommandOfStatement 2: %s\n", label);
     free(label);
     return  UNKNOWN_COMMAND;
 }

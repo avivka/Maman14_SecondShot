@@ -21,12 +21,10 @@ void 		initCodeSection				(char* fileName, int dataCounter)
 	FILE*	fileToAssembler	= NULL;
 	
 	newFileName = concat(fileName, ".ob");
-	
-	printf("check %s filename \n", newFileName);
+
 	
 	if (open_or_create_file(&fileToAssembler, newFileName) == 0) 
     {
-		printf("check ic = %d DC= %d \n", IC, dataCounter);
 		fprintf(fileToAssembler, "\t %d %d \n", IC, dataCounter);
 		
 		fclose(fileToAssembler);
@@ -49,7 +47,6 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
     OperandNode* 	indexDesOperand = NULL;
     int 			operandsCount 	= 0;
 
-    printf("check here we try to get the label in command statement: %s %p\n", label, (void*)label);
 
     /** if statment has a label, add it to the symbols table */
     if(label != NULL)
@@ -113,7 +110,6 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
 					IC += 1;
 				}
 			}
-            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement: %s\n", label);
             break;
             
         case 1:
@@ -134,7 +130,7 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
 				
 				else
 				{
-					/** increae by one for index label value, and by one for each of the two operands */
+					/** increase by one for index label value, and by one for each of the two operands */
 					IC += 2;
 				}
 				
@@ -144,17 +140,14 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
                 /** just increase by one */
                 IC++;
             }
-            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 2: %s\n", label);
             break;
         
         case 0:
         
             /** nothing to do */
-            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 3: %s\n", label);
             break;
             
         default:
-            printf("check here's the label before I let it go in increaseCommandInstructionsCountByStatement 4: %s\n", label);
             ERROR_PROGRAM(("invalid number of operands for a command statement, got %d, expected to be between 0 to 2", operandsCount));
             break;
     }
@@ -163,6 +156,7 @@ void 		increaseCommandInstructionsCountByStatement	(char* statement)
     {
         free(label);
     }
+    free(operandsList);
 }
 
 
@@ -181,29 +175,23 @@ commandLine addStatementToCodeSegment	(char* statement)
     trimwhitespace(statement);
     
     label = extractLabel(statement);
-    
-    printf("check called \n");
+
 
     operandsSrcList = getOperandsListOfStatement(statement, COMMAND_STATEMENT, label);
-    
-    printf("check ok \n");
+
 
     operandsCount = countNumberOfOpearnds(operandsSrcList);
-    
-    printf("check operand count = %d \n", operandsCount);
+
     
     commandEnum = getCommandOfStatement(statement);
-    
-    printf("check command enum = %d \n", commandEnum);
+
     
     descriptor = getCommandDescriptor(commandEnum);
-    
-    printf("check descriptor != null \n");
+
     
     if(descriptor == NULL)
     {
         ERROR_PROGRAM(("unknown command"));
-        printf("check here's the label before I let it go in addStatementToCodeSegment 1: %s\n", label);
         free(label);
         return newLine;
     }
@@ -251,7 +239,6 @@ commandLine addStatementToCodeSegment	(char* statement)
             break;
     }
 
-    printf("check here's the label before I let it go in addStatementToCodeSegment 2: %s\n", label);
     free(label);
     return newLine;
 }

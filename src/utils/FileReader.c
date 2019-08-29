@@ -40,14 +40,14 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 {
     if (check_if_file_exists(filepathwithextention) == -1)
     {
-		printf("check creating new file \n");
+
 		
         *pf = fopen(filepathwithextention, "w+");
     }
 
     else
     {
-		printf("check opening the file \n");
+
 		
         *pf = fopen(filepathwithextention, "a+");
     }
@@ -62,11 +62,29 @@ int 		open_or_create_file 			(FILE **pf, char* filepathwithextention)
 
 void 		doWhileFileHaveLines			(FILE * file, void (*nextLineHandler)(char*))
 {
-    char 	line[MAX_LINE_SIZE]				= "";
-    
+    char 	line[MAX_LINE_SIZE+1]				= "";
+
     while(fgets(line, sizeof(line), file))
     {
-        nextLineHandler(line);
+
+        if (strlen(line) == MAX_LINE_SIZE && !(isContainsChar(line,'\n')))
+        {
+            currentLine++;
+            ERROR_PROGRAM(("line is longer then 80 characters."));
+            while(fgets(line, sizeof(line), file))
+            {
+                if (isContainsChar(line,'\n'))
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            nextLineHandler(line);
+            currentLine++;
+        }
+
     }
 }
 
